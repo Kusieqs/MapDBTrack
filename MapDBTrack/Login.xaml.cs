@@ -88,10 +88,10 @@ namespace MapDBTrack
         private bool CheckingLog(string login, string password)
         {
 
-            string sqlQueryLog = $"Select Username From Users Where Username = @login";
-            string sqlQueryPass = $"Select Password, Username From Users Where Password = @password and Username = @login";
+            string sqlQueryLog = $"Select login From Employee Where login = @login";
+            string sqlQueryPass = $"Select password, login From Employee Where password = @password and login = @login";
 
-            SqlConnection sql = new SqlConnection();
+            SqlConnection sql = new SqlConnection(HelpingClass.connectString);
             sql.Open();
 
 
