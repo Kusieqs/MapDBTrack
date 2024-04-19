@@ -10,7 +10,6 @@ namespace MapDBTrack
 {
     public static class HelpingClass
     {
-
         public static bool NetworkCheck(Window window)
         {
             while(true)

@@ -10,12 +10,13 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.Data.SqlClient;
+using System.ComponentModel;
 
 namespace MapDBTrack
 {
     public partial class Login : Window
     {
-        public Registration Registration;
+        public Registration registration;
         public Login()
         {
             InitializeComponent();
@@ -37,23 +38,24 @@ namespace MapDBTrack
             // Opening new window
             Close();
 
-        }
+        }// trying to login to account
 
         private void SignUp(object sender, RoutedEventArgs e)
         {
-            // open new window
-        }
+            registration = new Registration();
+            this.Hide();
+            registration.Show();
+            registration.Closing += (s, args) => this.Show();
+        } // opening registration window
 
         private void LoginChanged(object sender, RoutedEventArgs e)
         {
-            if (LoginFailed.Text != "")
-                LoginFailed.Text = "";
+            LoginFailed.Text = string.Empty;
         } // if login box will change, red text will disappear
 
         private void PasswordChanged(object sender, RoutedEventArgs e)
         {
-            if (PasswordFailed.Text != "")
-                PasswordFailed.Text = "";
+            LoginFailed.Text = string.Empty;
         } // if password box will change, red text will disappear
 
         private void CheckNetwork(object sender, RoutedEventArgs e)
@@ -124,5 +126,6 @@ namespace MapDBTrack
             return true;
 
         } // Checking correct of password and login
+
     }
 }

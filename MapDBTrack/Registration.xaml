@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:MapDBTrack"
         mc:Ignorable="d"
-        Title="Registration" Height="850" Width="600" ResizeMode="NoResize">
+        Title="Registration" Height="850" Width="600" ResizeMode="NoResize" Loaded="CheckNetowrk">
     <Window.Resources>
         <Style x:Key="ButtonRounded" TargetType="Button">
             <Setter Property="Width" Value="120"/>
