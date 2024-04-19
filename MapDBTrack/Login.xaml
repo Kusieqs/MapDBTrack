@@ -14,7 +14,7 @@
             <Setter Property="BorderThickness" Value="2"/>
             <Setter Property="FontSize" Value="20"/>
             <Setter Property="FontWeight" Value="DemiBold"/>
-            <Setter Property="Foreground" Value="#ead0ff"/>
+            <Setter Property="Foreground" Value="White"/>
             <Setter Property="BorderBrush" Value="Gray"/>
             <Setter Property="Template">
                 <Setter.Value>
@@ -84,8 +84,8 @@
                 <TextBox x:Name="Signup" Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="2" TextChanged="PasswordChanged" Style="{StaticResource RoundedTextBox}"/>
                 <TextBlock Text="User name" Grid.Row="2" Width="60" Height="20" Margin="39,17,99,75" Foreground="#FF2F5588" FontWeight="DemiBold"/>
                 <TextBlock Text="Password" Grid.Row="3" Width="60" Height="20" Margin="39,17,99,75" Foreground="#FF2F5588" FontWeight="DemiBold"/>
-                <TextBlock x:Name="LoginFailed" Text="" Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="2" Width="200" Height="20" Margin="50,71,96,11" FontSize="10" FontWeight="DemiBold" Foreground="Red"/>
-                <TextBlock x:Name="PasswordFailed" Text="" Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="3" Width="200" Height="20" Margin="50,71,96,11" FontSize="10" FontWeight="DemiBold" Foreground="Red"/>
+                <TextBlock x:Name="LoginFailed" Text="" Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="2" Width="200" Height="20" Margin="39,76,157,16" FontSize="10" FontWeight="DemiBold" Foreground="Red"/>
+                <TextBlock x:Name="PasswordFailed" Text="" Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="3" Width="200" Height="20" Margin="39,76,157,16" FontSize="10" FontWeight="DemiBold" Foreground="Red"/>
             </Grid>
         </Border>
 
