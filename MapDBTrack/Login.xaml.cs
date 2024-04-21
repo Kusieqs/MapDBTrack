@@ -26,8 +26,8 @@ namespace MapDBTrack
         {
             HelpingClass.NetworkCheck(this);
 
-            string login = Signin.Text;
-            string password = Signup.Text;
+            string login = LoginBox.Text;
+            string password = PasswordBox.Text;
 
             if (!CheckingEmptyText(login, password))
                 return;
@@ -55,7 +55,9 @@ namespace MapDBTrack
 
         private void PasswordChanged(object sender, RoutedEventArgs e)
         {
-            LoginFailed.Text = string.Empty;
+            PasswordFailed.Text = string.Empty;
+            Reset.IsEnabled = false;
+            Reset.Content = string.Empty;
         } // if password box will change, red text will disappear
 
         private void CheckNetwork(object sender, RoutedEventArgs e)
@@ -117,6 +119,8 @@ namespace MapDBTrack
             if (!reader.HasRows)
             {
                 PasswordFailed.Text = "Password is not correct";
+                Reset.Content = "Click to to remind password";
+                Reset.IsEnabled = true;
                 reader.Close();
                 sql.Close();
                 return false;
@@ -127,5 +131,10 @@ namespace MapDBTrack
 
         } // Checking correct of password and login
 
+        private void ResetPassword(object sender, EventArgs e)
+        {
+            MessageBox.Show("Password was sent to your email", "Information", MessageBoxButton.OK, MessageBoxImage.Information);
+            HelpingClass.SendingPassword();
+        }
     }
 }

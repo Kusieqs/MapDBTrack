@@ -10,7 +10,7 @@ namespace MapDBTrack
 {
     public static class HelpingClass
     {
-        public const string connectString = "";
+        public const string connectString = "Data Source=DESKTOP-0DCTSF4;Initial Catalog=MapPinss;Integrated Security=True;";
         public static bool NetworkCheck(Window window)
         {
             while(true)
@@ -34,6 +34,11 @@ namespace MapDBTrack
                 break;
             }
             return true;
+        }
+
+        public static void SendingPassword()
+        {
+
         }
     }
 }
