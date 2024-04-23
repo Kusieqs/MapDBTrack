@@ -134,7 +134,7 @@ namespace MapDBTrack
         private void ResetPassword(object sender, EventArgs e)
         {
             MessageBox.Show("Password was sent to your email", "Information", MessageBoxButton.OK, MessageBoxImage.Information);
-            HelpingClass.SendingPassword();
+            HelpingClass.SendingPassword(LoginBox.Text);
         }
     }
 }
