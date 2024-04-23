@@ -1,0 +1,106 @@
+﻿<Window x:Class="MapDBTrack.Login"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:MapDBTrack"
+        mc:Ignorable="d"
+        Title="Login" Height="550" Width="600" Loaded="CheckNetwork" ResizeMode="NoResize">
+    <Window.Resources>
+        <Style x:Key="ButtonRounded" TargetType="Button">
+            <Setter Property="Width" Value="120"/>
+            <Setter Property="Height" Value="60"/>
+            <Setter Property="Background" Value="#FF2F5588"/>
+            <Setter Property="BorderThickness" Value="2"/>
+            <Setter Property="FontSize" Value="20"/>
+            <Setter Property="FontWeight" Value="DemiBold"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="BorderBrush" Value="Gray"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border Background="{TemplateBinding Background}"
+                        BorderBrush="{TemplateBinding BorderBrush}"
+                        BorderThickness="{TemplateBinding BorderThickness}"
+                        CornerRadius="15">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Background" Value="#FF638EC8"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+        <Style x:Key="RoundedTextBox" TargetType="TextBox">
+            <Setter Property="Width" Value="318"/>
+            <Setter Property="Height" Value="40"/>
+            <Setter Property="Background" Value="#faf4ff"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="TextBox">
+                        <Border BorderBrush="{TemplateBinding BorderBrush}"
+                            BorderThickness="{TemplateBinding BorderThickness}"
+                            Background="{TemplateBinding Background}"
+                            CornerRadius="10">
+                            <TextBox Text="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Text}"
+                             HorizontalAlignment="Stretch"
+                             VerticalAlignment="Stretch"
+                             BorderThickness="0"
+                             Background="Transparent"
+                             MaxLength="25"
+                             FontSize="18"
+                             FontWeight="DemiBold"   
+                             HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </Window.Resources>
+    <Grid>
+        <Image Source="Pictures/Background.jpg" Stretch="Fill"/>
+        <Border Grid.Column="0" Grid.Row="0" Width="400" Height="400" CornerRadius="30" BorderThickness="2" Background="#FFD1E1EC">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="80"/>
+                    <RowDefinition Height="2"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="90"/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <Button Content="Sign in" Click="SignIn" Grid.Column="0" Grid.Row="4" Style="{StaticResource ButtonRounded}"/>
+                <Button Content="Sign up" Click="SignUp" Grid.Column="1" Grid.Row="4" Style="{StaticResource ButtonRounded}"/>
+                <TextBlock Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" Foreground="#FF2F5588" Text="USER LOGIN" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="35" FontWeight="DemiBold"/>
+                <Border Grid.Row="1" Grid.Column="0"  Grid.ColumnSpan="2" Background="#FF2F5588" />
+                <TextBox x:Name="LoginBox" Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2" TextChanged="LoginChanged" Style="{StaticResource RoundedTextBox}"/>
+                <TextBox x:Name="PasswordBox" Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="2" TextChanged="PasswordChanged" Style="{StaticResource RoundedTextBox}"/>
+                <TextBlock Text="User name" Grid.Row="2" Width="60" Height="20" Margin="39,17,99,75" Foreground="#FF2F5588" FontWeight="DemiBold"/>
+                <TextBlock Text="Password" Grid.Row="3" Width="60" Height="20" Margin="39,17,99,75" Foreground="#FF2F5588" FontWeight="DemiBold"/>
+                <Button x:Name="Reset" Content="" Click="ResetPassword" Grid.Column="0" Grid.Row="3" Height="20" Margin="39,85,27,7" HorizontalContentAlignment="Left" FontSize="10" Foreground="Red" IsEnabled="False" FontWeight="DemiBold" Cursor="Hand">
+                    <Button.Template>
+                        <ControlTemplate TargetType="Button">
+                            <Border Background="#FFD1E1EC" Padding="{TemplateBinding Padding}">
+                                <ContentPresenter HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}" />
+                            </Border>
+                            <ControlTemplate.Triggers>
+                                <Trigger Property="IsEnabled" Value="False">
+                                    <Setter Property="Background" Value="#FFD1E1EC" />
+                                </Trigger>
+                            </ControlTemplate.Triggers>
+                        </ControlTemplate>
+                    </Button.Template>
+                </Button>
+                <TextBlock x:Name="LoginFailed" Text="" Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="2" Width="200" Height="20" Margin="39,76,157,16" FontSize="10" FontWeight="DemiBold" Foreground="Red"/>
+                <TextBlock x:Name="PasswordFailed" Text="" Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="3" Width="200" Height="20" Margin="39,76,157,16" FontSize="10" FontWeight="DemiBold" Foreground="Red"/>
+            </Grid>
+        </Border>
+
+    </Grid>
+</Window>
