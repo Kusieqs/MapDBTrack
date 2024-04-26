@@ -1,0 +1,93 @@
+﻿<Window x:Class="MapDBTrack.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:MapDBTrack"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="800" Width="1200">
+
+
+    <Window.Resources>
+        <Style x:Key="Buttons" TargetType="Button">
+            <Setter Property="Opacity" Value="0"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Background" Value="LightBlue" />
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+        <Style x:Key="TexBlocks" TargetType="TextBlock">
+            <Setter Property="FontSize" Value="30"/>
+            <Setter Property="FontWeight" Value="DemiBold"/>
+        </Style>
+    </Window.Resources>
+
+
+
+    <Grid Background="Black">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="300"/>
+            <ColumnDefinition Width="2"/>
+            <ColumnDefinition/>
+            <ColumnDefinition Width="0*"/>
+        </Grid.ColumnDefinitions>
+        <Border x:Name="Menu" Grid.Column="0">
+            <Border.Background>
+                <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                    <GradientStop Color="#FF3D5A69" Offset="1"/>
+                    <GradientStop Color="#FF008DDA" Offset="0.063"/>
+                </LinearGradientBrush>
+            </Border.Background>
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="100"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="2"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="2"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="2"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="2"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="2"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="2"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+
+                <Border Grid.Row="1" Grid.ColumnSpan="2" Background="Black"/>
+                <Border Grid.Row="3" Grid.ColumnSpan="2" Background="Black"/>
+                <Border Grid.Row="5" Grid.ColumnSpan="2" Background="Black"/>
+                <Border Grid.Row="7" Grid.ColumnSpan="2" Background="Black"/>
+                <Border Grid.Row="9" Grid.ColumnSpan="2" Background="Black"/>
+                <Border Grid.Row="11" Grid.ColumnSpan="2" Background="Black"/>
+
+                <Border Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2">
+                    <Grid>
+                        <TextBlock Text="MapDBTrack" FontSize="40" FontWeight="Bold" Foreground="#F7EEDD" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        <Button Opacity="0" Click="Information" Width="235" Height="50" Cursor="Hand"/>
+                    </Grid>
+                </Border>
+
+                <TextBlock Text="Map" Grid.Column="1" Grid.Row="2" Style="{StaticResource TexBlocks}" />
+                <Button Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="2" Content="Map" Style="{StaticResource Buttons}"/>
+                <Button Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="4" Content="Customers" Style="{StaticResource Buttons}"/>
+                <Button Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="6" Content="" Style="{StaticResource Buttons}"/>
+                <Button Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="8" Content="History" Style="{StaticResource Buttons}"/>
+                <Button Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="10" Content="Log out" Style="{StaticResource Buttons}"/>
+                <Button Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="12" Content="Exit" Style="{StaticResource Buttons}"/>
+
+            </Grid>
+        </Border>
+
+
+
+        <Border x:Name="Content" Grid.Column="2" Background="#FFFFF7FC"/>
+    </Grid>
+</Window>

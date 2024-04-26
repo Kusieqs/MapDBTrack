@@ -36,6 +36,9 @@ namespace MapDBTrack
                 return;
 
             // Opening new window
+
+            MainWindow mainWindow = new MainWindow();
+            mainWindow.Show();
             Close();
 
         }// trying to login to account
