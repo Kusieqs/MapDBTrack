@@ -6,18 +6,38 @@
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
     <UseWPF>true</UseWPF>
+    <ApplicationManifest>app.manifest</ApplicationManifest>
   </PropertyGroup>
 
   <ItemGroup>
     <None Remove="Pictures\Background.jpg" />
+    <None Remove="Pictures\Customer.png" />
+    <None Remove="Pictures\Exit.png" />
+    <None Remove="Pictures\History.png" />
+    <None Remove="Pictures\Logout.png" />
+    <None Remove="Pictures\Pin.png" />
   </ItemGroup>
 
   <ItemGroup>
+    <Resource Include="Pictures\Customer.png" />
+    <Resource Include="Pictures\Exit.png" />
+    <Resource Include="Pictures\History.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.Maps.MapControl.WPF" Version="1.0.0.3" />
     <PackageReference Include="System.Data.SqlClient" Version="4.8.6" />
   </ItemGroup>
 
   <ItemGroup>
     <Resource Include="Pictures\Background.jpg" />
+    <Resource Include="Pictures\Logout.png" />
+    <Resource Include="Pictures\Map.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Pictures\Pin.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
   </ItemGroup>
 
 </Project>

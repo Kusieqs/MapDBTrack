@@ -3,9 +3,10 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:m="clr-namespace:Microsoft.Maps.MapControl.WPF;assembly=Microsoft.Maps.MapControl.WPF"
         xmlns:local="clr-namespace:MapDBTrack"
         mc:Ignorable="d"
-        Title="MainWindow" Height="800" Width="1200">
+        Title="MainWindow" Height="800" Width="1200" ResizeMode="NoResize">
 
 
     <Window.Resources>
@@ -14,12 +15,12 @@
             <Setter Property="Cursor" Value="Hand"/>
             <Style.Triggers>
                 <Trigger Property="IsMouseOver" Value="True">
-                    <Setter Property="Background" Value="LightBlue" />
+                    <Setter Property="Background" Value="Red" />
                 </Trigger>
             </Style.Triggers>
         </Style>
         <Style x:Key="TexBlocks" TargetType="TextBlock">
-            <Setter Property="FontSize" Value="36"/>
+            <Setter Property="FontSize" Value="34"/>
             <Setter Property="FontWeight" Value="DemiBold"/>
             <Setter Property="Foreground" Value="#F7EEDD"/>
             <Setter Property="VerticalAlignment" Value="Center"/>
@@ -53,7 +54,7 @@
                     <RowDefinition Height="*"/>
                     <RowDefinition Height="2"/>
                     <RowDefinition Height="*"/>
-                    <RowDefinition Height="4"/>
+                    <RowDefinition Height="2"/>
                     <RowDefinition Height="*"/>
                     <RowDefinition Height="2"/>
                     <RowDefinition Height="*"/>
@@ -78,7 +79,6 @@
                     </Grid>
                 </Border>
 
-                <Image  Source="/Pictures/Pin.png" Grid.Column="1" Margin="0,92,100,21" Grid.RowSpan="3"/>
                 <TextBlock Text="Map" Grid.Column="1" Grid.Row="4" Style="{StaticResource TexBlocks}"/>
                 <Button Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="4" Style="{StaticResource Buttons}" />
                 <TextBlock Text="Customers" Grid.Column="1" Grid.Row="6" Style="{StaticResource TexBlocks}" />
@@ -89,12 +89,32 @@
                 <Button Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="10" Style="{StaticResource Buttons}"/>
                 <TextBlock Text="Exit" Grid.Column="1" Grid.Row="12" Style="{StaticResource TexBlocks}"/>
                 <Button Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="12" Style="{StaticResource Buttons}"/>
-
             </Grid>
         </Border>
 
 
+        <Border Grid.Column="2" Background="#FFFFF7FC">
+            <Grid x:Name="Content">
+                <m:Map CredentialsProvider="" Mode="AerialWithLabels" Center="52.2387, 19.0478" ZoomLevel="6.7"/>
+            </Grid>
+        </Border>
+        
+        
+        <Image Source="/Pictures/Map.png" Grid.Row="0" Margin="36,90,36,586" IsHitTestVisible="False"/>
+        <Image Source="/Pictures/Exit.png" Grid.Row="0" Margin="7,681,197,12" IsHitTestVisible="False" RenderTransformOrigin="0.5,0.5">
+            <Image.RenderTransform>
+                <TransformGroup>
+                    <ScaleTransform/>
+                    <SkewTransform/>
+                    <RotateTransform Angle="0.237"/>
+                    <TranslateTransform/>
+                </TransformGroup>
+            </Image.RenderTransform>
+        </Image>
+        <Image Source="/Pictures/Logout.png" Grid.Row="0" Margin="24,584,204,131" IsHitTestVisible="False"/>
+        <Image Source="/Pictures/Customer.png" Grid.Row="0" Margin="10,353,211,354" IsHitTestVisible="False"/>
+        <Image Source="/Pictures/History.png" Grid.Row="0" Margin="13,462,205,236" IsHitTestVisible="False"/>
+        <Image Source="/Pictures/Pin.png" Grid.Row="0" Margin="0,240,198,463" IsHitTestVisible="False"/>
 
-        <Border x:Name="Content" Grid.Column="2" Background="#FFFFF7FC"/>
     </Grid>
 </Window>
