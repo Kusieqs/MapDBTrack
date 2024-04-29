@@ -24,6 +24,8 @@ namespace MapDBTrack
 
         private void SignIn(object sender, RoutedEventArgs e)
         {
+            MainWindow mainWindow = new MainWindow();
+            mainWindow.Show();
             HelpingClass.NetworkCheck(this);
 
             string login = LoginBox.Text;
@@ -36,6 +38,7 @@ namespace MapDBTrack
                 return;
 
             // Opening new window
+
             Close();
 
         }// trying to login to account
