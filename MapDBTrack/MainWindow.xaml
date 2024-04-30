@@ -70,8 +70,7 @@
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="300"/>
             <ColumnDefinition Width="2"/>
-            <ColumnDefinition/>
-            <ColumnDefinition Width="0*"/>
+            <ColumnDefinition Width="898"/>
         </Grid.ColumnDefinitions>
         <Image Source="/Pictures/MainWindowBack.jpg" Stretch="None"/>
         <Border x:Name="Menu" Grid.Column="0">
@@ -111,7 +110,7 @@
                             <ColumnDefinition Width="80"/>
                             <ColumnDefinition Width="*"/>
                         </Grid.ColumnDefinitions>
-                        <Button Grid.Column="0" Grid.ColumnSpan="2" Style="{StaticResource Buttons}" />
+                        <Button Grid.Column="0" Grid.ColumnSpan="2" Style="{StaticResource Buttons}" Click="MapClick"/>
                         <TextBlock Text="Map" Grid.Column="1" Style="{StaticResource TexBlocks}" IsHitTestVisible="False"/>
                         <Image Source="/Pictures/Pin.png" Grid.Column="0" IsHitTestVisible="False" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="0,5,0,5"/>
                     </Grid>
@@ -123,7 +122,7 @@
                             <ColumnDefinition Width="80"/>
                             <ColumnDefinition Width="*"/>
                         </Grid.ColumnDefinitions>
-                        <Button Grid.Column="0" Grid.ColumnSpan="2" Style="{StaticResource Buttons}" />
+                        <Button Grid.Column="0" Grid.ColumnSpan="2" Style="{StaticResource Buttons}" Click="CustomersClick"/>
                         <TextBlock Text="Customers" Grid.Column="1" Style="{StaticResource TexBlocks}" IsHitTestVisible="False"/>
                         <Image Source="/Pictures/Customer.png" Grid.Column="0" IsHitTestVisible="False"  HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="0,5,0,5"/>
                     </Grid>
@@ -135,7 +134,7 @@
                             <ColumnDefinition Width="80"/>
                             <ColumnDefinition Width="*"/>
                         </Grid.ColumnDefinitions>
-                        <Button Grid.Column="0" Grid.ColumnSpan="2" Style="{StaticResource Buttons}" />
+                        <Button Grid.Column="0" Grid.ColumnSpan="2" Style="{StaticResource Buttons}" Click="HistoryClick"/>
                         <TextBlock Text="History" Grid.Column="1" Style="{StaticResource TexBlocks}" IsHitTestVisible="False"/>
                         <Image Source="/Pictures/History.png" Grid.Column="0" IsHitTestVisible="False"  HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="0,5,0,5"/>
                     </Grid>
@@ -147,7 +146,7 @@
                             <ColumnDefinition Width="80"/>
                             <ColumnDefinition Width="*"/>
                         </Grid.ColumnDefinitions>
-                        <Button Grid.Column="0" Grid.ColumnSpan="2" Style="{StaticResource Buttons}" />
+                        <Button Grid.Column="0" Grid.ColumnSpan="2" Style="{StaticResource Buttons}" Click="LogoutClick"/>
                         <TextBlock Text="Log out" Grid.Column="1" Style="{StaticResource TexBlocks}" IsHitTestVisible="False"/>
                         <Image Source="/Pictures/Logout.png" Grid.Column="0" IsHitTestVisible="False" Margin="6,9,6,9"/>
                     </Grid>
@@ -159,7 +158,7 @@
                             <ColumnDefinition Width="80"/>
                             <ColumnDefinition Width="*"/>
                         </Grid.ColumnDefinitions>
-                        <Button Grid.Column="0" Grid.ColumnSpan="2" Style="{StaticResource Buttons}" />
+                        <Button Grid.Column="0" Grid.ColumnSpan="2" Style="{StaticResource Buttons}" Click="ExitClick"/>
                         <TextBlock Text="Exit" Grid.Column="1" Style="{StaticResource TexBlocks}" IsHitTestVisible="False"/>
                         <Image Source="/Pictures/Exit.png" Grid.Column="0" IsHitTestVisible="False"  HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="0,5,0,5"/>
                     </Grid>

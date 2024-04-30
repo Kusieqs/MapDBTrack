@@ -16,21 +16,24 @@ using System.Windows.Shapes;
 
 namespace MapDBTrack
 {
-    /// <summary>
-    /// Logika interakcji dla klasy MainWindow.xaml
-    /// </summary>
     public partial class MainWindow : Window
     {
         private Grid mapGrid;
         private Map map;
         private bool pinned = false;
+        // dodanie pola z uzytkownikiem
         public MainWindow()
         {
             InitializeComponent();
-            CreateMap();
+            LoadingMapScreen();
 
         }
-        private void CreateMap()
+
+        private void MapClick(object sender, RoutedEventArgs e)
+        {
+            LoadingMapScreen();
+        } // button method
+        private void LoadingMapScreen()
         {
             Border mapBorder = new Border();
             mapBorder.Background = new SolidColorBrush("#FFFFF7FC".ToColor()); 
@@ -46,7 +49,7 @@ namespace MapDBTrack
             map.Mode = new AerialMode(true);
             map.Center = new Location(52.2387, 19.0478);
             map.ZoomLevel = 6.7;
-            map.MouseLeftButtonDown += MapPutting;
+            map.MouseLeftButtonDown += MapPuttingPins;
 
             mapGrid.Children.Add(map);
 
@@ -85,32 +88,44 @@ namespace MapDBTrack
             MainGrid.Children.Add(mapBorder);
             MainGrid.Children.Add(buttonBorder);
 
-        }
+        } // loading map 
+        private void CustomersClick(object sender, RoutedEventArgs e)
+        {
+            HelpingClass.CleanGrid(MainGrid);
+        } // button customer
+        private void HistoryClick(object sender, RoutedEventArgs e)
+        {
+
+        } // history button
+        private void LogoutClick(object sender, RoutedEventArgs e)
+        {
+
+        } // button logout 
+        private void ExitClick(object sender, RoutedEventArgs e)
+        {
+            this.Close();
+        } // close window
         private void Information(object sender, RoutedEventArgs e)
         {
             // information about app and version
         }
-
         private void AddPin(object sender, RoutedEventArgs e)
         {
             Mouse.OverrideCursor = Cursors.Hand;
             pinned = true;
         } // set true for added new pin to map
-        private void MapPutting(object sender, MouseButtonEventArgs e)
+        private void MapPuttingPins(object sender, MouseButtonEventArgs e)
         {
             if (pinned)
             {
-                // Pobierz pozycję kliknięcia na mapie
                 Point mousePosition = e.GetPosition(mapGrid);
                 Location pinLocation = map.ViewportPointToLocation(mousePosition);
 
-                // Stwórz nową pinezkę na mapie w miejscu kliknięcia
                 Pushpin pin = new Pushpin();
                 pin.Location = pinLocation;
-                pin.Background = Brushes.Red; // Dostosuj kolor pinezki według potrzeb
+                pin.Background = Brushes.DarkBlue; 
                 map.Children.Add(pin);
 
-                // Zakończ dodawanie pinezki i przywróć standardowy kursor
                 pinned = false;
                 Mouse.OverrideCursor = Cursors.Arrow;
 
