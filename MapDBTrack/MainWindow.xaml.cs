@@ -21,12 +21,10 @@ namespace MapDBTrack
         private Grid mapGrid;
         private Map map;
         private bool pinned = false;
-        // dodanie pola z uzytkownikiem
         public MainWindow()
         {
             InitializeComponent();
             LoadingMapScreen();
-
         }
 
         private void MapClick(object sender, RoutedEventArgs e)
@@ -35,6 +33,9 @@ namespace MapDBTrack
         } // button method
         private void LoadingMapScreen()
         {
+
+            LoginName.Text = "Welcome " + Login.informationsEmployee[1];
+
             Border mapBorder = new Border();
             mapBorder.Background = new SolidColorBrush("#FFFFF7FC".ToColor()); 
             Grid.SetColumn(mapBorder, 2);
@@ -44,8 +45,7 @@ namespace MapDBTrack
             mapGrid.Name = "Content";
 
             map = new Map();
-            map.CredentialsProvider = new ApplicationIdCredentialsProvider("Omi6chwps4qZse8uKKBz~1UQ7_Si2p2ODSsRCrCKxYw~AtFhG_SEo0Y6l_NRkUEVAf435kpg50sefPGfqdzhncRljdpipYSsjHci_BtcWM73");
-            // Ustawienie trybu mapy na AerialMode
+            map.CredentialsProvider = new ApplicationIdCredentialsProvider();
             map.Mode = new AerialMode(true);
             map.Center = new Location(52.2387, 19.0478);
             map.ZoomLevel = 6.7;
@@ -130,7 +130,7 @@ namespace MapDBTrack
                 Mouse.OverrideCursor = Cursors.Arrow;
 
             }
-        }
+        } // puting pins on map when pinned is true
     }
     public static class StringExtensions
     {

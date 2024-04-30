@@ -16,6 +16,7 @@ namespace MapDBTrack
 {
     public partial class Login : Window
     {
+        public static string[] informationsEmployee = new string[2];
         public Registration registration;
         public Login()
         {
@@ -24,8 +25,6 @@ namespace MapDBTrack
 
         private void SignIn(object sender, RoutedEventArgs e)
         {
-            MainWindow mainWindow = new MainWindow();
-            mainWindow.Show();
             HelpingClass.NetworkCheck(this);
 
             string login = LoginBox.Text;
@@ -37,9 +36,10 @@ namespace MapDBTrack
             if (!CheckingLog(login, password))
                 return;
 
-            // Opening new window
 
-            Close();
+            MainWindow mainWindow = new MainWindow();
+            mainWindow.Show();
+            this.Close();
 
         }// trying to login to account
 
@@ -129,15 +129,29 @@ namespace MapDBTrack
                 return false;
             }
             reader.Close();
+
+            string idQuery = "Select Id, Login From Employee Where login = @login";
+            command = new SqlCommand(idQuery, sql);
+            command.Parameters.AddWithValue("@login", login);
+            reader = command.ExecuteReader();
+
+            while(reader.Read())
+            {
+                informationsEmployee[0] = reader.GetInt32(0).ToString();
+                informationsEmployee[1] = reader.GetString(1);
+            }
+
+
+
+            reader.Close();
             sql.Close();
             return true;
-
         } // Checking correct of password and login
 
         private void ResetPassword(object sender, EventArgs e)
         {
-            MessageBox.Show("Password was sent to your email", "Information", MessageBoxButton.OK, MessageBoxImage.Information);
             HelpingClass.SendingPassword(LoginBox.Text);
-        }
+            MessageBox.Show("Password was sent to your email", "Information", MessageBoxButton.OK, MessageBoxImage.Information);
+        } // resseting password
     }
 }

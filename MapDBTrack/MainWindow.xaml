@@ -96,8 +96,8 @@
 
                 <Border Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2">
                     <Grid>
-                        <TextBlock Text="MapDBTrack" FontSize="40" FontWeight="Bold" Foreground="#F7EEDD" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                        <Button Opacity="0" Click="Information" Width="235" Height="50" Cursor="Hand"/>
+                        <TextBlock Text="MapDBTrack" FontSize="40" FontWeight="Bold" Foreground="#F7EEDD" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,3,0,0"/>
+                        <Button Opacity="0" Click="Information" Width="235" Cursor="Hand" Margin="34,15,31,60"/>
                     </Grid>
                 </Border>
 
@@ -166,10 +166,8 @@
 
             </Grid>
         </Border>
-
-
-
-        <Image Source="/Pictures/Map.png" Grid.Row="0" Margin="36,90,36,586" IsHitTestVisible="False"/>
+        <TextBlock x:Name="LoginName" Text="" Foreground="#F7EEDD" FontWeight="DemiBold" VerticalAlignment="Top" TextAlignment="Left" FontSize="22" Height="41" Margin="21,200,0,0"/>
+        <Image Source="/Pictures/Map.png" Grid.Row="0" Margin="36,66,36,609" IsHitTestVisible="False"/>
 
     </Grid>
 </Window>
