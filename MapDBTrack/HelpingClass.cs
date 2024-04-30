@@ -8,6 +8,7 @@ using System.Windows;
 using System.Net.Mail;
 using System.Data.SqlClient;
 using System.Printing;
+using System.Drawing;
 
 namespace MapDBTrack
 {
