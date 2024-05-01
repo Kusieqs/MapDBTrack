@@ -45,7 +45,7 @@ namespace MapDBTrack
             mapGrid.Name = "Content";
 
             map = new Map();
-            map.CredentialsProvider = new ApplicationIdCredentialsProvider();
+            map.CredentialsProvider = new ApplicationIdCredentialsProvider(HelpingClass.connectMap);
             map.Mode = new AerialMode(true);
             map.Center = new Location(52.2387, 19.0478);
             map.ZoomLevel = 6.7;
@@ -99,7 +99,10 @@ namespace MapDBTrack
         } // history button
         private void LogoutClick(object sender, RoutedEventArgs e)
         {
-
+            Login login = new Login();
+            login.Show();
+            Array.Clear(Login.informationsEmployee);
+            this.Close();
         } // button logout 
         private void ExitClick(object sender, RoutedEventArgs e)
         {
@@ -121,13 +124,16 @@ namespace MapDBTrack
                 Point mousePosition = e.GetPosition(mapGrid);
                 Location pinLocation = map.ViewportPointToLocation(mousePosition);
 
+
                 Pushpin pin = new Pushpin();
                 pin.Location = pinLocation;
-                pin.Background = Brushes.DarkBlue; 
+                pin.Background = Brushes.DarkBlue;
                 map.Children.Add(pin);
-
                 pinned = false;
                 Mouse.OverrideCursor = Cursors.Arrow;
+
+                AddingCustomer addingCustomer = new AddingCustomer(pinLocation, this);
+                addingCustomer.Show();
 
             }
         } // puting pins on map when pinned is true
