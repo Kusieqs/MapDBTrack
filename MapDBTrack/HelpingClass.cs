@@ -8,12 +8,15 @@ using System.Windows;
 using System.Net.Mail;
 using System.Data.SqlClient;
 using System.Printing;
+using System.Drawing;
+using System.Windows.Controls;
 
 namespace MapDBTrack
 {
     public static class HelpingClass
     {
         public const string connectString = "";
+        public const string connectMap = "";
         public static bool NetworkCheck(Window window)
         {
             while(true)
@@ -79,6 +82,18 @@ namespace MapDBTrack
 
             smtClient.Send(message);
 
+        }
+        public static void CleanGrid(Grid MainGrid)
+        {
+            for (int i = MainGrid.Children.Count - 1; i >= 0; i--)
+            {
+                UIElement child = MainGrid.Children[i];
+                int column = Grid.GetColumn(child);
+                if (column == 2)
+                {
+                    MainGrid.Children.Remove(child);
+                }
+            }
         }
     }
 }
