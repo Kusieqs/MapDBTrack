@@ -15,8 +15,6 @@ namespace MapDBTrack
 {
     public static class HelpingClass
     {
-        public const string connectString = "";
-        public const string connectMap = "";
         public static bool NetworkCheck(Window window)
         {
             while(true)

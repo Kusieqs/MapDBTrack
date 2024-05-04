@@ -43,11 +43,11 @@ namespace MapDBTrack
 
             mapGrid = new Grid();
             mapGrid.Name = "Content";
-
             map = new Map();
             map.CredentialsProvider = new ApplicationIdCredentialsProvider(HelpingClass.connectMap);
             map.Mode = new AerialMode(true);
             map.Center = new Location(52.2387, 19.0478);
+            map.Culture = "en-US";
             map.ZoomLevel = 6.7;
             map.MouseLeftButtonDown += MapPuttingPins;
 
@@ -132,7 +132,7 @@ namespace MapDBTrack
                 pinned = false;
                 Mouse.OverrideCursor = Cursors.Arrow;
 
-                AddingCustomer addingCustomer = new AddingCustomer(pinLocation, this);
+                AddingCustomer addingCustomer = new AddingCustomer(pinLocation, this, pin, map);
                 addingCustomer.Show();
 
             }
