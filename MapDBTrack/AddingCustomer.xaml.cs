@@ -22,6 +22,8 @@ namespace MapDBTrack
         {
             InitializeComponent();
             this.location = location;
+            LongitudeBox.Text = location.Longitude.ToString();
+            LatitudeBox.Text = location.Latitude.ToString();
         }
     }
 }
