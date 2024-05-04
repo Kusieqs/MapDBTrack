@@ -5,31 +5,35 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:MapDBTrack"
         mc:Ignorable="d"
-        Title="AddingCustomer" Height="750" Width="700">
+        Title="AddingCustomer" Height="880" Width="700">
     <Window.Resources>
         <Style x:Key="TextBlocksStyle" TargetType="TextBlock">
-            <Setter Property="FontSize" Value="25"/>
+            <Setter Property="FontSize" Value="15"/>
             <Setter Property="FontWeight" Value="DemiBold"/>
             <Setter Property="VerticalAlignment" Value="Center"/>
             <Setter Property="HorizontalAlignment" Value="Center"/>
-            <Setter Property="Foreground" Value="#F7EEDD"/>
+            <Setter Property="Foreground" Value="#FF2F5588"/>
         </Style>
         <Style x:Key="Buttons" TargetType="Button">
-            <Setter Property="Background" Value="#FF5B5B5B"/>
+            <Setter Property="Background" Value="#FF2F5588"/>
+            <Setter Property="BorderThickness" Value="2"/>
+            <Setter Property="FontSize" Value="20"/>
             <Setter Property="FontWeight" Value="DemiBold"/>
-            <Setter Property="FontSize" Value="30"/>
-            <Setter Property="Cursor" Value="Hand"/>
-            <Setter Property="Foreground" Value="#F7EEDD"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="BorderBrush" Value="Gray"/>
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate TargetType="Button">
+
                         <Border Background="{TemplateBinding Background}"
-                        CornerRadius="20">
+                        BorderBrush="{TemplateBinding BorderBrush}"
+                        BorderThickness="{TemplateBinding BorderThickness}"
+                        CornerRadius="15">
                             <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
                         </Border>
                         <ControlTemplate.Triggers>
                             <Trigger Property="IsMouseOver" Value="True">
-                                <Setter Property="Background" Value="#FF888888"/>
+                                <Setter Property="Background" Value="#FF638EC8"/>
                             </Trigger>
                         </ControlTemplate.Triggers>
                     </ControlTemplate>
@@ -84,67 +88,108 @@
         </Style>
     </Window.Resources>
     <Grid>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="*"/>
-            <RowDefinition Height="*"/>
-            <RowDefinition Height="*"/>
-            <RowDefinition Height="*"/>
-            <RowDefinition Height="*"/>
-            <RowDefinition Height="*"/>
-            <RowDefinition Height="*"/>
-            <RowDefinition Height="*"/>
-            <RowDefinition Height="*"/>
-            <RowDefinition Height="*"/>
-            <RowDefinition Height="*"/>
-            <RowDefinition Height="*"/>
-            <RowDefinition Height="80"/>
-        </Grid.RowDefinitions>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="200"/>
-            <ColumnDefinition Width="*"/>
-        </Grid.ColumnDefinitions>
-
-        <Image Source="/Pictures/MainWindowBack.jpg" Stretch="UniformToFill" Grid.RowSpan="20" Grid.ColumnSpan="2"/>
-        <TextBlock Grid.Row="0" Grid.Column="0" Text="First name" Style="{StaticResource ResourceKey=TextBlocksStyle}"/>
-        <TextBlock Grid.Row="1" Grid.Column="0" Text="Last name" Style="{StaticResource ResourceKey=TextBlocksStyle}"/>
-        <TextBlock Grid.Row="2" Grid.Column="0" Text="Number" Style="{StaticResource ResourceKey=TextBlocksStyle}"/>
-        <TextBlock Grid.Row="3" Grid.Column="0" Text="Email" Style="{StaticResource ResourceKey=TextBlocksStyle}"/>
-        <TextBlock Grid.Row="4" Grid.Column="0" Text="Province" Style="{StaticResource ResourceKey=TextBlocksStyle}"/>
-        <TextBlock Grid.Row="5" Grid.Column="0" Text="City" Style="{StaticResource ResourceKey=TextBlocksStyle}"/>
-        <TextBlock Grid.Row="6" Grid.Column="0" Text="Postal code" Style="{StaticResource ResourceKey=TextBlocksStyle}"/>
-        <TextBlock Grid.Row="7" Grid.Column="0" Text="Street" Style="{StaticResource ResourceKey=TextBlocksStyle}"/>
-        <TextBlock Grid.Row="8" Grid.Column="0" Text="Latitude" Style="{StaticResource ResourceKey=TextBlocksStyle}"/>
-        <TextBlock Grid.Row="9" Grid.Column="0" Text="Longitude" Style="{StaticResource ResourceKey=TextBlocksStyle}"/>
-        <TextBlock Grid.Row="10" Grid.RowSpan="2" Grid.Column="0" Text="Description" Style="{StaticResource ResourceKey=TextBlocksStyle}"/>
-
-        <TextBox x:Name="FirstNameBox" Grid.Row="0" Grid.Column="1" Margin="27,11,29,11" Style="{StaticResource RoundedTextBox}" />
-        <TextBox x:Name="LastNameBox" Grid.Row="1" Grid.Column="1" Margin="27,11,29,11" Style="{StaticResource RoundedTextBox}" />
-        <TextBox x:Name="ContactBox" Grid.Row="2" Grid.Column="1" Margin="27,11,29,11" Style="{StaticResource RoundedTextBox}"/>
-        <TextBox x:Name="EmailBox" Grid.Row="3" Grid.Column="1" Margin="27,11,29,11" Style="{StaticResource RoundedTextBox}" />
-        <TextBox x:Name="ProvinceBox" Grid.Row="4" Grid.Column="1" Margin="27,11,29,11" Style="{StaticResource RoundedTextBox}" />
-        <TextBox x:Name="CityBox" Grid.Row="5" Grid.Column="1" Margin="27,11,29,11" Style="{StaticResource RoundedTextBox}"/>
-        <TextBox x:Name="PostalCodeBox" Grid.Row="6" Grid.Column="1" Margin="27,11,29,11" Style="{StaticResource RoundedTextBox}"/>
-        <TextBox x:Name="StreetBox" Grid.Row="7" Grid.Column="1" Margin="27,11,29,11" Style="{StaticResource RoundedTextBox}" />
-        <TextBox x:Name="LatitudeBox" Grid.Row="8" Grid.Column="1" Margin="27,11,29,11" IsEnabled="False" Style="{StaticResource RoundedTextBox}"/>
-        <TextBox x:Name="LongitudeBox" Grid.Row="9" Grid.Column="1" Margin="27,11,29,11" IsEnabled="False" Style="{StaticResource RoundedTextBox}"/>
-        <TextBox x:Name="DescriptionBox" Grid.Row="10" Grid.Column="1" Margin="27,11,29,11" Grid.RowSpan="2" Style="{StaticResource RoundedTextBoxDesc}" />
-
-        <Border Grid.Row="12" Grid.Column="0" Grid.ColumnSpan="2">
+        <Border Background="#FFD1E1EC">
             <Grid>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="*"/>
-                    <ColumnDefinition Width="*"/>
-                </Grid.ColumnDefinitions>
-                <Border Grid.Row="0" Grid.Column="0" CornerRadius="20" Margin="10" Background="#FF5B5B5B" BorderThickness="2" BorderBrush="Black">
-                    <Button Content="Accept" Style="{StaticResource Buttons}" Click="AcceptClick"/>
-                </Border>
-                <Border Grid.Row="0" Grid.Column="1" CornerRadius="20" Margin="10" Background="#FF5B5B5B" BorderThickness="2" BorderBrush="Black">
-                    <Button Content="Delete" Style="{StaticResource Buttons}" Click="DeleteClick"/>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="3"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="3"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+                <TextBlock Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" Text="Contact information" FontSize="50" Foreground="#FF2F5588" FontWeight="DemiBold" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+
+
+                <Border Grid.Row="1" Grid.RowSpan="2">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="*"/>
+                        </Grid.RowDefinitions>
+                        <TextBox x:Name="FirstNameBox" Grid.Row="0" Grid.Column="0" Margin="10,26,10,5"  Style="{StaticResource RoundedTextBox}" />
+                        <TextBox x:Name="LastNameBox" Grid.Row="0" Grid.Column="1"  Style="{StaticResource RoundedTextBox}" Margin="10,26,10,5" />
+
+                        <TextBlock Grid.Row="0" Grid.Column="0" Text="First name" Style="{StaticResource ResourceKey=TextBlocksStyle}" HorizontalAlignment="Left" Margin="12,5,0,0" VerticalAlignment="Top" Height="16"/>
+                        <TextBlock Grid.Row="0" Grid.Column="1" Text="Last name" Style="{StaticResource ResourceKey=TextBlocksStyle}" HorizontalAlignment="Left" Margin="12,5,0,0" VerticalAlignment="Top" Height="18"/>
+
+                        <TextBox x:Name="ContactBox" Grid.Row="1" Grid.Column="1" Margin="10,26,10,5" Style="{StaticResource RoundedTextBox}"/>
+                        <TextBox x:Name="EmailBox" Grid.Row="1" Grid.Column="0" Margin="10,26,10,5" Style="{StaticResource RoundedTextBox}" />
+
+                        <TextBlock Grid.Row="1" Grid.Column="1" Text="Number" Style="{StaticResource ResourceKey=TextBlocksStyle}" HorizontalAlignment="Left"  VerticalAlignment="Top" Margin="12,5,0,0"/>
+                        <TextBlock Grid.Row="1" Text="Email" Style="{StaticResource ResourceKey=TextBlocksStyle}" HorizontalAlignment="Left"  VerticalAlignment="Top" Margin="12,5,0,0"/>
+                    </Grid>
                 </Border>
 
+                <Border Grid.Row="4" Background="#FF2F5588" Margin="0,4,0,71"/>
+
+                <TextBlock Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="2" Text="Residence details" FontSize="50" Foreground="#FF2F5588" FontWeight="DemiBold" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+
+                <Border Grid.Row="5" Grid.RowSpan="3">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="*"/>
+                        </Grid.RowDefinitions>
+                        <TextBlock Grid.Row="0" Text="Province" Style="{StaticResource ResourceKey=TextBlocksStyle}" HorizontalAlignment="Left" Margin="12,5,0,0" VerticalAlignment="Top"/>
+                        <TextBlock Grid.Row="0" Grid.Column="1" Text="City" Style="{StaticResource ResourceKey=TextBlocksStyle}" HorizontalAlignment="Left" Margin="12,5,0,0" VerticalAlignment="Top"/>
+
+                        <TextBox x:Name="ProvinceBox" Grid.Row="0" Grid.Column="0" Margin="10,26,10,5" Style="{StaticResource RoundedTextBox}" />
+                        <TextBox x:Name="CityBox" Grid.Row="0" Grid.Column="1" Margin="10,26,10,5" Style="{StaticResource RoundedTextBox}"/>
+
+                        <TextBox x:Name="PostalCodeBox" Grid.Row="1" Grid.Column="0" Margin="10,26,10,5" Style="{StaticResource RoundedTextBox}"/>
+                        <TextBox x:Name="StreetBox" Grid.Row="1" Grid.Column="1" Margin="10,26,10,5" Style="{StaticResource RoundedTextBox}" />
+
+                        <TextBlock Grid.Row="1" Grid.Column="0" Text="Postal code" Style="{StaticResource ResourceKey=TextBlocksStyle}" HorizontalAlignment="Left" Margin="18,2,0,0" VerticalAlignment="Top"/>
+                        <TextBlock Grid.Row="1" Grid.Column="1" Text="Street" Style="{StaticResource ResourceKey=TextBlocksStyle}" HorizontalAlignment="Left" Margin="12,5,0,0" VerticalAlignment="Top"/>
+
+                        <TextBlock Grid.Row="2" Grid.Column="0" Text="Latitude" Style="{StaticResource ResourceKey=TextBlocksStyle}" HorizontalAlignment="Left" Margin="12,5,0,0" VerticalAlignment="Top"/>
+                        <TextBlock Grid.Row="2" Grid.Column="1" Text="Longitude" Style="{StaticResource ResourceKey=TextBlocksStyle}" HorizontalAlignment="Left" Margin="12,5,0,0" VerticalAlignment="Top"/>
+
+                        <TextBox x:Name="LatitudeBox" Grid.Row="2" Grid.Column="0" Margin="10,26,10,5" IsEnabled="False" Style="{StaticResource RoundedTextBox}"/>
+                        <TextBox x:Name="LongitudeBox" Grid.Row="2" Grid.Column="1" Margin="10,26,10,5" IsEnabled="False" Style="{StaticResource RoundedTextBox}"/>
+                    </Grid>
+                </Border>
+
+                <Border Grid.Row="9" Background="#FF2F5588" Margin="0,2,0,73"/>
+
+                <TextBlock Grid.Row="9" Grid.Column="0" Grid.ColumnSpan="2" Text="Description" FontSize="50" Foreground="#FF2F5588" FontWeight="DemiBold" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+
+                <TextBox x:Name="DescriptionBox" Grid.Row="10" Grid.RowSpan="2" Style="{StaticResource RoundedTextBoxDesc}" Margin="10,12,10,17"/>
+
+
+                <Border Grid.Row="12" Grid.Column="0" Grid.ColumnSpan="2">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <Border Grid.Row="0" Grid.Column="0" CornerRadius="20" Margin="10">
+                            <Button Content="Accept" Style="{StaticResource Buttons}" Click="AcceptClick"/>
+                        </Border>
+                        <Border Grid.Row="0" Grid.Column="1" CornerRadius="20" Margin="10">
+                            <Button Content="Delete" Style="{StaticResource Buttons}" Click="DeleteClick"/>
+                        </Border>
+
+                    </Grid>
+                </Border>
             </Grid>
         </Border>
-
-
     </Grid>
 </Window>
