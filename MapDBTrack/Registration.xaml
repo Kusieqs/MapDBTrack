@@ -6,63 +6,9 @@
         xmlns:local="clr-namespace:MapDBTrack"
         mc:Ignorable="d"
         Title="Registration" Height="850" Width="600" ResizeMode="NoResize" Loaded="CheckNetwork">
-    <Window.Resources>
-        <Style x:Key="ButtonRounded" TargetType="Button">
-            <Setter Property="Width" Value="120"/>
-            <Setter Property="Height" Value="60"/>
-            <Setter Property="Background" Value="#FF2F5588"/>
-            <Setter Property="BorderThickness" Value="2"/>
-            <Setter Property="FontSize" Value="20"/>
-            <Setter Property="FontWeight" Value="DemiBold"/>
-            <Setter Property="Foreground" Value="White"/>
-            <Setter Property="BorderBrush" Value="Gray"/>
-            <Setter Property="Template">
-                <Setter.Value>
-                    <ControlTemplate TargetType="Button">
-                        <Border Background="{TemplateBinding Background}"
-                        BorderBrush="{TemplateBinding BorderBrush}"
-                        BorderThickness="{TemplateBinding BorderThickness}"
-                        CornerRadius="15">
-                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                        </Border>
-                        <ControlTemplate.Triggers>
-                            <Trigger Property="IsMouseOver" Value="True">
-                                <Setter Property="Background" Value="#FF638EC8"/>
-                            </Trigger>
-                        </ControlTemplate.Triggers>
-                    </ControlTemplate>
-                </Setter.Value>
-            </Setter>
-        </Style>
-        <Style x:Key="RoundedTextBox" TargetType="TextBox">
-            <Setter Property="Width" Value="318"/>
-            <Setter Property="Height" Value="40"/>
-            <Setter Property="Background" Value="#faf4ff"/>
-            <Setter Property="Template">
-                <Setter.Value>
-                    <ControlTemplate TargetType="TextBox">
-                        <Border BorderBrush="{TemplateBinding BorderBrush}"
-                            BorderThickness="{TemplateBinding BorderThickness}"
-                            Background="{TemplateBinding Background}"
-                            CornerRadius="10">
-                            <TextBox Text="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Text}"
-                             HorizontalAlignment="Stretch"
-                             VerticalAlignment="Stretch"
-                             BorderThickness="0"
-                             Background="Transparent"
-                             MaxLength="25"
-                             FontSize="18"
-                             FontWeight="DemiBold"   
-                             HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
-                        </Border>
-                    </ControlTemplate>
-                </Setter.Value>
-            </Setter>
 
-        </Style>
-    </Window.Resources>
+
     <Grid>
-
         <Image Source="Pictures/Background.jpg" Stretch="Fill"/>
         <Border Grid.Column="0" Grid.Row="0" Width="400" CornerRadius="30" BorderThickness="2" Background="#FFD1E1EC" Margin="75,75,75,75">
             <Grid>
@@ -79,18 +25,24 @@
                     <ColumnDefinition Width="*"/>
                     <ColumnDefinition Width="*"/>
                 </Grid.ColumnDefinitions>
+                
                 <Button Content="Back" Click="Back" Grid.Column="0" Grid.Row="6" Style="{StaticResource ButtonRounded}"/>
                 <Button Content="Accept" Click="SignUp" Grid.Column="1" Grid.Row="6" Style="{StaticResource ButtonRounded}"/>
+                
                 <TextBlock Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" Foreground="#FF2F5588" Text="REGISTRATION" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="35" FontWeight="DemiBold"/>
                 <Border Grid.Row="1" Grid.Column="0"  Grid.ColumnSpan="2" Background="#FF2F5588" />
+                
                 <TextBox x:Name="Login" Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2" TextChanged="LoginChanged"  Style="{StaticResource RoundedTextBox}"/>
                 <TextBox x:Name="Email" Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="2" TextChanged="EmailChanged"  Style="{StaticResource RoundedTextBox}"/>
                 <TextBox x:Name="Password" Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="2" TextChanged="PasswordChanged"   Style="{StaticResource RoundedTextBox}"/>
                 <TextBox x:Name="RepeatPassword" Grid.Row="5" Grid.Column="0" Grid.ColumnSpan="2" TextChanged="RepeatPasswordChanged"  Style="{StaticResource RoundedTextBox}"/>
+                
+                
                 <TextBlock Text="User name" Grid.Row="2" Width="60" Height="20" Margin="39,24,100,83" Foreground="#FF2F5588" FontWeight="DemiBold" RenderTransformOrigin="0.325,0.51"/>
                 <TextBlock Text="Email" Grid.Row="3" Width="60" Height="20" Margin="39,24,100,83" Foreground="#FF2F5588" FontWeight="DemiBold"/>
                 <TextBlock Text="Password" Grid.Row="4" Width="60" Height="20" Margin="39,24,100,83" Foreground="#FF2F5588" FontWeight="DemiBold"/>
                 <TextBlock Text="Repeat password" Grid.Row="5" Height="20" Margin="39,24,63,83" Foreground="#FF2F5588" FontWeight="DemiBold"/>
+                
                 <TextBlock x:Name="LoginFailed" Text="" Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="2" Width="200" Height="20" Margin="39,83,157,24" FontSize="10" FontWeight="DemiBold" Foreground="Red"/>
                 <TextBlock x:Name="EmailFailed" Text="" Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="3" Width="200" Height="20" Margin="39,83,157,24" FontSize="10" FontWeight="DemiBold" Foreground="Red"/>
                 <TextBlock x:Name="PasswordFailed" Text="" Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="4" Width="200" Height="20" Margin="39,83,157,24" FontSize="10" FontWeight="DemiBold" Foreground="Red"/>

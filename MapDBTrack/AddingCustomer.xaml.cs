@@ -145,7 +145,7 @@ namespace MapDBTrack
                 CityError.Text = HelpingClass.Exceptions(0);
                 return false;
             }
-            else if (!Regex.IsMatch(CityBox.Text.Trim(), @"^[A-Za-ząćęłńóśźżĄĆĘŁŃÓŚŹŻ]+- ?[A-Za-ząćęłńóśźżĄĆĘŁŃÓŚŹŻ]+$"))
+            else if (!Regex.IsMatch(CityBox.Text.Trim(), @"^[A-Za-ząćęłńóśźżĄĆĘŁŃÓŚŹŻ]+ ?[A-Za-ząćęłńóśźżĄĆĘŁŃÓŚŹŻ]+$"))
             {
                 CityError.Text = HelpingClass.Exceptions(1);
                 return false;
@@ -185,12 +185,12 @@ namespace MapDBTrack
             }
             else if (StreetBox.Text.Trim().Length > 100)
             {
-                StreetError.Text = HelpingClass.Exceptions(1);
+                StreetError.Text = HelpingClass.Exceptions(2);
                 return false;
             }
-            else if (!Regex.IsMatch(StreetBox.Text.Trim(), @"^[A-Za-ząćęłńóśźżĄĆĘŁŃÓŚŹŻ]+- ?[A-Za-ząćęłńóśźżĄĆĘŁŃÓŚŹŻ]+\d+$"))
+            else if (!Regex.IsMatch(StreetBox.Text.Trim(), @"^[A-Za-zęóąśłżźćńĘÓĄŚŁŻŹĆŃ]+(?: [A-Za-zęóąśłżźćńĘÓĄŚŁŻŹĆŃ]+)?(?: [0-9A-Za-zęóąśłżźćńĘÓĄŚŁŻŹĆŃ]+)?$"))
             {
-                StreetError.Text = HelpingClass.Exceptions(2);
+                StreetError.Text = HelpingClass.Exceptions(1);
                 return false;
             }
             return true;

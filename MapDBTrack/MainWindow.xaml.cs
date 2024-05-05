@@ -2,6 +2,7 @@
 using Microsoft.Maps.MapControl.WPF;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -18,6 +19,8 @@ namespace MapDBTrack
 {
     public partial class MainWindow : Window
     {
+        private Button adding;
+        private AddingCustomer addingCustomer;
         private Grid mapGrid;
         private Map map;
         private bool pinned = false;
@@ -66,9 +69,9 @@ namespace MapDBTrack
 
             Grid buttonGrid = new Grid();
 
-            Button addButton = new Button();
-            addButton.Style = FindResource("ButtonsAddPins") as Style; 
-            addButton.Click += AddPin;
+            adding = new Button();
+            adding.Style = FindResource("ButtonsAddPins") as Style; 
+            adding.Click += AddPin;
 
             TextBlock plusText = new TextBlock();
             plusText.Text = "+";
@@ -81,7 +84,7 @@ namespace MapDBTrack
             plusText.Width = 42;
             plusText.IsHitTestVisible = false;
 
-            buttonGrid.Children.Add(addButton);
+            buttonGrid.Children.Add(adding);
             buttonGrid.Children.Add(plusText);
             buttonBorder.Child = buttonGrid;
 
@@ -132,11 +135,29 @@ namespace MapDBTrack
                 pinned = false;
                 Mouse.OverrideCursor = Cursors.Arrow;
 
-                AddingCustomer addingCustomer = new AddingCustomer(pinLocation, this, pin, map);
+                addingCustomer = new AddingCustomer(pinLocation, this, pin, map);
                 addingCustomer.Show();
 
+                Map.IsEnabled = false;
+                Exit.IsEnabled = false;
+                Logout.IsEnabled = false;
+                adding.IsEnabled = false;
+
+                addingCustomer.Closed += (s, args) =>
+                {
+                    Map.IsEnabled = true;
+                    Exit.IsEnabled = true;
+                    Logout.IsEnabled = true;
+                    adding.IsEnabled = true;
+                };
             }
         } // puting pins on map when pinned is true
+        protected override void OnClosing(CancelEventArgs e)
+        {
+            base.OnClosing(e);
+            if(addingCustomer != null && addingCustomer.IsVisible)
+                e.Cancel = true;
+        }
     }
     public static class StringExtensions
     {

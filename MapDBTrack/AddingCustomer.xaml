@@ -6,93 +6,6 @@
         xmlns:local="clr-namespace:MapDBTrack"
         mc:Ignorable="d"
         Title="AddingCustomer" Height="950" Width="700">
-    <Window.Resources>
-        <Style x:Key="TextBlocksStyle" TargetType="TextBlock">
-            <Setter Property="FontSize" Value="15"/>
-            <Setter Property="FontWeight" Value="DemiBold"/>
-            <Setter Property="VerticalAlignment" Value="Center"/>
-            <Setter Property="HorizontalAlignment" Value="Center"/>
-            <Setter Property="Foreground" Value="#FF2F5588"/>
-        </Style>
-        <Style x:Key="TextBlokcsError" TargetType="TextBlock">
-            <Setter Property="FontSize" Value="10"/>
-            <Setter Property="VerticalAlignment" Value="Center"/>
-            <Setter Property="Foreground" Value="Red"/>
-            <Setter Property="HorizontalAlignment" Value="Center"/>
-        </Style>
-        <Style x:Key="Buttons" TargetType="Button">
-            <Setter Property="Background" Value="#FF2F5588"/>
-            <Setter Property="BorderThickness" Value="2"/>
-            <Setter Property="FontSize" Value="20"/>
-            <Setter Property="FontWeight" Value="DemiBold"/>
-            <Setter Property="Foreground" Value="White"/>
-            <Setter Property="BorderBrush" Value="Gray"/>
-            <Setter Property="Template">
-                <Setter.Value>
-                    <ControlTemplate TargetType="Button">
-
-                        <Border Background="{TemplateBinding Background}"
-                        BorderBrush="{TemplateBinding BorderBrush}"
-                        BorderThickness="{TemplateBinding BorderThickness}"
-                        CornerRadius="15">
-                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                        </Border>
-                        <ControlTemplate.Triggers>
-                            <Trigger Property="IsMouseOver" Value="True">
-                                <Setter Property="Background" Value="#FF638EC8"/>
-                            </Trigger>
-                        </ControlTemplate.Triggers>
-                    </ControlTemplate>
-                </Setter.Value>
-            </Setter>
-        </Style>
-        <Style x:Key="RoundedTextBox" TargetType="TextBox">
-            <Setter Property="Background" Value="#faf4ff"/>
-            <Setter Property="Template">
-                <Setter.Value>
-                    <ControlTemplate TargetType="TextBox">
-                        <Border BorderBrush="{TemplateBinding BorderBrush}"
-                            BorderThickness="{TemplateBinding BorderThickness}"
-                            Background="{TemplateBinding Background}"
-                            CornerRadius="10">
-                            <TextBox Text="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Text}"
-                             HorizontalAlignment="Stretch"
-                             VerticalAlignment="Stretch"
-                             BorderThickness="0"
-                             Background="Transparent"
-                             FontSize="18"
-                             FontWeight="DemiBold"   
-                             HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
-                        </Border>
-                    </ControlTemplate>
-                </Setter.Value>
-            </Setter>
-        </Style>
-        <Style x:Key="RoundedTextBoxDesc" TargetType="TextBox">
-            <Setter Property="Background" Value="#faf4ff"/>
-            <Setter Property="Template">
-                <Setter.Value>
-                    <ControlTemplate TargetType="TextBox">
-                        <Border BorderBrush="{TemplateBinding BorderBrush}"
-                            BorderThickness="{TemplateBinding BorderThickness}"
-                            Background="{TemplateBinding Background}"
-                            CornerRadius="10">
-                            <TextBox Text="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Text}"
-                             HorizontalAlignment="Stretch"
-                             VerticalAlignment="Stretch"
-                             BorderThickness="0"
-                             Background="Transparent"
-                             FontSize="18"
-                             FontWeight="DemiBold"   
-                             TextWrapping="Wrap"
-                             AcceptsReturn="True"
-                             HorizontalContentAlignment="Left" VerticalContentAlignment="Top"/>
-                        </Border>
-                    </ControlTemplate>
-                </Setter.Value>
-            </Setter>
-        </Style>
-    </Window.Resources>
     <Grid>
         <Border Background="#FFD1E1EC">
             <Grid>
@@ -111,7 +24,7 @@
                     <RowDefinition Height="*"/>
                     <RowDefinition Height="*"/>
                 </Grid.RowDefinitions>
-                <TextBlock Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" Text="Contact information" FontSize="45" Foreground="#FF2F5588" FontWeight="DemiBold" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                <TextBlock Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" Text="Contact information" FontSize="45" Foreground="#FF2F5588" FontWeight="Bold" VerticalAlignment="Center" HorizontalAlignment="Center"/>
 
 
                 <Border Grid.Row="1" Grid.RowSpan="2">
@@ -146,7 +59,7 @@
 
                 <Border Grid.Row="3" Background="#FF2F5588" Margin="0,3,0,80" Grid.RowSpan="2"/>
 
-                <TextBlock Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="2" Text="Residence details" FontSize="45" Foreground="#FF2F5588" FontWeight="DemiBold" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                <TextBlock Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="2" Text="Residence details" FontSize="45" Foreground="#FF2F5588" FontWeight="Bold" VerticalAlignment="Center" HorizontalAlignment="Center"/>
 
                 <Border Grid.Row="5" Grid.RowSpan="3">
                     <Grid>
@@ -173,7 +86,7 @@
                         <TextBox x:Name="PostalCodeBox" Grid.Row="1" Grid.Column="0" Margin="10,26,10,15" Style="{StaticResource RoundedTextBox}" TextChanged="PostalChanged"/>
                         <TextBox x:Name="StreetBox" Grid.Row="1" Grid.Column="1" Margin="10,26,10,15" Style="{StaticResource RoundedTextBox}" TextChanged="StreetChanged"/>
 
-                        <TextBlock Grid.Row="1" Grid.Column="0" Text="Postal code" Style="{StaticResource ResourceKey=TextBlocksStyle}" HorizontalAlignment="Left" Margin="18,2,0,0" VerticalAlignment="Top"/>
+                        <TextBlock Grid.Row="1" Grid.Column="0" Text="Postal code" Style="{StaticResource ResourceKey=TextBlocksStyle}" HorizontalAlignment="Left" Margin="12,2,0,0" VerticalAlignment="Top"/>
                         <TextBlock Grid.Row="1" Grid.Column="1" Text="Street" Style="{StaticResource ResourceKey=TextBlocksStyle}" HorizontalAlignment="Left" Margin="12,5,0,0" VerticalAlignment="Top"/>
                         
                         <TextBlock x:Name="PostalError" Text="" Grid.Row="1" Grid.Column="0" Style="{StaticResource TextBlokcsError}" HorizontalAlignment="Left" Margin="12,68,0,0" VerticalAlignment="Top"/>
@@ -189,7 +102,7 @@
 
                 <Border Grid.Row="9" Background="#FF2F5588" Margin="0,2,0,78"/>
 
-                <TextBlock Grid.Row="9" Text="Description" FontSize="45" Foreground="#FF2F5588" FontWeight="DemiBold" VerticalAlignment="Top" HorizontalAlignment="Center" Margin="0,6,0,0"/>
+                <TextBlock Grid.Row="9" Text="Description" FontSize="45" Foreground="#FF2F5588" FontWeight="Bold" VerticalAlignment="Top" HorizontalAlignment="Center" Margin="0,6,0,0"/>
                 <TextBlock Grid.Row="9" Grid.Column="0" Text="(optional)" FontSize="20" Foreground="#FF2F5588" FontWeight="DemiBold" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="307,67,0,0" Grid.RowSpan="2"/>
 
 
@@ -203,10 +116,10 @@
                             <ColumnDefinition Width="*"/>
                         </Grid.ColumnDefinitions>
                         <Border Grid.Row="0" Grid.Column="0" CornerRadius="20" Margin="10">
-                            <Button Content="Accept" Style="{StaticResource Buttons}" Click="AcceptClick"/>
+                            <Button Content="Accept" Style="{StaticResource ButtonRounded}" Click="AcceptClick" Width="300"/>
                         </Border>
                         <Border Grid.Row="0" Grid.Column="1" CornerRadius="20" Margin="10">
-                            <Button Content="Delete" Style="{StaticResource Buttons}" Click="DeleteClick"/>
+                            <Button Content="Delete" Style="{StaticResource ButtonRounded}" Click="DeleteClick" Width="300"/>
                         </Border>
 
                     </Grid>
