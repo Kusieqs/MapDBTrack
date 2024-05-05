@@ -32,63 +32,14 @@ namespace MapDBTrack
         }
         public void AcceptClick(object sender, RoutedEventArgs e)
         {
-
-            if (FirstNameBox.Text.Trim().Length == 0)
-                MessageBox.Show("Blad1");
-            else if (!Regex.IsMatch(FirstNameBox.Text.Trim(), @"^[A-Za-ząćęłńóśźżĄĆĘŁŃÓŚŹŻ]+$"))
-                MessageBox.Show("Blad2");
-            else if (FirstNameBox.Text.Trim().Length > 50)
-                MessageBox.Show("Blad3");
-
-
-
-            if (LastNameBox.Text.Trim().Length > 0)
-                if (!Regex.IsMatch(LastNameBox.Text.Trim(), @"^[A-Za-ząćęłńóśźżĄĆĘŁŃÓŚŹŻ]+- ?[A-Za-ząćęłńóśźżĄĆĘŁŃÓŚŹŻ]+$"))
-                    MessageBox.Show("Blad4");
-                else if (LastNameBox.Text.Trim().Length > 50)
-                    MessageBox.Show("Blad5");
-
-
-            if (ContactBox.Text.Trim().Length == 0)
-                MessageBox.Show("Blad6");
-            if (!Regex.IsMatch(ContactBox.Text.Trim(), @"^\+?\d{1,}$"))
-                MessageBox.Show("Blad7");
-            else if (ContactBox.Text.Trim().Length > 20)
-                MessageBox.Show("Blad8");
-
-            string pattern = @"^[^\.\s][.\w]*@[.\w]+\.[a-zA-Z]{2,4}$";
-
-            if (EmailBox.Text.Trim().Length != 0 || !Regex.IsMatch(EmailBox.Text.Trim(), pattern))
-                MessageBox.Show("Blad9");
-
-            if (ProvinceBox.Text.Trim().Length > 0)
-                if (!Regex.IsMatch(ProvinceBox.Text.Trim(), @"^[A-Za-ząćęłńóśźżĄĆĘŁŃÓŚŹŻ]+- ?[A-Za-ząćęłńóśźżĄĆĘŁŃÓŚŹŻ]+$"))
-                    MessageBox.Show("Blad10");
-                else if (ProvinceBox.Text.Trim().Length > 50)
-                    MessageBox.Show("Blad11");
-
-
-            if (CityBox.Text.Trim().Length == 0)
-                MessageBox.Show("Blad12");
-            else if (CityBox.Text.Trim().Length > 50)
-                MessageBox.Show("Blad13");
-            else if (!Regex.IsMatch(CityBox.Text.Trim(), @"^[A-Za-ząćęłńóśźżĄĆĘŁŃÓŚŹŻ]+- ?[A-Za-ząćęłńóśźżĄĆĘŁŃÓŚŹŻ]+$"))
-                MessageBox.Show("Blad14");
-
-            if (PostalCodeBox.Text.Trim().Length == 0)
-                MessageBox.Show("Blad15");
-            else if (PostalCodeBox.Text.Trim().Length > 10)
-                MessageBox.Show("Blad16");
-            else if (!Regex.IsMatch(PostalCodeBox.Text.Trim(), @"^\d+-\d+$"))
-                MessageBox.Show("Blad17");
-
-
-            if (StreetBox.Text.Trim().Length == 0)
-                MessageBox.Show("Blad18");
-            else if (StreetBox.Text.Trim().Length > 100)
-                MessageBox.Show("Blad19");
-            else if (!Regex.IsMatch(StreetBox.Text.Trim(), @"^[A-Za-ząćęłńóśźżĄĆĘŁŃÓŚŹŻ]+- ?[A-Za-ząćęłńóśźżĄĆĘŁŃÓŚŹŻ]+\d+$"))
-                MessageBox.Show("Blad20");
+            if(FirstNameExceptions() & LastNameExceptions() & ContactExceptions() & EmailExceptions() & ProvinceExceptions() & CityExceptions() & PostalExceptions() & StreetExceptions())
+            {
+                MessageBox.Show("Git");
+            }
+            else
+            {
+                MessageBox.Show("Nie git");
+            }
 
             //obsluga dodania danych do bazy danych
         }
@@ -101,6 +52,185 @@ namespace MapDBTrack
         {
             map.Children.Remove(Pushpin);
         } // Ovveriding method when window is closing
+
+        #region Excpetions to infomration about customer
+        private bool FirstNameExceptions()
+        {
+            if (FirstNameBox.Text.Trim().Length == 0)
+            {
+                FirstNameError.Text = HelpingClass.Exceptions(0);
+                return false;
+            }
+            else if (!Regex.IsMatch(FirstNameBox.Text.Trim(), @"^[A-Za-ząćęłńóśźżĄĆĘŁŃÓŚŹŻ]+$"))
+            {
+                FirstNameError.Text = HelpingClass.Exceptions(1);
+                return false;
+            }
+            else if (FirstNameBox.Text.Trim().Length > 50)
+            {
+                FirstNameError.Text = HelpingClass.Exceptions(2);
+                return false;
+            }
+
+            return true;
+        }
+        private bool LastNameExceptions()
+        {
+            if (LastNameBox.Text.Trim().Length > 0)
+                if (!Regex.IsMatch(LastNameBox.Text.Trim(), @"^[A-Za-ząćęłńóśźżĄĆĘŁŃÓŚŹŻ]+- ?[A-Za-ząćęłńóśźżĄĆĘŁŃÓŚŹŻ]+$"))
+                {
+                    LastNameError.Text = HelpingClass.Exceptions(1);
+                    return false;
+                }
+                else if (LastNameBox.Text.Trim().Length > 50)
+                {
+                    LastNameError.Text = HelpingClass.Exceptions(2);
+                    return false;
+                }
+
+            return true;
+        }
+        private bool ContactExceptions()
+        {
+
+
+            if (ContactBox.Text.Trim().Length == 0)
+            {
+                ContactError.Text = HelpingClass.Exceptions(0);
+                return false;
+            }
+            else if (!Regex.IsMatch(ContactBox.Text.Trim(), @"^\+?\d{1,}$"))
+            {
+                ContactError.Text = HelpingClass.Exceptions(1);
+                return false;
+            }
+            else if (ContactBox.Text.Trim().Length > 20)
+            {
+                ContactError.Text = HelpingClass.Exceptions(2);
+                return false;
+            }
+            return true;
+        }
+        private bool EmailExceptions()
+        {
+            string pattern = @"^[^\.\s][.\w]*@[.\w]+\.[a-zA-Z]{2,4}$";
+
+            if (EmailBox.Text.Trim().Length != 0 && !Regex.IsMatch(EmailBox.Text.Trim(), pattern))
+            {
+                MailError.Text = HelpingClass.Exceptions(1);
+                return false;
+            }
+            return true;
+
+        }
+        private bool ProvinceExceptions()
+        {
+            if (ProvinceBox.Text.Trim().Length > 0)
+                if (!Regex.IsMatch(ProvinceBox.Text.Trim(), @"^[A-Za-ząćęłńóśźżĄĆĘŁŃÓŚŹŻ]+- ?[A-Za-ząćęłńóśźżĄĆĘŁŃÓŚŹŻ]+$"))
+                {
+                    ProvinceError.Text = HelpingClass.Exceptions(1); 
+                    return false;
+                }
+                else if (ProvinceBox.Text.Trim().Length > 50)
+                {
+                    ProvinceError.Text = HelpingClass.Exceptions(2);
+                    return false;
+                }
+            return true;
+        }
+        private bool CityExceptions()
+        {
+            if (CityBox.Text.Trim().Length == 0)
+            {
+                CityError.Text = HelpingClass.Exceptions(0);
+                return false;
+            }
+            else if (!Regex.IsMatch(CityBox.Text.Trim(), @"^[A-Za-ząćęłńóśźżĄĆĘŁŃÓŚŹŻ]+- ?[A-Za-ząćęłńóśźżĄĆĘŁŃÓŚŹŻ]+$"))
+            {
+                CityError.Text = HelpingClass.Exceptions(1);
+                return false;
+            }
+            else if (CityBox.Text.Trim().Length > 50)
+            {
+                CityError.Text = HelpingClass.Exceptions(2);
+                return false;
+            }
+            return true;
+        }
+        private bool PostalExceptions()
+        {
+            if (PostalCodeBox.Text.Trim().Length == 0)
+            {
+                PostalError.Text = HelpingClass.Exceptions(0);
+                return false;
+            }
+            else if (!Regex.IsMatch(PostalCodeBox.Text.Trim(), @"^\d+-\d+$"))
+            {
+                PostalError.Text = HelpingClass.Exceptions(1);
+                return false;
+            }
+            else if (PostalCodeBox.Text.Trim().Length > 10)
+            {
+                PostalError.Text = HelpingClass.Exceptions(2);
+                return false;
+            }
+            return true;
+        }
+        private bool StreetExceptions()
+        {
+            if (StreetBox.Text.Trim().Length == 0)
+            {
+                StreetError.Text = HelpingClass.Exceptions(0);
+                return false;
+            }
+            else if (StreetBox.Text.Trim().Length > 100)
+            {
+                StreetError.Text = HelpingClass.Exceptions(1);
+                return false;
+            }
+            else if (!Regex.IsMatch(StreetBox.Text.Trim(), @"^[A-Za-ząćęłńóśźżĄĆĘŁŃÓŚŹŻ]+- ?[A-Za-ząćęłńóśźżĄĆĘŁŃÓŚŹŻ]+\d+$"))
+            {
+                StreetError.Text = HelpingClass.Exceptions(2);
+                return false;
+            }
+            return true;
+        }
+
+        private void FirstChanged(object sender, EventArgs e)
+        {
+            FirstNameError.Text = string.Empty;
+        }
+        private void LastChanged(object sender, EventArgs e)
+        {
+            LastNameError.Text = string.Empty;
+        }
+        private void NumberChanged(object sender, EventArgs e)
+        {
+            ContactError.Text = string.Empty;
+        }
+        private void EmailChanged(object sender, EventArgs e)
+        {
+            MailError.Text = string.Empty;
+        }
+        private void ProvinceChanged(object sender, EventArgs e)
+        {
+            ProvinceError.Text = string.Empty;
+        }
+        private void CityChanged(object sender, EventArgs e)
+        {
+            CityError.Text = string.Empty;
+        }
+        private void PostalChanged(object sender, EventArgs e)
+        {
+            PostalError.Text = string.Empty;
+        }
+        private void StreetChanged(object sender, EventArgs e)
+        {
+            StreetError.Text = string.Empty;
+        }
+
+        #endregion
+
     }
 }
 
