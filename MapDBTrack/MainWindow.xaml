@@ -9,71 +9,13 @@
         Title="MainWindow" Height="800" Width="1200" ResizeMode="NoResize" >
 
 
-    <Window.Resources>
-        <Style x:Key="Buttons" TargetType="Button">
-            <Setter Property="Background" Value="#FF5B5B5B"/>
-            <Setter Property="FontWeight" Value="DemiBold"/>
-            <Setter Property="Cursor" Value="Hand"/>
-            <Setter Property="Template">
-                <Setter.Value>
-                    <ControlTemplate TargetType="Button">
-                        <Border Background="{TemplateBinding Background}"
-                        CornerRadius="20">
-                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                        </Border>
-                        <ControlTemplate.Triggers>
-                            <Trigger Property="IsMouseOver" Value="True">
-                                <Setter Property="Background" Value="#FF888888"/>
-                            </Trigger>
-                        </ControlTemplate.Triggers>
-                    </ControlTemplate>
-                </Setter.Value>
-            </Setter>
-        </Style>
-        <Style x:Key="TexBlocks" TargetType="TextBlock">
-            <Setter Property="FontSize" Value="32"/>
-            <Setter Property="FontWeight" Value="DemiBold"/>
-            <Setter Property="Foreground" Value="#F7EEDD"/>
-            <Setter Property="VerticalAlignment" Value="Center"/>
-            <Setter Property="HorizontalAlignment" Value="Center"/>
-
-        </Style>
-        <Style x:Key="ButtonsAddPins" TargetType="Button">
-            <Setter Property="Background" Value="#FF2C3C96"/>
-            <Setter Property="FontWeight" Value="DemiBold"/>
-            <Setter Property="Cursor" Value="Hand"/>
-            <Setter Property="FontSize" Value="45"/>
-            <Setter Property="FontWeight" Value="DemiBold"/>
-            <Setter Property="VerticalContentAlignment" Value="Center"/>
-            <Setter Property="HorizontalContentAlignment" Value="Center"/>
-            <Setter Property="Template">
-                <Setter.Value>
-                    <ControlTemplate TargetType="Button">
-                        <Border Background="{TemplateBinding Background}"
-                        CornerRadius="100">
-                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                        </Border>
-                        <ControlTemplate.Triggers>
-                            <Trigger Property="IsMouseOver" Value="True">
-                                <Setter Property="Background" Value="#FF6376E0"/>
-                            </Trigger>
-                        </ControlTemplate.Triggers>
-                    </ControlTemplate>
-                </Setter.Value>
-            </Setter>
-        </Style>
-    </Window.Resources>
-
-
-
     <Grid x:Name="MainGrid">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="300"/>
             <ColumnDefinition Width="2"/>
             <ColumnDefinition Width="898"/>
         </Grid.ColumnDefinitions>
-        <Image Source="/Pictures/MainWindowBack.jpg" Stretch="None"/>
-        <Border x:Name="Menu" Grid.Column="0">
+        <Border x:Name="Menu" Grid.Column="0" Background="#FFD1E1EC">
             <Grid>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="100"/>
@@ -96,7 +38,7 @@
 
                 <Border Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2">
                     <Grid>
-                        <TextBlock Text="MapDBTrack" FontSize="40" FontWeight="Bold" Foreground="#F7EEDD" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,3,0,0"/>
+                        <TextBlock Text="MapDBTrack" FontSize="40" FontWeight="Bold" Foreground="#FF2F5588" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,3,0,0"/>
                         <Button Opacity="0" Click="Information" Width="235" Cursor="Hand" Margin="34,15,31,60"/>
                     </Grid>
                 </Border>
@@ -104,69 +46,69 @@
 
 
 
-                <Border Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2" CornerRadius="20" Margin="20" Background="#FF5B5B5B" BorderThickness="2" BorderBrush="Black">
+                <Border Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2" CornerRadius="20" Margin="20">
                     <Grid>
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="80"/>
                             <ColumnDefinition Width="*"/>
                         </Grid.ColumnDefinitions>
-                        <Button Grid.Column="0" Grid.ColumnSpan="2" Style="{StaticResource Buttons}" Click="MapClick"/>
+                        <Button x:Name="Map" Grid.Column="0" Grid.ColumnSpan="2" Style="{StaticResource ButtonRounded}" Click="MapClick" Width="250" Height="72"/>
                         <TextBlock Text="Map" Grid.Column="1" Style="{StaticResource TexBlocks}" IsHitTestVisible="False"/>
-                        <Image Source="/Pictures/Pin.png" Grid.Column="0" IsHitTestVisible="False" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="0,5,0,5"/>
+                        <Image Source="/Pictures/Pin.png" Grid.Column="0" IsHitTestVisible="False" Margin="3,6,1,6"/>
                     </Grid>
                 </Border>
 
-                <Border Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="2" CornerRadius="20" Margin="20" Background="#FF5B5B5B" BorderThickness="2" BorderBrush="Black">
+                <Border Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="2" CornerRadius="20" Margin="20">
                     <Grid>
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="80"/>
                             <ColumnDefinition Width="*"/>
                         </Grid.ColumnDefinitions>
-                        <Button Grid.Column="0" Grid.ColumnSpan="2" Style="{StaticResource Buttons}" Click="CustomersClick"/>
+                        <Button Grid.Column="0" Grid.ColumnSpan="2" Style="{StaticResource ButtonRounded}" Click="CustomersClick" Width="250" Height="72"/>
                         <TextBlock Text="Customers" Grid.Column="1" Style="{StaticResource TexBlocks}" IsHitTestVisible="False"/>
-                        <Image Source="/Pictures/Customer.png" Grid.Column="0" IsHitTestVisible="False"  HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="0,5,0,5"/>
+                        <Image Source="/Pictures/Customer.png" Grid.Column="0" IsHitTestVisible="False" Margin="3,6,1,6"/>
                     </Grid>
                 </Border>
 
-                <Border Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="2" CornerRadius="20" Margin="20" Background="#FF5B5B5B" BorderThickness="2" BorderBrush="Black">
+                <Border Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="2" CornerRadius="20" Margin="20" >
                     <Grid>
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="80"/>
                             <ColumnDefinition Width="*"/>
                         </Grid.ColumnDefinitions>
-                        <Button Grid.Column="0" Grid.ColumnSpan="2" Style="{StaticResource Buttons}" Click="HistoryClick"/>
+                        <Button Grid.Column="0" Grid.ColumnSpan="2" Style="{StaticResource ButtonRounded}" Click="HistoryClick" Width="250" Height="72"/>
                         <TextBlock Text="History" Grid.Column="1" Style="{StaticResource TexBlocks}" IsHitTestVisible="False"/>
-                        <Image Source="/Pictures/History.png" Grid.Column="0" IsHitTestVisible="False"  HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="0,5,0,5"/>
+                        <Image Source="/Pictures/History.png" Grid.Column="0" IsHitTestVisible="False" Margin="0,5,0,5"/>
                     </Grid>
                 </Border>
 
-                <Border Grid.Row="5" Grid.Column="0" Grid.ColumnSpan="2" CornerRadius="20" Margin="20" Background="#FF5B5B5B" BorderThickness="2" BorderBrush="Black">
+                <Border Grid.Row="5" Grid.Column="0" Grid.ColumnSpan="2" CornerRadius="20" Margin="20">
                     <Grid>
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="80"/>
                             <ColumnDefinition Width="*"/>
                         </Grid.ColumnDefinitions>
-                        <Button Grid.Column="0" Grid.ColumnSpan="2" Style="{StaticResource Buttons}" Click="LogoutClick"/>
+                        <Button x:Name="Logout" Grid.Column="0" Grid.ColumnSpan="2" Style="{StaticResource ButtonRounded}" Click="LogoutClick" Width="250" Height="72"/>
                         <TextBlock Text="Log out" Grid.Column="1" Style="{StaticResource TexBlocks}" IsHitTestVisible="False"/>
-                        <Image Source="/Pictures/Logout.png" Grid.Column="0" IsHitTestVisible="False" Margin="6,9,6,9"/>
+                        <Image Source="/Pictures/Logout.png" Grid.Column="0" IsHitTestVisible="False" Margin="8,9,4,9"/>
                     </Grid>
                 </Border>
 
-                <Border Grid.Row="6" Grid.Column="0" Grid.ColumnSpan="2" CornerRadius="20" Margin="20" Background="#FF5B5B5B" BorderThickness="2" BorderBrush="Black">
+                <Border Grid.Row="6" Grid.Column="0" Grid.ColumnSpan="2" CornerRadius="20" Margin="20">
                     <Grid>
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="80"/>
                             <ColumnDefinition Width="*"/>
                         </Grid.ColumnDefinitions>
-                        <Button Grid.Column="0" Grid.ColumnSpan="2" Style="{StaticResource Buttons}" Click="ExitClick"/>
+                        <Button x:Name="Exit" Grid.Column="0" Grid.ColumnSpan="2" Style="{StaticResource ButtonRounded}" Click="ExitClick" Width="250" Height="72"/>
                         <TextBlock Text="Exit" Grid.Column="1" Style="{StaticResource TexBlocks}" IsHitTestVisible="False"/>
-                        <Image Source="/Pictures/Exit.png" Grid.Column="0" IsHitTestVisible="False"  HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="0,5,0,5"/>
+                        <Image Source="/Pictures/Exit.png" Grid.Column="0" IsHitTestVisible="False" Margin="1,-2,2,1"/>
                     </Grid>
                 </Border>
 
             </Grid>
         </Border>
-        <TextBlock x:Name="LoginName" Text="" Foreground="#F7EEDD" FontWeight="DemiBold" VerticalAlignment="Top" TextAlignment="Left" FontSize="22" Height="41" Margin="21,200,0,0"/>
+        <TextBlock x:Name="LoginName" Text="" Foreground="#FF2F5588" FontWeight="DemiBold" VerticalAlignment="Top" TextAlignment="Left" FontSize="22" Height="41" Margin="21,200,0,0"/>
         <Image Source="/Pictures/Map.png" Grid.Row="0" Margin="36,66,36,609" IsHitTestVisible="False"/>
 
     </Grid>

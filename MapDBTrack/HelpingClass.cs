@@ -15,8 +15,15 @@ namespace MapDBTrack
 {
     public static class HelpingClass
     {
-        public const string connectString = "";
-        public const string connectMap = "";
+        public static string[] engExp = new string[]
+        {
+            "Field is empty",
+            "Wrong field format",
+            "String is too long",
+        };
+        
+
+
         public static bool NetworkCheck(Window window)
         {
             while(true)
@@ -94,6 +101,12 @@ namespace MapDBTrack
                     MainGrid.Children.Remove(child);
                 }
             }
+        }
+
+        public static string Exceptions(int num)
+        {
+            string[] exp = engExp; // warunek czy pol czy eng
+            return exp[num];
         }
     }
 }
