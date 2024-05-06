@@ -10,9 +10,15 @@ using System.Data.SqlClient;
 using System.Printing;
 using System.Drawing;
 using System.Windows.Controls;
+using Microsoft.Maps.MapControl.WPF;
+using System.Globalization;
+using System.IO;
+using System.Runtime.Serialization.Json;
+using System.Windows.Controls.Primitives;
 
 namespace MapDBTrack
 {
+
     public static class HelpingClass
     {
         public static string[] engExp = new string[]
@@ -48,7 +54,6 @@ namespace MapDBTrack
             }
             return true;
         }
-
         public static void SendingPassword(string login)
         {
             string passwordReminder = "", employeeEmail = "";
@@ -102,7 +107,76 @@ namespace MapDBTrack
                 }
             }
         }
+        public static RootObject ReadLocation(Location location)
+        {
+            WebClient webClient = new WebClient();
+            webClient.Headers.Add("user-agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/96.0.4664.110 Safari/537.36");
+            webClient.Headers.Add("Referer", "https://www.google.com");
+            var jsonData = webClient.DownloadData($"http://nominatim.openstreetmap.org/reverse?format=json&lat={location.Latitude.ToString("0.000000", CultureInfo.InvariantCulture)}&lon={location.Longitude.ToString("0.000000", CultureInfo.InvariantCulture)}");
+            DataContractJsonSerializer ser = new DataContractJsonSerializer(typeof(RootObject));
+            RootObject rootObject = (RootObject)ser.ReadObject(new MemoryStream(jsonData));
+            return rootObject;
+        }
+        public static void AddingNewCustomer(Place customer)
+        {
+            MessageBox.Show(customer.latitude.ToString());
+            string queryCustomer = $"Insert Into Customer (employee_id, contact_number, first_name, last_name, description, email)";
+            string valuesCustomer = $"\nValues ({customer.employee_id}, '{customer.contact_number}', '{customer.first_name}', '{customer.last_name}', '{customer.description}', '{customer.email}')";
+            string queryPlace = $"INSERT INTO Place (Customer_Id, province, city, postal_code, street, latitude, longitude)";
+            string valuesPlace = $"\nValues (3, '{customer.province}', '{customer.city}', '{customer.postal_code}', '{customer.street}', {customer.latitude.ToString().Replace(',','.')}, {customer.longitude.ToString().Replace(',','.')})";
+            queryCustomer += valuesCustomer;
+            queryPlace += valuesPlace;
 
+            SqlConnection sqlConnection = new SqlConnection(connectString);
+            sqlConnection.Open();
+            SqlCommand command1 = new SqlCommand(queryPlace, sqlConnection);
+            command1.ExecuteNonQuery();
+            SqlCommand command = new SqlCommand(queryCustomer, sqlConnection);
+            command.ExecuteNonQuery();
+            sqlConnection.Close();
+
+        }
+        public static List<Place> LoadingPlace()
+        {
+            List<Place> places = new List<Place>();
+
+            string query = $"SELECT * \r\nFROM Customer c \r\nRIGHT JOIN Place p ON c.id = p.Customer_Id \r\nWHERE employee_id = {MainWindow.idOfEmployee};";
+            SqlConnection sqlConnection = new SqlConnection(connectString);
+            sqlConnection.Open();
+            SqlCommand command = new SqlCommand(query, sqlConnection);
+            SqlDataReader reader = command.ExecuteReader();
+            if (reader.HasRows)
+            {
+                while (reader.Read())
+                {
+                    double lat = double.Parse(reader.GetDecimal(12).ToString().Replace(',','.'));
+                    double lon = double.Parse(reader.GetDecimal(13).ToString().Replace(',', '.'));
+
+                    Place p1 = new Place(
+                        reader.GetInt32(1),
+                        reader.GetString(3),
+                        reader.GetString(4),
+                        reader.GetString(2),
+                        reader.GetString(5),
+                        reader.GetInt32(7),
+                        reader.GetString(8),
+                        reader.GetString(9),
+                        reader.GetString(10),
+                        reader.GetString(11),
+                        lat,
+                        lon,
+                        reader.GetString(6)
+                        );
+
+                    places.Add( p1 );
+                }
+                return places;
+            }
+            else
+                return null;
+
+            
+        }
         public static string Exceptions(int num)
         {
             string[] exp = engExp; // warunek czy pol czy eng

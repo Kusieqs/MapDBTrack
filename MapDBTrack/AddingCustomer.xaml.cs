@@ -1,56 +1,92 @@
 ﻿using Microsoft.Maps.MapControl.WPF;
-using Microsoft.VisualBasic;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
 
 namespace MapDBTrack
 {
     public partial class AddingCustomer : Window
     {
+        bool correctClose = false;
+        private Location location;
         private Pushpin Pushpin;
         private Map map;
         public AddingCustomer(Location location, Window window, Pushpin pin, Map map)
         {
             InitializeComponent();
-            LongitudeBox.Text = location.Longitude.ToString();
-            LatitudeBox.Text = location.Latitude.ToString();
+            this.location = location;
+            LoadingData();
             this.Pushpin = pin;
             this.map = map;
-            this.Closing += CloseWindow;
         }
         public void AcceptClick(object sender, RoutedEventArgs e)
         {
-            if(FirstNameExceptions() & LastNameExceptions() & ContactExceptions() & EmailExceptions() & ProvinceExceptions() & CityExceptions() & PostalExceptions() & StreetExceptions())
+            if(FirstNameExceptions() & 
+                LastNameExceptions() & 
+                ContactExceptions() & 
+                EmailExceptions() &
+                ProvinceExceptions() & 
+                CityExceptions() & 
+                PostalExceptions() & 
+                StreetExceptions())
             {
-                MessageBox.Show("Git");
+                int lastOne = MainWindow.places.Max(x => x.customer_id) + 1;
+
+
+                Place place = new Place(
+                    MainWindow.idOfEmployee,
+                    FirstNameBox.Text,
+                    LastNameBox.Text,
+                    ContactBox.Text,
+                    DescriptionBox.Text,
+                    lastOne,
+                    ProvinceBox.Text,
+                    CityBox.Text,
+                    PostalCodeBox.Text,
+                    StreetBox.Text,
+                    double.Parse(LongitudeBox.Text),
+                    double.Parse(LatitudeBox.Text),
+                    EmailBox.Text
+                    );
+                
+                MainWindow.places.Add(place);
+                HelpingClass.AddingNewCustomer(place);
+                correctClose = true;
+                this.Close();
             }
             else
-            {
-                MessageBox.Show("Nie git");
-            }
+                return;
 
             //obsluga dodania danych do bazy danych
         }
+        private void LoadingData()
+        {
+            LongitudeBox.Text = location.Longitude.ToString();
+            LatitudeBox.Text = location.Latitude.ToString();
+
+            RootObject rootObject = HelpingClass.ReadLocation(location);
+
+            string numberRoad = rootObject.display_name;
+
+            if (int.TryParse(numberRoad.Split(',')[0], out int x))
+                StreetBox.Text = $"{rootObject.address.road} {x}";
+            else
+                StreetBox.Text = $"{rootObject.address.road}";
+
+            ProvinceBox.Text = rootObject.address.state;
+            CityBox.Text = rootObject.address.city;
+            PostalCodeBox.Text = rootObject.address.postcode;
+
+        } // Loading inforamtion about place where pinn was inputed
         public void DeleteClick(object sender, RoutedEventArgs e)
         {
             map.Children.Remove(Pushpin);
             Close();
-        }
+        } // deleting pinn from map
         public void CloseWindow(object sender, System.ComponentModel.CancelEventArgs e)
         {
-            map.Children.Remove(Pushpin);
+            if(!correctClose)
+                map.Children.Remove(Pushpin);
         } // Ovveriding method when window is closing
 
         #region Excpetions to infomration about customer
@@ -61,7 +97,7 @@ namespace MapDBTrack
                 FirstNameError.Text = HelpingClass.Exceptions(0);
                 return false;
             }
-            else if (!Regex.IsMatch(FirstNameBox.Text.Trim(), @"^[A-Za-ząćęłńóśźżĄĆĘŁŃÓŚŹŻ]+$"))
+            else if (!Regex.IsMatch(FirstNameBox.Text.Trim(), @"^[\p{L}\p{M}]+$"))
             {
                 FirstNameError.Text = HelpingClass.Exceptions(1);
                 return false;
@@ -77,7 +113,7 @@ namespace MapDBTrack
         private bool LastNameExceptions()
         {
             if (LastNameBox.Text.Trim().Length > 0)
-                if (!Regex.IsMatch(LastNameBox.Text.Trim(), @"^[A-Za-ząćęłńóśźżĄĆĘŁŃÓŚŹŻ]+- ?[A-Za-ząćęłńóśźżĄĆĘŁŃÓŚŹŻ]+$"))
+                if (!Regex.IsMatch(LastNameBox.Text.Trim(), @"^[\p{L}\p{M}\s-]+$"))
                 {
                     LastNameError.Text = HelpingClass.Exceptions(1);
                     return false;
@@ -126,7 +162,7 @@ namespace MapDBTrack
         private bool ProvinceExceptions()
         {
             if (ProvinceBox.Text.Trim().Length > 0)
-                if (!Regex.IsMatch(ProvinceBox.Text.Trim(), @"^[A-Za-ząćęłńóśźżĄĆĘŁŃÓŚŹŻ]+- ?[A-Za-ząćęłńóśźżĄĆĘŁŃÓŚŹŻ]+$"))
+                if (!Regex.IsMatch(ProvinceBox.Text.Trim(), @"^[\p{L}\p{M}\s-]+$"))
                 {
                     ProvinceError.Text = HelpingClass.Exceptions(1); 
                     return false;
@@ -145,7 +181,7 @@ namespace MapDBTrack
                 CityError.Text = HelpingClass.Exceptions(0);
                 return false;
             }
-            else if (!Regex.IsMatch(CityBox.Text.Trim(), @"^[A-Za-ząćęłńóśźżĄĆĘŁŃÓŚŹŻ]+ ?[A-Za-ząćęłńóśźżĄĆĘŁŃÓŚŹŻ]+$"))
+            else if (!Regex.IsMatch(CityBox.Text.Trim(), @"^[\p{L}\p{M}\s-]+$"))
             {
                 CityError.Text = HelpingClass.Exceptions(1);
                 return false;
@@ -188,7 +224,7 @@ namespace MapDBTrack
                 StreetError.Text = HelpingClass.Exceptions(2);
                 return false;
             }
-            else if (!Regex.IsMatch(StreetBox.Text.Trim(), @"^[A-Za-zęóąśłżźćńĘÓĄŚŁŻŹĆŃ]+(?: [A-Za-zęóąśłżźćńĘÓĄŚŁŻŹĆŃ]+)?(?: [0-9A-Za-zęóąśłżźćńĘÓĄŚŁŻŹĆŃ]+)?$"))
+            else if (!Regex.IsMatch(StreetBox.Text.Trim(), @"^[\p{L}\p{M}\s-]+$"))
             {
                 StreetError.Text = HelpingClass.Exceptions(1);
                 return false;

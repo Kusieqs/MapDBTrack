@@ -1,5 +1,6 @@
 ﻿
 using Microsoft.Maps.MapControl.WPF;
+using Microsoft.Win32;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -19,15 +20,22 @@ namespace MapDBTrack
 {
     public partial class MainWindow : Window
     {
+
+        public static int idOfEmployee;
+        public static string loginOfEmployee;
+
+        public static List<Place> places = new List<Place>();
         private Button adding;
         private AddingCustomer addingCustomer;
         private Grid mapGrid;
         private Map map;
         private bool pinned = false;
-        public MainWindow()
+        public MainWindow(int id, string login)
         {
             InitializeComponent();
             LoadingMapScreen();
+            idOfEmployee = id;
+            loginOfEmployee = login;
         }
 
         private void MapClick(object sender, RoutedEventArgs e)
@@ -37,7 +45,7 @@ namespace MapDBTrack
         private void LoadingMapScreen()
         {
 
-            LoginName.Text = "Welcome " + Login.informationsEmployee[1];
+            LoginName.Text = "Welcome " + loginOfEmployee;
 
             Border mapBorder = new Border();
             mapBorder.Background = new SolidColorBrush("#FFFFF7FC".ToColor()); 
@@ -91,6 +99,8 @@ namespace MapDBTrack
             MainGrid.Children.Add(mapBorder);
             MainGrid.Children.Add(buttonBorder);
 
+            LoadingPinns();
+
         } // loading map 
         private void CustomersClick(object sender, RoutedEventArgs e)
         {
@@ -104,7 +114,6 @@ namespace MapDBTrack
         {
             Login login = new Login();
             login.Show();
-            Array.Clear(Login.informationsEmployee);
             this.Close();
         } // button logout 
         private void ExitClick(object sender, RoutedEventArgs e)
@@ -152,12 +161,25 @@ namespace MapDBTrack
                 };
             }
         } // puting pins on map when pinned is true
+        private void LoadingPinns()
+        {
+            MessageBox.Show(places.Count.ToString());
+            places = HelpingClass.LoadingPlace();
+            foreach(Place p in places)
+            {
+                Location pinLocation = new Location(p.latitude, p.longitude);
+                Pushpin pin = new Pushpin();
+                pin.Location = pinLocation;
+                pin.Background = Brushes.DarkBlue;
+                map.Children.Add(pin);
+            }
+        } // loading all pins when map is close
         protected override void OnClosing(CancelEventArgs e)
         {
             base.OnClosing(e);
             if(addingCustomer != null && addingCustomer.IsVisible)
                 e.Cancel = true;
-        }
+        } // blocking window 
     }
     public static class StringExtensions
     {

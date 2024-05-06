@@ -16,7 +16,7 @@ namespace MapDBTrack
 {
     public partial class Login : Window
     {
-        public static string[] informationsEmployee = new string[2];
+        int id; string login;
         public Registration registration;
         public Login()
         {
@@ -37,7 +37,7 @@ namespace MapDBTrack
                 return;
 
 
-            MainWindow mainWindow = new MainWindow();
+            MainWindow mainWindow = new MainWindow(this.id, this.login);
             mainWindow.Show();
             this.Close();
 
@@ -137,11 +137,9 @@ namespace MapDBTrack
 
             while(reader.Read())
             {
-                informationsEmployee[0] = reader.GetInt32(0).ToString();
-                informationsEmployee[1] = reader.GetString(1);
+                this.id = reader.GetInt32(0);
+                this.login = reader.GetString(1);
             }
-
-
 
             reader.Close();
             sql.Close();
