@@ -23,6 +23,7 @@ namespace MapDBTrack
 {
     public partial class AddingCustomer : Window
     {
+        bool correctClose = false;
         private Location location;
         private Pushpin Pushpin;
         private Map map;
@@ -37,14 +38,41 @@ namespace MapDBTrack
         }
         public void AcceptClick(object sender, RoutedEventArgs e)
         {
-            if(FirstNameExceptions() & LastNameExceptions() & ContactExceptions() & EmailExceptions() & ProvinceExceptions() & CityExceptions() & PostalExceptions() & StreetExceptions())
+            if(FirstNameExceptions() & 
+                LastNameExceptions() & 
+                ContactExceptions() & 
+                EmailExceptions() &
+                ProvinceExceptions() & 
+                CityExceptions() & 
+                PostalExceptions() & 
+                StreetExceptions())
             {
-                MessageBox.Show("Git");
+                int lastOne = 0;
+                if (MainWindow.places.Count != 0)
+                    lastOne = MainWindow.places.Count + 1;
+
+
+                Place place = new Place(
+                    MainWindow.idOfEmployee,
+                    FirstNameBox.Text,
+                    LastNameBox.Text,
+                    ContactBox.Text,
+                    DescriptionBox.Text,
+                    lastOne,
+                    ProvinceBox.Text,
+                    CityBox.Text,
+                    PostalCodeBox.Text,
+                    StreetBox.Text,
+                    double.Parse(LongitudeBox.Text),
+                    double.Parse(LatitudeBox.Text)
+                    );
+                
+                MainWindow.places.Add(place);
+                correctClose = true;
+                this.Close();
             }
             else
-            {
-                MessageBox.Show("Nie git");
-            }
+                return;
 
             //obsluga dodania danych do bazy danych
         }
@@ -66,15 +94,16 @@ namespace MapDBTrack
             CityBox.Text = rootObject.address.city;
             PostalCodeBox.Text = rootObject.address.postcode;
 
-        }
+        } // Loading inforamtion about place where pinn was inputed
         public void DeleteClick(object sender, RoutedEventArgs e)
         {
             map.Children.Remove(Pushpin);
             Close();
-        }
+        } // deleting pinn from map
         public void CloseWindow(object sender, System.ComponentModel.CancelEventArgs e)
         {
-            map.Children.Remove(Pushpin);
+            if(!correctClose)
+                map.Children.Remove(Pushpin);
         } // Ovveriding method when window is closing
 
         #region Excpetions to infomration about customer
@@ -85,7 +114,7 @@ namespace MapDBTrack
                 FirstNameError.Text = HelpingClass.Exceptions(0);
                 return false;
             }
-            else if (!Regex.IsMatch(FirstNameBox.Text.Trim(), @"^[A-Za-ząćęłńóśźżĄĆĘŁŃÓŚŹŻ]+$"))
+            else if (!Regex.IsMatch(FirstNameBox.Text.Trim(), @"^[\p{L}\p{M}]+$"))
             {
                 FirstNameError.Text = HelpingClass.Exceptions(1);
                 return false;
@@ -101,7 +130,7 @@ namespace MapDBTrack
         private bool LastNameExceptions()
         {
             if (LastNameBox.Text.Trim().Length > 0)
-                if (!Regex.IsMatch(LastNameBox.Text.Trim(), @"^[A-Za-ząćęłńóśźżĄĆĘŁŃÓŚŹŻ]+- ?[A-Za-ząćęłńóśźżĄĆĘŁŃÓŚŹŻ]+$"))
+                if (!Regex.IsMatch(LastNameBox.Text.Trim(), @"^[\p{L}\p{M}\s-]+$"))
                 {
                     LastNameError.Text = HelpingClass.Exceptions(1);
                     return false;
@@ -150,7 +179,7 @@ namespace MapDBTrack
         private bool ProvinceExceptions()
         {
             if (ProvinceBox.Text.Trim().Length > 0)
-                if (!Regex.IsMatch(ProvinceBox.Text.Trim(), @"^[A-Za-ząćęłńóśźżĄĆĘŁŃÓŚŹŻ]+- ?[A-Za-ząćęłńóśźżĄĆĘŁŃÓŚŹŻ]+$"))
+                if (!Regex.IsMatch(ProvinceBox.Text.Trim(), @"^[\p{L}\p{M}\s-]+$"))
                 {
                     ProvinceError.Text = HelpingClass.Exceptions(1); 
                     return false;
@@ -169,7 +198,7 @@ namespace MapDBTrack
                 CityError.Text = HelpingClass.Exceptions(0);
                 return false;
             }
-            else if (!Regex.IsMatch(CityBox.Text.Trim(), @"^[A-Za-ząćęłńóśźżĄĆĘŁŃÓŚŹŻ]+ ?[A-Za-ząćęłńóśźżĄĆĘŁŃÓŚŹŻ]+$"))
+            else if (!Regex.IsMatch(CityBox.Text.Trim(), @"^[\p{L}\p{M}\s-]+$"))
             {
                 CityError.Text = HelpingClass.Exceptions(1);
                 return false;
@@ -212,7 +241,7 @@ namespace MapDBTrack
                 StreetError.Text = HelpingClass.Exceptions(2);
                 return false;
             }
-            else if (!Regex.IsMatch(StreetBox.Text.Trim(), @"^[A-Za-zęóąśłżźćńĘÓĄŚŁŻŹĆŃ]+(?: [A-Za-zęóąśłżźćńĘÓĄŚŁŻŹĆŃ]+)?(?: [0-9A-Za-zęóąśłżźćńĘÓĄŚŁŻŹĆŃ]+)?$"))
+            else if (!Regex.IsMatch(StreetBox.Text.Trim(), @"^[\p{L}\p{M}\s-]+$"))
             {
                 StreetError.Text = HelpingClass.Exceptions(1);
                 return false;

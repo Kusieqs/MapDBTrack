@@ -6,33 +6,44 @@ using System.Threading.Tasks;
 
 namespace MapDBTrack
 {
-    class Customer
+    public class Customer
     {
-        private int id;
-        private int employee_id;
-        private string first_name;
-        private string last_name;
-        private string contact_number;
-        private string description;
-        public Customer()
+        public int employee_id { get; set; }
+        public string first_name { get; set; }
+        public string last_name { get; set; }
+        public string contact_number { get; set; }
+        public string description { get; set; }
+        public Customer(int employee_id, string first_name, string last_name, string contact_number, string description)
         {
-            
+            this.employee_id = employee_id;
+            this.first_name = first_name;
+            this.last_name = last_name;
+            this.contact_number = contact_number;
+            this.description = description;
         }
 
     }
 
-    class Place : Customer
+    public class Place : Customer
     {
-        private int customer_id;
-        private string province;
-        private string city;
-        private string postal_code;
-        private string street;
-        private double longitude;
-        private double latitude;
-        public Place() 
+        public int customer_id { get; set; }
+        public string province { get; set; }
+        public string city { get; set; }
+        public string postal_code { get; set; }
+        public string street { get; set; }
+        public double longitude { get; set; }
+        public double latitude { get; set; }
+        public Place(int employee_id, string first_name, string last_name, string contact_number, string description,
+                 int customer_id, string province, string city, string postal_code, string street, double longitude, double latitude)
+                 : base(employee_id, first_name, last_name, contact_number, description)
         {
-            
+            this.customer_id = customer_id;
+            this.province = province;
+            this.city = city;
+            this.postal_code = postal_code;
+            this.street = street;
+            this.longitude = longitude;
+            this.latitude = latitude;
         }
 
     }
