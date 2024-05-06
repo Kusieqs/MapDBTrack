@@ -1,23 +1,7 @@
 ﻿using Microsoft.Maps.MapControl.WPF;
-using Microsoft.VisualBasic;
-using System;
-using System.Collections.Generic;
-using System.Globalization;
-using System.IO;
-using System.Linq;
-using System.Net;
-using System.Runtime.Serialization.Json;
-using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
 
 namespace MapDBTrack
 {
@@ -34,7 +18,6 @@ namespace MapDBTrack
             LoadingData();
             this.Pushpin = pin;
             this.map = map;
-            this.Closing += CloseWindow;
         }
         public void AcceptClick(object sender, RoutedEventArgs e)
         {
@@ -47,9 +30,7 @@ namespace MapDBTrack
                 PostalExceptions() & 
                 StreetExceptions())
             {
-                int lastOne = 0;
-                if (MainWindow.places.Count != 0)
-                    lastOne = MainWindow.places.Count + 1;
+                int lastOne = MainWindow.places.Max(x => x.customer_id) + 1;
 
 
                 Place place = new Place(
@@ -64,10 +45,12 @@ namespace MapDBTrack
                     PostalCodeBox.Text,
                     StreetBox.Text,
                     double.Parse(LongitudeBox.Text),
-                    double.Parse(LatitudeBox.Text)
+                    double.Parse(LatitudeBox.Text),
+                    EmailBox.Text
                     );
                 
                 MainWindow.places.Add(place);
+                HelpingClass.AddingNewCustomer(place);
                 correctClose = true;
                 this.Close();
             }

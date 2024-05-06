@@ -163,6 +163,8 @@ namespace MapDBTrack
         } // puting pins on map when pinned is true
         private void LoadingPinns()
         {
+            MessageBox.Show(places.Count.ToString());
+            places = HelpingClass.LoadingPlace();
             foreach(Place p in places)
             {
                 Location pinLocation = new Location(p.latitude, p.longitude);
