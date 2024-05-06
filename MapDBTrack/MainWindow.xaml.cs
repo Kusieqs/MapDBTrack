@@ -33,8 +33,8 @@ namespace MapDBTrack
         public MainWindow(int id, string login)
         {
             InitializeComponent();
-            LoadingMapScreen();
             idOfEmployee = id;
+            LoadingMapScreen();
             loginOfEmployee = login;
         }
 
@@ -163,9 +163,10 @@ namespace MapDBTrack
         } // puting pins on map when pinned is true
         private void LoadingPinns()
         {
-            MessageBox.Show(places.Count.ToString());
-            places = HelpingClass.LoadingPlace();
-            foreach(Place p in places)
+
+            places = HelpingClass.LoadingPlace(idOfEmployee);
+
+            foreach (Place p in places)
             {
                 Location pinLocation = new Location(p.latitude, p.longitude);
                 Pushpin pin = new Pushpin();
@@ -173,6 +174,8 @@ namespace MapDBTrack
                 pin.Background = Brushes.DarkBlue;
                 map.Children.Add(pin);
             }
+
+
         } // loading all pins when map is close
         protected override void OnClosing(CancelEventArgs e)
         {

@@ -119,11 +119,10 @@ namespace MapDBTrack
         }
         public static void AddingNewCustomer(Place customer)
         {
-            MessageBox.Show(customer.latitude.ToString());
             string queryCustomer = $"Insert Into Customer (employee_id, contact_number, first_name, last_name, description, email)";
             string valuesCustomer = $"\nValues ({customer.employee_id}, '{customer.contact_number}', '{customer.first_name}', '{customer.last_name}', '{customer.description}', '{customer.email}')";
             string queryPlace = $"INSERT INTO Place (Customer_Id, province, city, postal_code, street, latitude, longitude)";
-            string valuesPlace = $"\nValues (3, '{customer.province}', '{customer.city}', '{customer.postal_code}', '{customer.street}', {customer.latitude.ToString().Replace(',','.')}, {customer.longitude.ToString().Replace(',','.')})";
+            string valuesPlace = $"\nValues ({customer.customer_id}, '{customer.province}', '{customer.city}', '{customer.postal_code}', '{customer.street}', {customer.latitude.ToString().Replace(',','.')}, {customer.longitude.ToString().Replace(',','.')})";
             queryCustomer += valuesCustomer;
             queryPlace += valuesPlace;
 
@@ -136,46 +135,51 @@ namespace MapDBTrack
             sqlConnection.Close();
 
         }
-        public static List<Place> LoadingPlace()
+        public static List<Place> LoadingPlace(int id)
         {
             List<Place> places = new List<Place>();
 
-            string query = $"SELECT * \r\nFROM Customer c \r\nRIGHT JOIN Place p ON c.id = p.Customer_Id \r\nWHERE employee_id = {MainWindow.idOfEmployee};";
-            SqlConnection sqlConnection = new SqlConnection(connectString);
-            sqlConnection.Open();
-            SqlCommand command = new SqlCommand(query, sqlConnection);
-            SqlDataReader reader = command.ExecuteReader();
-            if (reader.HasRows)
+            string query = $"SELECT * FROM Customer c RIGHT JOIN Place p ON c.id = p.Customer_Id WHERE employee_id = 1";
+
+            using (SqlConnection sqlConnection = new SqlConnection(connectString))
             {
-                while (reader.Read())
+                sqlConnection.Open();
+                using (SqlCommand command = new SqlCommand(query, sqlConnection))
                 {
-                    double lat = double.Parse(reader.GetDecimal(12).ToString().Replace(',','.'));
-                    double lon = double.Parse(reader.GetDecimal(13).ToString().Replace(',', '.'));
+                    using (SqlDataReader reader = command.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            double lat = Convert.ToDouble(reader.GetDecimal(12));
+                            double lon = Convert.ToDouble(reader.GetDecimal(13));
 
-                    Place p1 = new Place(
-                        reader.GetInt32(1),
-                        reader.GetString(3),
-                        reader.GetString(4),
-                        reader.GetString(2),
-                        reader.GetString(5),
-                        reader.GetInt32(7),
-                        reader.GetString(8),
-                        reader.GetString(9),
-                        reader.GetString(10),
-                        reader.GetString(11),
-                        lat,
-                        lon,
-                        reader.GetString(6)
-                        );
+                            Place p1 = new Place(
+                                reader.GetInt32(1),
+                                reader.GetString(3),
+                                reader.GetString(4),
+                                reader.GetString(2),
+                                reader.GetString(5),
+                                reader.GetInt32(7),
+                                reader.GetString(8),
+                                reader.GetString(9),
+                                reader.GetString(10),
+                                reader.GetString(11),
+                                lon,
+                                lat,
+                                reader.GetString(6));
 
-                    places.Add( p1 );
+
+                            places.Add(p1);
+                        }
+                    }
                 }
-                return places;
             }
-            else
-                return null;
 
-            
+            if (places.Count == 0)
+                return new List<Place>();
+            else
+                return places;
+
         }
         public static string Exceptions(int num)
         {
