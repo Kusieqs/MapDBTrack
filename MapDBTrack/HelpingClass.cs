@@ -10,6 +10,10 @@ using System.Data.SqlClient;
 using System.Printing;
 using System.Drawing;
 using System.Windows.Controls;
+using Microsoft.Maps.MapControl.WPF;
+using System.Globalization;
+using System.IO;
+using System.Runtime.Serialization.Json;
 
 namespace MapDBTrack
 {
@@ -48,7 +52,6 @@ namespace MapDBTrack
             }
             return true;
         }
-
         public static void SendingPassword(string login)
         {
             string passwordReminder = "", employeeEmail = "";
@@ -102,7 +105,16 @@ namespace MapDBTrack
                 }
             }
         }
-
+        public static RootObject ReadLocation(Location location)
+        {
+            WebClient webClient = new WebClient();
+            webClient.Headers.Add("user-agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/96.0.4664.110 Safari/537.36");
+            webClient.Headers.Add("Referer", "https://www.google.com");
+            var jsonData = webClient.DownloadData($"http://nominatim.openstreetmap.org/reverse?format=json&lat={location.Latitude.ToString("0.000000", CultureInfo.InvariantCulture)}&lon={location.Longitude.ToString("0.000000", CultureInfo.InvariantCulture)}");
+            DataContractJsonSerializer ser = new DataContractJsonSerializer(typeof(RootObject));
+            RootObject rootObject = (RootObject)ser.ReadObject(new MemoryStream(jsonData));
+            return rootObject;
+        }
         public static string Exceptions(int num)
         {
             string[] exp = engExp; // warunek czy pol czy eng

@@ -2,7 +2,11 @@
 using Microsoft.VisualBasic;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
+using System.IO;
 using System.Linq;
+using System.Net;
+using System.Runtime.Serialization.Json;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
@@ -19,13 +23,14 @@ namespace MapDBTrack
 {
     public partial class AddingCustomer : Window
     {
+        private Location location;
         private Pushpin Pushpin;
         private Map map;
         public AddingCustomer(Location location, Window window, Pushpin pin, Map map)
         {
             InitializeComponent();
-            LongitudeBox.Text = location.Longitude.ToString();
-            LatitudeBox.Text = location.Latitude.ToString();
+            this.location = location;
+            LoadingData();
             this.Pushpin = pin;
             this.map = map;
             this.Closing += CloseWindow;
@@ -42,6 +47,25 @@ namespace MapDBTrack
             }
 
             //obsluga dodania danych do bazy danych
+        }
+        private void LoadingData()
+        {
+            LongitudeBox.Text = location.Longitude.ToString();
+            LatitudeBox.Text = location.Latitude.ToString();
+
+            RootObject rootObject = HelpingClass.ReadLocation(location);
+
+            string numberRoad = rootObject.display_name;
+
+            if (int.TryParse(numberRoad.Split(',')[0], out int x))
+                StreetBox.Text = $"{rootObject.address.road} {x}";
+            else
+                StreetBox.Text = $"{rootObject.address.road}";
+
+            ProvinceBox.Text = rootObject.address.state;
+            CityBox.Text = rootObject.address.city;
+            PostalCodeBox.Text = rootObject.address.postcode;
+
         }
         public void DeleteClick(object sender, RoutedEventArgs e)
         {
