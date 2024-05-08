@@ -18,6 +18,7 @@ namespace MapDBTrack
             LoadingData();
             this.Pushpin = pin;
             this.map = map;
+            Closing += CloseWindow;
         }
         public void AcceptClick(object sender, RoutedEventArgs e)
         {
@@ -32,21 +33,20 @@ namespace MapDBTrack
             {
                 int lastOne = MainWindow.places.Max(x => x.customer_id) + 1;
 
-
                 Place place = new Place(
                     MainWindow.idOfEmployee,
+                    ContactBox.Text,
                     FirstNameBox.Text,
                     LastNameBox.Text,
-                    ContactBox.Text,
                     DescriptionBox.Text,
+                    EmailBox.Text,
                     lastOne,
                     ProvinceBox.Text,
                     CityBox.Text,
                     PostalCodeBox.Text,
                     StreetBox.Text,
-                    double.Parse(LongitudeBox.Text),
                     double.Parse(LatitudeBox.Text),
-                    EmailBox.Text
+                    double.Parse(LongitudeBox.Text)
                     );
                 
                 MainWindow.places.Add(place);
@@ -65,7 +65,6 @@ namespace MapDBTrack
             LatitudeBox.Text = location.Latitude.ToString();
 
             RootObject rootObject = HelpingClass.ReadLocation(location);
-
             string numberRoad = rootObject.display_name;
 
             if (int.TryParse(numberRoad.Split(',')[0], out int x))

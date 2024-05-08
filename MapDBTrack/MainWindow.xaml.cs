@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
+using System.Net.NetworkInformation;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -25,6 +26,7 @@ namespace MapDBTrack
         public static string loginOfEmployee;
 
         public static List<Place> places = new List<Place>();
+        public static List<Place> newCustomers = new List<Place>();
         private Button adding;
         private AddingCustomer addingCustomer;
         private Grid mapGrid;
@@ -33,9 +35,9 @@ namespace MapDBTrack
         public MainWindow(int id, string login)
         {
             InitializeComponent();
-            LoadingMapScreen();
             idOfEmployee = id;
             loginOfEmployee = login;
+            LoadingMapScreen();
         }
 
         private void MapClick(object sender, RoutedEventArgs e)
@@ -44,6 +46,7 @@ namespace MapDBTrack
         } // button method
         private void LoadingMapScreen()
         {
+            HelpingClass.NetworkCheck(this);
 
             LoginName.Text = "Welcome " + loginOfEmployee;
 
@@ -63,7 +66,6 @@ namespace MapDBTrack
             map.MouseLeftButtonDown += MapPuttingPins;
 
             mapGrid.Children.Add(map);
-
             mapBorder.Child = mapGrid;
 
             Border buttonBorder = new Border();
@@ -74,8 +76,6 @@ namespace MapDBTrack
             buttonBorder.CornerRadius = new CornerRadius(100);
             Grid.SetColumn(buttonBorder, 2);
             Grid.SetRow(buttonBorder, 0);
-
-            Grid buttonGrid = new Grid();
 
             adding = new Button();
             adding.Style = FindResource("ButtonsAddPins") as Style; 
@@ -92,6 +92,7 @@ namespace MapDBTrack
             plusText.Width = 42;
             plusText.IsHitTestVisible = false;
 
+            Grid buttonGrid = new Grid();
             buttonGrid.Children.Add(adding);
             buttonGrid.Children.Add(plusText);
             buttonBorder.Child = buttonGrid;
@@ -105,6 +106,7 @@ namespace MapDBTrack
         private void CustomersClick(object sender, RoutedEventArgs e)
         {
             HelpingClass.CleanGrid(MainGrid);
+            // Changing  mainGird
         } // button customer
         private void HistoryClick(object sender, RoutedEventArgs e)
         {
@@ -123,24 +125,33 @@ namespace MapDBTrack
         private void Information(object sender, RoutedEventArgs e)
         {
             // information about app and version
-        }
+        } // special MessageBox with version etc.
         private void AddPin(object sender, RoutedEventArgs e)
         {
-            Mouse.OverrideCursor = Cursors.Hand;
-            pinned = true;
-        } // set true for added new pin to map
+            if(pinned == true)
+            {
+                pinned = false;
+                Mouse.OverrideCursor = Cursors.Arrow;
+            }
+            else 
+            {
+                pinned = true;
+                Mouse.OverrideCursor = Cursors.Hand;
+            }
+        } // set true for added new pin to map or false
         private void MapPuttingPins(object sender, MouseButtonEventArgs e)
         {
+            HelpingClass.NetworkCheck(this);
+
             if (pinned)
             {
                 Point mousePosition = e.GetPosition(mapGrid);
                 Location pinLocation = map.ViewportPointToLocation(mousePosition);
 
 
-                Pushpin pin = new Pushpin();
-                pin.Location = pinLocation;
-                pin.Background = Brushes.DarkBlue;
+                Pushpin pin = SetPinns(pinLocation);
                 map.Children.Add(pin);
+
                 pinned = false;
                 Mouse.OverrideCursor = Cursors.Arrow;
 
@@ -163,23 +174,39 @@ namespace MapDBTrack
         } // puting pins on map when pinned is true
         private void LoadingPinns()
         {
-            MessageBox.Show(places.Count.ToString());
-            places = HelpingClass.LoadingPlace();
-            foreach(Place p in places)
+            places = HelpingClass.LoadingPlace(idOfEmployee);
+
+            foreach (Place p in places)
             {
                 Location pinLocation = new Location(p.latitude, p.longitude);
-                Pushpin pin = new Pushpin();
-                pin.Location = pinLocation;
-                pin.Background = Brushes.DarkBlue;
+                Pushpin pin = SetPinns(pinLocation);
                 map.Children.Add(pin);
             }
+
+
         } // loading all pins when map is close
+        private void PinClick(object sender, RoutedEventArgs e)
+        {
+
+            e.Handled = true;
+        }
+
+        private Pushpin SetPinns(Location pinLocation)
+        {
+            Pushpin pin = new Pushpin();
+            pin.Location = pinLocation;
+            pin.Background = Brushes.DarkBlue;
+            pin.MouseDown += PinClick;
+            return pin;
+        } // Setting options for pin
+
         protected override void OnClosing(CancelEventArgs e)
         {
             base.OnClosing(e);
             if(addingCustomer != null && addingCustomer.IsVisible)
                 e.Cancel = true;
         } // blocking window 
+
     }
     public static class StringExtensions
     {

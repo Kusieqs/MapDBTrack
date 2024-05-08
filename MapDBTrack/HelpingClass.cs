@@ -28,8 +28,6 @@ namespace MapDBTrack
             "String is too long",
         };
         
-
-
         public static bool NetworkCheck(Window window)
         {
             while(true)
@@ -41,28 +39,23 @@ namespace MapDBTrack
                     client.Dispose();
                     stream.Close();
                     MessageBoxResult result = MessageBox.Show("No internet connection\nDo you want try again?", "Error", MessageBoxButton.YesNo, MessageBoxImage.Error);
+
                     if(result == MessageBoxResult.Yes)
-                    {
                         continue;
-                    }
                     else
-                    {
                         window.Close();
-                    }
                 }
                 break;
             }
             return true;
-        }
+        } // Checking connection with wifi
         public static void SendingPassword(string login)
         {
             string passwordReminder = "", employeeEmail = "";
-
             string query = $"Select password, email From Employee Where login = '{login}'";
+
             SqlConnection connect = new SqlConnection(connectString);
             connect.Open();
-
-
             SqlCommand command = new SqlCommand(query,connect);
             SqlDataReader reader = command.ExecuteReader();
 
@@ -94,7 +87,7 @@ namespace MapDBTrack
 
             smtClient.Send(message);
 
-        }
+        } // Sending password reminder to user email
         public static void CleanGrid(Grid MainGrid)
         {
             for (int i = MainGrid.Children.Count - 1; i >= 0; i--)
@@ -106,7 +99,7 @@ namespace MapDBTrack
                     MainGrid.Children.Remove(child);
                 }
             }
-        }
+        } // cleaning Grid 
         public static RootObject ReadLocation(Location location)
         {
             WebClient webClient = new WebClient();
@@ -116,14 +109,13 @@ namespace MapDBTrack
             DataContractJsonSerializer ser = new DataContractJsonSerializer(typeof(RootObject));
             RootObject rootObject = (RootObject)ser.ReadObject(new MemoryStream(jsonData));
             return rootObject;
-        }
+        } // Reading locations when employee will click on map
         public static void AddingNewCustomer(Place customer)
         {
-            MessageBox.Show(customer.latitude.ToString());
             string queryCustomer = $"Insert Into Customer (employee_id, contact_number, first_name, last_name, description, email)";
             string valuesCustomer = $"\nValues ({customer.employee_id}, '{customer.contact_number}', '{customer.first_name}', '{customer.last_name}', '{customer.description}', '{customer.email}')";
             string queryPlace = $"INSERT INTO Place (Customer_Id, province, city, postal_code, street, latitude, longitude)";
-            string valuesPlace = $"\nValues (3, '{customer.province}', '{customer.city}', '{customer.postal_code}', '{customer.street}', {customer.latitude.ToString().Replace(',','.')}, {customer.longitude.ToString().Replace(',','.')})";
+            string valuesPlace = $"\nValues ({customer.customer_id}, '{customer.province}', '{customer.city}', '{customer.postal_code}', '{customer.street}', {customer.latitude.ToString().Replace(',','.')}, {customer.longitude.ToString().Replace(',','.')})";
             queryCustomer += valuesCustomer;
             queryPlace += valuesPlace;
 
@@ -135,52 +127,50 @@ namespace MapDBTrack
             command.ExecuteNonQuery();
             sqlConnection.Close();
 
-        }
-        public static List<Place> LoadingPlace()
+        } // Adding new customer to DB
+        public static List<Place> LoadingPlace(int id)
         {
             List<Place> places = new List<Place>();
+            string query = $"SELECT * FROM Customer c RIGHT JOIN Place p ON c.id = p.Customer_Id WHERE employee_id = 1";
 
-            string query = $"SELECT * \r\nFROM Customer c \r\nRIGHT JOIN Place p ON c.id = p.Customer_Id \r\nWHERE employee_id = {MainWindow.idOfEmployee};";
             SqlConnection sqlConnection = new SqlConnection(connectString);
             sqlConnection.Open();
             SqlCommand command = new SqlCommand(query, sqlConnection);
             SqlDataReader reader = command.ExecuteReader();
-            if (reader.HasRows)
+
+            while (reader.Read())
             {
-                while (reader.Read())
-                {
-                    double lat = double.Parse(reader.GetDecimal(12).ToString().Replace(',','.'));
-                    double lon = double.Parse(reader.GetDecimal(13).ToString().Replace(',', '.'));
+                Place p1 = new Place(
+                    reader.GetInt32(1),
+                    reader.GetString(2),
+                    reader.GetString(3),
+                    reader.GetString(4),
+                    reader.GetString(5),
+                    reader.GetString(6),
+                    reader.GetInt32(7),
+                    reader.GetString(8),
+                    reader.GetString(9),
+                    reader.GetString(10),
+                    reader.GetString(11),
+                    Convert.ToDouble(reader.GetDecimal(12)),
+                    Convert.ToDouble(reader.GetDecimal(13)));
 
-                    Place p1 = new Place(
-                        reader.GetInt32(1),
-                        reader.GetString(3),
-                        reader.GetString(4),
-                        reader.GetString(2),
-                        reader.GetString(5),
-                        reader.GetInt32(7),
-                        reader.GetString(8),
-                        reader.GetString(9),
-                        reader.GetString(10),
-                        reader.GetString(11),
-                        lat,
-                        lon,
-                        reader.GetString(6)
-                        );
-
-                    places.Add( p1 );
-                }
-                return places;
+                places.Add(p1);
             }
-            else
-                return null;
 
-            
-        }
+            reader.Close();
+            sqlConnection.Close();
+
+            if (places.Count == 0)
+                return new List<Place>();
+            else
+                return places;
+
+        } // Loading data to list
         public static string Exceptions(int num)
         {
             string[] exp = engExp; // warunek czy pol czy eng
             return exp[num];
-        }
+        } // excpetions words
     }
 }

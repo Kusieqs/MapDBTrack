@@ -16,7 +16,8 @@ namespace MapDBTrack
 {
     public partial class Login : Window
     {
-        int id; string login;
+        private int id; 
+        private string login;
         public Registration registration;
         public Login()
         {
@@ -51,23 +52,6 @@ namespace MapDBTrack
             registration.Closing += (s, args) => this.Show();
         } // opening registration window
 
-        private void LoginChanged(object sender, RoutedEventArgs e)
-        {
-            LoginFailed.Text = string.Empty;
-        } // if login box will change, red text will disappear
-
-        private void PasswordChanged(object sender, RoutedEventArgs e)
-        {
-            PasswordFailed.Text = string.Empty;
-            Reset.IsEnabled = false;
-            Reset.Content = string.Empty;
-        } // if password box will change, red text will disappear
-
-        private void CheckNetwork(object sender, RoutedEventArgs e)
-        {
-            HelpingClass.NetworkCheck(this);
-        } // checking whether the computer is connected to the Internet
-
         private bool CheckingEmptyText(string login, string password) // if box is empty red text under the box will show
         {
 
@@ -95,11 +79,10 @@ namespace MapDBTrack
 
             string sqlQueryLog = $"Select login From Employee Where login = @login";
             string sqlQueryPass = $"Select password, login From Employee Where password = @password and login = @login";
+            string sqlQueryId = "Select Id, Login From Employee Where login = @login";
 
             SqlConnection sql = new SqlConnection(HelpingClass.connectString);
             sql.Open();
-
-
             SqlCommand command = new SqlCommand(sqlQueryLog, sql);
             command.Parameters.AddWithValue("@login", login);
             SqlDataReader reader = command.ExecuteReader();
@@ -113,7 +96,6 @@ namespace MapDBTrack
             }
             reader.Close();
 
-
             command = new SqlCommand(sqlQueryPass, sql);
             command.Parameters.AddWithValue("@password", password);
             command.Parameters.AddWithValue("@login", login);
@@ -122,7 +104,7 @@ namespace MapDBTrack
             if (!reader.HasRows)
             {
                 PasswordFailed.Text = "Password is not correct";
-                Reset.Content = "Click to to remind password";
+                PasswordReminder.Text = "Click to to remind password";
                 Reset.IsEnabled = true;
                 reader.Close();
                 sql.Close();
@@ -130,8 +112,7 @@ namespace MapDBTrack
             }
             reader.Close();
 
-            string idQuery = "Select Id, Login From Employee Where login = @login";
-            command = new SqlCommand(idQuery, sql);
+            command = new SqlCommand(sqlQueryId, sql);
             command.Parameters.AddWithValue("@login", login);
             reader = command.ExecuteReader();
 
@@ -146,10 +127,23 @@ namespace MapDBTrack
             return true;
         } // Checking correct of password and login
 
-        private void ResetPassword(object sender, EventArgs e)
+        private void ResetPassword(object sender, EventArgs e) 
         {
+            HelpingClass.NetworkCheck(this);
             HelpingClass.SendingPassword(LoginBox.Text);
             MessageBox.Show("Password was sent to your email", "Information", MessageBoxButton.OK, MessageBoxImage.Information);
         } // resseting password
+
+        private void LoginChanged(object sender, RoutedEventArgs e)
+        {
+            LoginFailed.Text = string.Empty;
+        } // if login box will change, red text will disappear
+
+        private void PasswordChanged(object sender, RoutedEventArgs e)
+        {
+            PasswordFailed.Text = string.Empty;
+            Reset.IsEnabled = false;
+            PasswordReminder.Text = string.Empty; 
+        } // if password box will change, red text will disappear
     }
 }
