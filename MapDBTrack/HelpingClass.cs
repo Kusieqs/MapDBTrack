@@ -28,8 +28,6 @@ namespace MapDBTrack
             "String is too long",
         };
         
-
-
         public static bool NetworkCheck(Window window)
         {
             while(true)
@@ -50,7 +48,7 @@ namespace MapDBTrack
                 break;
             }
             return true;
-        }
+        } // Checking connection with wifi
         public static void SendingPassword(string login)
         {
             string passwordReminder = "", employeeEmail = "";
@@ -89,7 +87,7 @@ namespace MapDBTrack
 
             smtClient.Send(message);
 
-        }
+        } // Sending password reminder to user email
         public static void CleanGrid(Grid MainGrid)
         {
             for (int i = MainGrid.Children.Count - 1; i >= 0; i--)
@@ -101,7 +99,7 @@ namespace MapDBTrack
                     MainGrid.Children.Remove(child);
                 }
             }
-        }
+        } // cleaning Grid 
         public static RootObject ReadLocation(Location location)
         {
             WebClient webClient = new WebClient();
@@ -111,7 +109,7 @@ namespace MapDBTrack
             DataContractJsonSerializer ser = new DataContractJsonSerializer(typeof(RootObject));
             RootObject rootObject = (RootObject)ser.ReadObject(new MemoryStream(jsonData));
             return rootObject;
-        }
+        } // Reading locations when employee will click on map
         public static void AddingNewCustomer(Place customer)
         {
             string queryCustomer = $"Insert Into Customer (employee_id, contact_number, first_name, last_name, description, email)";
@@ -129,7 +127,7 @@ namespace MapDBTrack
             command.ExecuteNonQuery();
             sqlConnection.Close();
 
-        }
+        } // Adding new customer to DB
         public static List<Place> LoadingPlace(int id)
         {
             List<Place> places = new List<Place>();
@@ -168,11 +166,11 @@ namespace MapDBTrack
             else
                 return places;
 
-        }
+        } // Loading data to list
         public static string Exceptions(int num)
         {
             string[] exp = engExp; // warunek czy pol czy eng
             return exp[num];
-        }
+        } // excpetions words
     }
 }

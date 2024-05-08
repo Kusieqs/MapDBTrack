@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
+using System.Net.NetworkInformation;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -25,6 +26,7 @@ namespace MapDBTrack
         public static string loginOfEmployee;
 
         public static List<Place> places = new List<Place>();
+        public static List<Place> newCustomers = new List<Place>();
         private Button adding;
         private AddingCustomer addingCustomer;
         private Grid mapGrid;
@@ -147,10 +149,9 @@ namespace MapDBTrack
                 Location pinLocation = map.ViewportPointToLocation(mousePosition);
 
 
-                Pushpin pin = new Pushpin();
-                pin.Location = pinLocation;
-                pin.Background = Brushes.DarkBlue;
+                Pushpin pin = SetPinns(pinLocation);
                 map.Children.Add(pin);
+
                 pinned = false;
                 Mouse.OverrideCursor = Cursors.Arrow;
 
@@ -178,20 +179,34 @@ namespace MapDBTrack
             foreach (Place p in places)
             {
                 Location pinLocation = new Location(p.latitude, p.longitude);
-                Pushpin pin = new Pushpin();
-                pin.Location = pinLocation;
-                pin.Background = Brushes.DarkBlue;
+                Pushpin pin = SetPinns(pinLocation);
                 map.Children.Add(pin);
             }
 
 
         } // loading all pins when map is close
+        private void PinClick(object sender, RoutedEventArgs e)
+        {
+
+            e.Handled = true;
+        }
+
+        private Pushpin SetPinns(Location pinLocation)
+        {
+            Pushpin pin = new Pushpin();
+            pin.Location = pinLocation;
+            pin.Background = Brushes.DarkBlue;
+            pin.MouseDown += PinClick;
+            return pin;
+        } // Setting options for pin
+
         protected override void OnClosing(CancelEventArgs e)
         {
             base.OnClosing(e);
             if(addingCustomer != null && addingCustomer.IsVisible)
                 e.Cancel = true;
         } // blocking window 
+
     }
     public static class StringExtensions
     {

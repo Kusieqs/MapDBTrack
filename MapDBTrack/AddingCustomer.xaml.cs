@@ -18,6 +18,7 @@ namespace MapDBTrack
             LoadingData();
             this.Pushpin = pin;
             this.map = map;
+            Closing += CloseWindow;
         }
         public void AcceptClick(object sender, RoutedEventArgs e)
         {
@@ -34,9 +35,9 @@ namespace MapDBTrack
 
                 Place place = new Place(
                     MainWindow.idOfEmployee,
+                    ContactBox.Text,
                     FirstNameBox.Text,
                     LastNameBox.Text,
-                    ContactBox.Text,
                     DescriptionBox.Text,
                     EmailBox.Text,
                     lastOne,
