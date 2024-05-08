@@ -41,14 +41,11 @@ namespace MapDBTrack
                     client.Dispose();
                     stream.Close();
                     MessageBoxResult result = MessageBox.Show("No internet connection\nDo you want try again?", "Error", MessageBoxButton.YesNo, MessageBoxImage.Error);
+
                     if(result == MessageBoxResult.Yes)
-                    {
                         continue;
-                    }
                     else
-                    {
                         window.Close();
-                    }
                 }
                 break;
             }
@@ -57,12 +54,10 @@ namespace MapDBTrack
         public static void SendingPassword(string login)
         {
             string passwordReminder = "", employeeEmail = "";
-
             string query = $"Select password, email From Employee Where login = '{login}'";
+
             SqlConnection connect = new SqlConnection(connectString);
             connect.Open();
-
-
             SqlCommand command = new SqlCommand(query,connect);
             SqlDataReader reader = command.ExecuteReader();
 
@@ -138,42 +133,35 @@ namespace MapDBTrack
         public static List<Place> LoadingPlace(int id)
         {
             List<Place> places = new List<Place>();
-
             string query = $"SELECT * FROM Customer c RIGHT JOIN Place p ON c.id = p.Customer_Id WHERE employee_id = 1";
 
-            using (SqlConnection sqlConnection = new SqlConnection(connectString))
+            SqlConnection sqlConnection = new SqlConnection(connectString);
+            sqlConnection.Open();
+            SqlCommand command = new SqlCommand(query, sqlConnection);
+            SqlDataReader reader = command.ExecuteReader();
+
+            while (reader.Read())
             {
-                sqlConnection.Open();
-                using (SqlCommand command = new SqlCommand(query, sqlConnection))
-                {
-                    using (SqlDataReader reader = command.ExecuteReader())
-                    {
-                        while (reader.Read())
-                        {
-                            double lat = Convert.ToDouble(reader.GetDecimal(12));
-                            double lon = Convert.ToDouble(reader.GetDecimal(13));
+                Place p1 = new Place(
+                    reader.GetInt32(1),
+                    reader.GetString(2),
+                    reader.GetString(3),
+                    reader.GetString(4),
+                    reader.GetString(5),
+                    reader.GetString(6),
+                    reader.GetInt32(7),
+                    reader.GetString(8),
+                    reader.GetString(9),
+                    reader.GetString(10),
+                    reader.GetString(11),
+                    Convert.ToDouble(reader.GetDecimal(12)),
+                    Convert.ToDouble(reader.GetDecimal(13)));
 
-                            Place p1 = new Place(
-                                reader.GetInt32(1),
-                                reader.GetString(3),
-                                reader.GetString(4),
-                                reader.GetString(2),
-                                reader.GetString(5),
-                                reader.GetInt32(7),
-                                reader.GetString(8),
-                                reader.GetString(9),
-                                reader.GetString(10),
-                                reader.GetString(11),
-                                lon,
-                                lat,
-                                reader.GetString(6));
-
-
-                            places.Add(p1);
-                        }
-                    }
-                }
+                places.Add(p1);
             }
+
+            reader.Close();
+            sqlConnection.Close();
 
             if (places.Count == 0)
                 return new List<Place>();

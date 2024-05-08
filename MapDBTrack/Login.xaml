@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:MapDBTrack"
         mc:Ignorable="d"
-        Title="Login" Height="550" Width="600" Loaded="CheckNetwork" ResizeMode="NoResize">
+        Title="Login" Height="550" Width="600" ResizeMode="NoResize">
     
     <Grid>
         <Image Source="Pictures/Background.jpg" Stretch="Fill"/>
@@ -22,19 +22,18 @@
                     <ColumnDefinition Width="*"/>
                     <ColumnDefinition Width="*"/>
                 </Grid.ColumnDefinitions>
-                
-                <Button Content="Sign in" Click="SignIn" Grid.Column="0" Grid.Row="4" Style="{StaticResource ButtonRounded}"/>
-                <Button Content="Sign up" Click="SignUp" Grid.Column="1" Grid.Row="4" Style="{StaticResource ButtonRounded}"/>
-                
+
+
                 <TextBlock Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" Foreground="#FF2F5588" Text="USER LOGIN" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="35" FontWeight="DemiBold"/>
                 <Border Grid.Row="1" Grid.Column="0"  Grid.ColumnSpan="2" Background="#FF2F5588" />
                 
                 <TextBox x:Name="LoginBox" Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2" TextChanged="LoginChanged" Style="{StaticResource RoundedTextBox}"/>
                 <TextBox x:Name="PasswordBox" Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="2" TextChanged="PasswordChanged" Style="{StaticResource RoundedTextBox}"/>
+                
                 <TextBlock Text="User name" Grid.Row="2" Width="60" Height="20" Margin="39,17,99,75" Foreground="#FF2F5588" FontWeight="DemiBold"/>
                 <TextBlock Text="Password" Grid.Row="3" Width="60" Height="20" Margin="39,17,99,75" Foreground="#FF2F5588" FontWeight="DemiBold"/>
-                
-                <Button x:Name="Reset" Content="" Click="ResetPassword" Grid.Column="0" Grid.Row="3" Height="20" Margin="39,85,27,7" HorizontalContentAlignment="Left" FontSize="10" IsEnabled="False" FontWeight="DemiBold" Cursor="Hand" Foreground="Red">
+
+                <Button x:Name="Reset" Click="ResetPassword" Grid.Column="0" Grid.Row="3" Height="20" Margin="39,85,22,7" HorizontalContentAlignment="Left" FontSize="10" IsEnabled="False" FontWeight="DemiBold" Cursor="Hand" Foreground="Red">
                     <Button.Template>
                         <ControlTemplate TargetType="Button">
                             <Border Background="#FFD1E1EC" Padding="{TemplateBinding Padding}">
@@ -48,9 +47,14 @@
                         </ControlTemplate>
                     </Button.Template>
                 </Button>
-                
+
+                <TextBlock x:Name="PasswordReminder" Text="" Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="3" Height="20" Margin="39,93,27,7" FontSize="10" FontWeight="Bold" Foreground="Red" TextDecorations="Underline" IsEnabled="False" IsHitTestVisible="False"/>
                 <TextBlock x:Name="LoginFailed" Text="" Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="2" Width="200" Height="20" Margin="39,76,157,16" FontSize="10" FontWeight="DemiBold" Foreground="Red"/>
                 <TextBlock x:Name="PasswordFailed" Text="" Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="3" Width="200" Height="20" Margin="39,76,157,16" FontSize="10" FontWeight="DemiBold" Foreground="Red"/>
+
+                <Button Content="Sign in" Click="SignIn" Grid.Column="0" Grid.Row="4" Style="{StaticResource ButtonRounded}"/>
+                <Button Content="Sign up" Click="SignUp" Grid.Column="1" Grid.Row="4" Style="{StaticResource ButtonRounded}"/>
+
             </Grid>
         </Border>
 

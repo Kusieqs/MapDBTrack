@@ -34,8 +34,8 @@ namespace MapDBTrack
         {
             InitializeComponent();
             idOfEmployee = id;
-            LoadingMapScreen();
             loginOfEmployee = login;
+            LoadingMapScreen();
         }
 
         private void MapClick(object sender, RoutedEventArgs e)
@@ -44,6 +44,7 @@ namespace MapDBTrack
         } // button method
         private void LoadingMapScreen()
         {
+            HelpingClass.NetworkCheck(this);
 
             LoginName.Text = "Welcome " + loginOfEmployee;
 
@@ -63,7 +64,6 @@ namespace MapDBTrack
             map.MouseLeftButtonDown += MapPuttingPins;
 
             mapGrid.Children.Add(map);
-
             mapBorder.Child = mapGrid;
 
             Border buttonBorder = new Border();
@@ -74,8 +74,6 @@ namespace MapDBTrack
             buttonBorder.CornerRadius = new CornerRadius(100);
             Grid.SetColumn(buttonBorder, 2);
             Grid.SetRow(buttonBorder, 0);
-
-            Grid buttonGrid = new Grid();
 
             adding = new Button();
             adding.Style = FindResource("ButtonsAddPins") as Style; 
@@ -92,6 +90,7 @@ namespace MapDBTrack
             plusText.Width = 42;
             plusText.IsHitTestVisible = false;
 
+            Grid buttonGrid = new Grid();
             buttonGrid.Children.Add(adding);
             buttonGrid.Children.Add(plusText);
             buttonBorder.Child = buttonGrid;
@@ -105,6 +104,7 @@ namespace MapDBTrack
         private void CustomersClick(object sender, RoutedEventArgs e)
         {
             HelpingClass.CleanGrid(MainGrid);
+            // Changing  mainGird
         } // button customer
         private void HistoryClick(object sender, RoutedEventArgs e)
         {
@@ -123,14 +123,24 @@ namespace MapDBTrack
         private void Information(object sender, RoutedEventArgs e)
         {
             // information about app and version
-        }
+        } // special MessageBox with version etc.
         private void AddPin(object sender, RoutedEventArgs e)
         {
-            Mouse.OverrideCursor = Cursors.Hand;
-            pinned = true;
-        } // set true for added new pin to map
+            if(pinned == true)
+            {
+                pinned = false;
+                Mouse.OverrideCursor = Cursors.Arrow;
+            }
+            else 
+            {
+                pinned = true;
+                Mouse.OverrideCursor = Cursors.Hand;
+            }
+        } // set true for added new pin to map or false
         private void MapPuttingPins(object sender, MouseButtonEventArgs e)
         {
+            HelpingClass.NetworkCheck(this);
+
             if (pinned)
             {
                 Point mousePosition = e.GetPosition(mapGrid);
@@ -163,7 +173,6 @@ namespace MapDBTrack
         } // puting pins on map when pinned is true
         private void LoadingPinns()
         {
-
             places = HelpingClass.LoadingPlace(idOfEmployee);
 
             foreach (Place p in places)

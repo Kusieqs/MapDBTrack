@@ -27,12 +27,7 @@ namespace MapDBTrack
         {
             this.Close();
         } // close window
-
-        private void CheckNetwork(object sender, RoutedEventArgs e)
-        {
-            HelpingClass.NetworkCheck(this);
-        }  // checking network connection
-
+        
         private void SignUp(object sender, RoutedEventArgs e)
         {
             HelpingClass.NetworkCheck(this);
@@ -48,11 +43,12 @@ namespace MapDBTrack
 
             string sqlQuery = "Insert Into Employee (login, password, email)";
             string values = $"\nValues ('{Login.Text}','{Password.Text}','{Email.Text}')";
+
             sqlQuery += values;
             SqlCommand command = new SqlCommand(sqlQuery, sql);
             command.ExecuteNonQuery();
-
             sql.Close();
+
             MessageBox.Show("Correct registration", "Information", MessageBoxButton.OK, MessageBoxImage.Information);
             Close();
         } // registration new account
@@ -154,6 +150,7 @@ namespace MapDBTrack
             SqlCommand command = new SqlCommand(sqlQuery, sql);
             command.Parameters.AddWithValue("@email", Email.Text);
             SqlDataReader reader = command.ExecuteReader();
+
             if (reader.HasRows)
             {
                 EmailFailed.Text = "This email is locked";
