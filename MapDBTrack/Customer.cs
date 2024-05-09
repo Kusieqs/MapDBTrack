@@ -38,7 +38,7 @@ namespace MapDBTrack
         public double latitude { get; set; }
         public Place(int employee_id, string contact_number, string first_name, string last_name, string description, string email,
                  int customer_id, string province, string city, string postal_code, string street, double latitude, double longitude)
-                 : base(employee_id, first_name, last_name, contact_number, description, email)
+                 : base(employee_id, contact_number, first_name, last_name, description, email)
         {
             this.customer_id = customer_id;
             this.province = province;

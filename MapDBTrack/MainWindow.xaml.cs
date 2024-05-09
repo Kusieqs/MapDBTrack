@@ -187,9 +187,13 @@ namespace MapDBTrack
         } // loading all pins when map is close
         private void PinClick(object sender, RoutedEventArgs e)
         {
-
+            Pushpin pin = sender as Pushpin;
+            double lat = pin.Location.Latitude;
+            double lng = pin.Location.Longitude;
+            Place p1 = places.Where(x => x.latitude == lat && x.longitude == lng).FirstOrDefault();
+            MessageBox.Show($"{p1.first_name} {p1.last_name}\n{p1.contact_number} {p1.email}\n{p1.city} {p1.postal_code} {p1.street} \n{p1.description}", "Information", MessageBoxButton.OK, MessageBoxImage.Information);
             e.Handled = true;
-        }
+        } // adding information about click to pinn
 
         private Pushpin SetPinns(Location pinLocation)
         {
