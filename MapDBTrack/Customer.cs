@@ -29,7 +29,7 @@ namespace MapDBTrack
 
     public class Place : Customer
     {
-        public int customer_id { get; set; }
+        public string customer_id { get; set; }
         public string province { get; set; }
         public string city { get; set; }
         public string postal_code { get; set; }
@@ -37,7 +37,7 @@ namespace MapDBTrack
         public double longitude { get; set; }
         public double latitude { get; set; }
         public Place(int employee_id, string contact_number, string first_name, string last_name, string description, string email,
-                 int customer_id, string province, string city, string postal_code, string street, double latitude, double longitude)
+                 string customer_id, string province, string city, string postal_code, string street, double latitude, double longitude)
                  : base(employee_id, contact_number, first_name, last_name, description, email)
         {
             this.customer_id = customer_id;

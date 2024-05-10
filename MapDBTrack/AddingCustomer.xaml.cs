@@ -31,7 +31,7 @@ namespace MapDBTrack
                 PostalExceptions() & 
                 StreetExceptions())
             {
-                int lastOne = MainWindow.places.Max(x => x.customer_id) + 1;
+                string lastOne = HelpingClass.GetIdFromDB();
 
                 Place place = new Place(
                     MainWindow.idOfEmployee,
