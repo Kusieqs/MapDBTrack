@@ -185,7 +185,7 @@ namespace MapDBTrack
                 {
                     desc += p1.description[i];
                     ++x;
-                    if (x > 40)
+                    if (x > 50)
                     {
                         desc += '\n';
                         x = 0;

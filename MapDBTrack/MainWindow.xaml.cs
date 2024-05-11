@@ -124,7 +124,8 @@ namespace MapDBTrack
         } // close window
         private void Information(object sender, RoutedEventArgs e)
         {
-            // information about app and version
+            string info = "Version: 1.0\nContact: kus.konrad1@gmail.com\nLicense: MapDBTrack Commercial Use License";
+            MessageBox.Show(info, "Information", MessageBoxButton.OK, MessageBoxImage.Information);
         } // special MessageBox with version etc.
         private void AddPin(object sender, RoutedEventArgs e)
         {

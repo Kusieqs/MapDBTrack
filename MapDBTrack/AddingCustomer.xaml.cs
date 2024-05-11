@@ -69,7 +69,9 @@ namespace MapDBTrack
                 RootObject rootObject = HelpingClass.ReadLocation(location);
                 string numberRoad = rootObject.display_name;
 
-                if (int.TryParse(numberRoad.Split(',')[0], out int x))
+                if (numberRoad == null)
+                    throw new FormatException();
+                else if (int.TryParse(numberRoad.Split(',')[0], out int x))
                     StreetBox.Text = $"{rootObject.address.road} {x}";
                 else
                     StreetBox.Text = $"{rootObject.address.road}";
@@ -78,7 +80,7 @@ namespace MapDBTrack
                 CityBox.Text = rootObject.address.city;
                 PostalCodeBox.Text = rootObject.address.postcode;
             }
-            catch (NullReferenceException ex)
+            catch (Exception)
             {
                 return;
             }

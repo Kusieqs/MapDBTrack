@@ -33,7 +33,7 @@
                 <Border Grid.Row="1" Grid.Column="0"  Grid.ColumnSpan="2" Background="#FF2F5588" />
                 
                 <TextBox x:Name="Login" Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2" TextChanged="LoginChanged"  Style="{StaticResource RoundedTextBox}"/>
-                <TextBox x:Name="Email" Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="2" TextChanged="EmailChanged"  Style="{StaticResource RoundedTextBox}"/>
+                <TextBox x:Name="Email" Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="2" TextChanged="EmailChanged"  Style="{StaticResource RoundedTextBoxEmail}"/>
                 <TextBox x:Name="Password" Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="2" TextChanged="PasswordChanged"   Style="{StaticResource RoundedTextBox}"/>
                 <TextBox x:Name="RepeatPassword" Grid.Row="5" Grid.Column="0" Grid.ColumnSpan="2" TextChanged="RepeatPasswordChanged"  Style="{StaticResource RoundedTextBox}"/>
                 

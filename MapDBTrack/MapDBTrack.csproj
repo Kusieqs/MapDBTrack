@@ -14,6 +14,7 @@
     <None Remove="Pictures\Customer.png" />
     <None Remove="Pictures\Exit.png" />
     <None Remove="Pictures\History.png" />
+    <None Remove="Pictures\Info.png" />
     <None Remove="Pictures\Logout.png" />
     <None Remove="Pictures\MainWindowBack.jpg" />
     <None Remove="Pictures\Pin.png" />
@@ -32,6 +33,7 @@
 
   <ItemGroup>
     <Resource Include="Pictures\Background.jpg" />
+    <Resource Include="Pictures\Info.png" />
     <Resource Include="Pictures\Logout.png" />
     <Resource Include="Pictures\MainWindowBack.jpg" />
     <Resource Include="Pictures\Map.png">
