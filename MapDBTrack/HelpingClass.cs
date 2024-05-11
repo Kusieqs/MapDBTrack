@@ -15,12 +15,14 @@ using System.Globalization;
 using System.IO;
 using System.Runtime.Serialization.Json;
 using System.Windows.Controls.Primitives;
+using System.Security.Cryptography.Pkcs;
 
 namespace MapDBTrack
 {
 
     public static class HelpingClass
     {
+
         public static string[] engExp = new string[]
         {
             "Field is empty",
@@ -112,26 +114,27 @@ namespace MapDBTrack
         } // Reading locations when employee will click on map
         public static void AddingNewCustomer(Place customer)
         {
-            string queryCustomer = $"Insert Into Customer (employee_id, contact_number, first_name, last_name, description, email)";
-            string valuesCustomer = $"\nValues ({customer.employee_id}, '{customer.contact_number}', '{customer.first_name}', '{customer.last_name}', '{customer.description}', '{customer.email}')";
-            string queryPlace = $"INSERT INTO Place (Customer_Id, province, city, postal_code, street, latitude, longitude)";
-            string valuesPlace = $"\nValues ({customer.customer_id}, '{customer.province}', '{customer.city}', '{customer.postal_code}', '{customer.street}', {customer.latitude.ToString().Replace(',','.')}, {customer.longitude.ToString().Replace(',','.')})";
+            string queryCustomer = $"Insert Into Customer (id, employee_id, contact_number, first_name, last_name, description, email)";
+            string valuesCustomer = $"\nValues ('{customer.customer_id}', {customer.employee_id}, '{customer.contact_number}', '{customer.first_name}', '{customer.last_name}', '{customer.description}', '{customer.email}')";
+            
+            string queryPlace = $"INSERT INTO Place (customer_id, province, city, postal_code, street, latitude, longitude)";
+            string valuesPlace = $"\nValues ('{customer.customer_id}', '{customer.province}', '{customer.city}', '{customer.postal_code}', '{customer.street}', {customer.latitude.ToString().Replace(',','.')}, {customer.longitude.ToString().Replace(',','.')})";
             queryCustomer += valuesCustomer;
             queryPlace += valuesPlace;
 
             SqlConnection sqlConnection = new SqlConnection(connectString);
             sqlConnection.Open();
-            SqlCommand command1 = new SqlCommand(queryPlace, sqlConnection);
-            command1.ExecuteNonQuery();
             SqlCommand command = new SqlCommand(queryCustomer, sqlConnection);
             command.ExecuteNonQuery();
+            SqlCommand command1 = new SqlCommand(queryPlace, sqlConnection);
+            command1.ExecuteNonQuery();
             sqlConnection.Close();
 
         } // Adding new customer to DB
         public static List<Place> LoadingPlace(int id)
         {
             List<Place> places = new List<Place>();
-            string query = $"SELECT * FROM Customer c RIGHT JOIN Place p ON c.id = p.Customer_Id WHERE employee_id = 1";
+            string query = $"SELECT * FROM Customer c RIGHT JOIN Place p ON c.id = p.Customer_Id WHERE employee_id = {id}";
 
             SqlConnection sqlConnection = new SqlConnection(connectString);
             sqlConnection.Open();
@@ -147,7 +150,7 @@ namespace MapDBTrack
                     reader.GetString(4),
                     reader.GetString(5),
                     reader.GetString(6),
-                    reader.GetInt32(7),
+                    reader.GetString(7),
                     reader.GetString(8),
                     reader.GetString(9),
                     reader.GetString(10),
@@ -167,6 +170,64 @@ namespace MapDBTrack
                 return places;
 
         } // Loading data to list
+        public static string GetDescTool(Place p1)
+        {
+            string info = $"Name: {p1.first_name}";
+            info += string.IsNullOrEmpty(p1.last_name) ? "\n" : $"\nLast name: {p1.last_name}\n";
+            info += string.IsNullOrEmpty(p1.email) ? $"Nr: {p1.contact_number}\n" : $"Nr: {p1.contact_number}\nEmail: {p1.email}\n";
+            info += $"{p1.city} {p1.postal_code} {p1.street} {p1.province}";
+
+            if(!string.IsNullOrEmpty(p1.description))
+            {
+                string desc = "";
+                int x = 0;
+                for (int i = 0; i < p1.description.Length; i++)
+                {
+                    desc += p1.description[i];
+                    ++x;
+                    if (x > 50)
+                    {
+                        desc += '\n';
+                        x = 0;
+                    }
+                }
+                info += "\n\n" + desc;
+            }
+            return info;
+        }
+        public static string GetIdFromDB()
+        {
+            string id = "";
+            while (true)
+            {
+                Random random = new Random();
+                string alfa = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+                id = "";
+
+                for (int i = 0; i < 8; i++)
+                {
+                    id += alfa[random.Next(0, alfa.Length)];
+                }
+
+                SqlConnection sql = new SqlConnection(connectString);
+                string query = $"Select id From Customer Where id = '{id}'";
+                sql.Open();
+                SqlCommand sqlCommand = new SqlCommand(query, sql);
+                SqlDataReader read = sqlCommand.ExecuteReader();
+
+                if (!read.HasRows)
+                {
+                    sql.Close();
+                    read.Close();
+                    break;
+                }
+                sql.Close();
+                read.Close();
+            }
+            return id;
+
+        }
+
         public static string Exceptions(int num)
         {
             string[] exp = engExp; // warunek czy pol czy eng

@@ -31,7 +31,7 @@ namespace MapDBTrack
                 PostalExceptions() & 
                 StreetExceptions())
             {
-                int lastOne = MainWindow.places.Max(x => x.customer_id) + 1;
+                string lastOne = HelpingClass.GetIdFromDB();
 
                 Place place = new Place(
                     MainWindow.idOfEmployee,
@@ -61,20 +61,29 @@ namespace MapDBTrack
         }
         private void LoadingData()
         {
-            LongitudeBox.Text = location.Longitude.ToString();
-            LatitudeBox.Text = location.Latitude.ToString();
+            try
+            {
+                LongitudeBox.Text = location.Longitude.ToString();
+                LatitudeBox.Text = location.Latitude.ToString();
 
-            RootObject rootObject = HelpingClass.ReadLocation(location);
-            string numberRoad = rootObject.display_name;
+                RootObject rootObject = HelpingClass.ReadLocation(location);
+                string numberRoad = rootObject.display_name;
 
-            if (int.TryParse(numberRoad.Split(',')[0], out int x))
-                StreetBox.Text = $"{rootObject.address.road} {x}";
-            else
-                StreetBox.Text = $"{rootObject.address.road}";
+                if (numberRoad == null)
+                    throw new FormatException();
+                else if (int.TryParse(numberRoad.Split(',')[0], out int x))
+                    StreetBox.Text = $"{rootObject.address.road} {x}";
+                else
+                    StreetBox.Text = $"{rootObject.address.road}";
 
-            ProvinceBox.Text = rootObject.address.state;
-            CityBox.Text = rootObject.address.city;
-            PostalCodeBox.Text = rootObject.address.postcode;
+                ProvinceBox.Text = rootObject.address.state;
+                CityBox.Text = rootObject.address.city;
+                PostalCodeBox.Text = rootObject.address.postcode;
+            }
+            catch (Exception)
+            {
+                return;
+            }
 
         } // Loading inforamtion about place where pinn was inputed
         public void DeleteClick(object sender, RoutedEventArgs e)
@@ -223,7 +232,7 @@ namespace MapDBTrack
                 StreetError.Text = HelpingClass.Exceptions(2);
                 return false;
             }
-            else if (!Regex.IsMatch(StreetBox.Text.Trim(), @"^[\p{L}\p{M}\s-]+$"))
+            else if (!Regex.IsMatch(StreetBox.Text.Trim(), @"^[\p{L}\p{M}0-9\s-]+$"))
             {
                 StreetError.Text = HelpingClass.Exceptions(1);
                 return false;

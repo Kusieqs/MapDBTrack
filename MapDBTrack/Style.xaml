@@ -76,7 +76,33 @@
                              VerticalAlignment="Stretch"
                              BorderThickness="0"
                              Background="Transparent"
-                             MaxLength="25"
+                             MaxLength="50"
+                             FontSize="18"
+                             FontWeight="DemiBold"   
+                             HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
+                    </Border>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style x:Key="RoundedTextBoxEmail" TargetType="TextBox">
+        <Setter Property="Width" Value="318"/>
+        <Setter Property="Height" Value="40"/>
+        <Setter Property="Background" Value="#faf4ff"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="TextBox">
+                    <Border BorderBrush="{TemplateBinding BorderBrush}"
+                            BorderThickness="{TemplateBinding BorderThickness}"
+                            Background="{TemplateBinding Background}"
+                            CornerRadius="10">
+                        <TextBox Text="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Text}"
+                             HorizontalAlignment="Stretch"
+                             VerticalAlignment="Stretch"
+                             BorderThickness="0"
+                             Background="Transparent"
+                             MaxLength="100"
                              FontSize="18"
                              FontWeight="DemiBold"   
                              HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
@@ -105,6 +131,7 @@
         <Setter Property="Foreground" Value="Red"/>
         <Setter Property="HorizontalAlignment" Value="Center"/>
     </Style>
+
     <Style x:Key="RoundedTextBoxDesc" TargetType="TextBox">
         <Setter Property="Background" Value="#faf4ff"/>
         <Setter Property="Template">
@@ -115,11 +142,12 @@
                             Background="{TemplateBinding Background}"
                             CornerRadius="10">
                         <TextBox Text="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Text}"
+                             Margin="5,5,5,5"
                              HorizontalAlignment="Stretch"
                              VerticalAlignment="Stretch"
                              BorderThickness="0"
                              Background="Transparent"
-                             FontSize="18"
+                             FontSize="16"
                              FontWeight="DemiBold"   
                              TextWrapping="Wrap"
                              AcceptsReturn="True"

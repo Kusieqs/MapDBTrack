@@ -124,7 +124,8 @@ namespace MapDBTrack
         } // close window
         private void Information(object sender, RoutedEventArgs e)
         {
-            // information about app and version
+            string info = "Version: 1.0\nContact: kus.konrad1@gmail.com\nLicense: MapDBTrack Commercial Use License";
+            MessageBox.Show(info, "Information", MessageBoxButton.OK, MessageBoxImage.Information);
         } // special MessageBox with version etc.
         private void AddPin(object sender, RoutedEventArgs e)
         {
@@ -185,18 +186,39 @@ namespace MapDBTrack
 
 
         } // loading all pins when map is close
-        private void PinClick(object sender, RoutedEventArgs e)
-        {
 
-            e.Handled = true;
+        private void PinMouseEnter(object sender, MouseEventArgs e)
+        {
+            Pushpin pin = sender as Pushpin;
+            double lat = pin.Location.Latitude;
+            double lng = pin.Location.Longitude;
+            Place p1 = places.FirstOrDefault(x => x.latitude == lat && x.longitude == lng);
+
+            if (p1 != null)
+            {
+                ToolTip tooltip = new ToolTip();
+                tooltip.IsEnabled = true; 
+                tooltip.Content = HelpingClass.GetDescTool(p1);
+                pin.ToolTip = tooltip; 
+                tooltip.IsOpen = true;
+            }
         }
+
+        private void PinMouseLeave(object sender, MouseEventArgs e)
+        {
+            Pushpin pin = sender as Pushpin;
+            ToolTip tooltip = pin.ToolTip as ToolTip;
+            tooltip.IsOpen = false;
+        }
+
 
         private Pushpin SetPinns(Location pinLocation)
         {
             Pushpin pin = new Pushpin();
             pin.Location = pinLocation;
             pin.Background = Brushes.DarkBlue;
-            pin.MouseDown += PinClick;
+            pin.MouseEnter += PinMouseEnter;
+            pin.MouseLeave += PinMouseLeave;
             return pin;
         } // Setting options for pin
 
