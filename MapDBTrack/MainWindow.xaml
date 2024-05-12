@@ -111,5 +111,6 @@
         <TextBlock x:Name="LoginName" Text="" Foreground="#FF2F5588" FontWeight="DemiBold" VerticalAlignment="Top" TextAlignment="Left" FontSize="22" Height="41" Margin="21,200,0,0"/>
         <Image Source="/Pictures/Map.png" Grid.Row="0" Margin="36,77,36,598" IsHitTestVisible="False"/>
 
+
     </Grid>
 </Window>

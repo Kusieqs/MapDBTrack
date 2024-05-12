@@ -38,6 +38,7 @@ namespace MapDBTrack
             idOfEmployee = id;
             loginOfEmployee = login;
             LoadingMapScreen();
+            LoginName.Text = "Welcome " + loginOfEmployee;
         }
 
         private void MapClick(object sender, RoutedEventArgs e)
@@ -47,8 +48,6 @@ namespace MapDBTrack
         private void LoadingMapScreen()
         {
             HelpingClass.NetworkCheck(this);
-
-            LoginName.Text = "Welcome " + loginOfEmployee;
 
             Border mapBorder = new Border();
             mapBorder.Background = new SolidColorBrush("#FFFFF7FC".ToColor()); 
@@ -103,9 +102,72 @@ namespace MapDBTrack
             LoadingPinns();
 
         } // loading map 
+        private void LoadingCustomerScreen()
+        {
+            Border mapBorder = new Border();
+            Grid.SetColumn(mapBorder, 2);
+            Grid.SetRow(mapBorder, 0);
+            MainGrid.Children.Add(mapBorder);
+            
+            Grid grid = new Grid();
+            grid.RowDefinitions.Add(new RowDefinition() { Height = new GridLength(180) });
+            grid.RowDefinitions.Add(new RowDefinition() { Height = new GridLength(2) });
+            grid.RowDefinitions.Add(new RowDefinition() { Height = new GridLength(1, GridUnitType.Star) });
+            mapBorder.Child = grid;
+
+            Border border1 = new Border();
+            Grid.SetColumn(border1, 0);
+            Grid.SetRow(border1, 0);
+            grid.Children.Add(border1);
+
+
+            Grid grid1 = new Grid();
+            grid1.RowDefinitions.Add(new RowDefinition() { Height = new GridLength(1, GridUnitType.Star) });
+            grid1.RowDefinitions.Add(new RowDefinition() { Height = new GridLength(1, GridUnitType.Star) });
+            grid1.ColumnDefinitions.Add(new ColumnDefinition() { Width = new GridLength(202) });
+            grid1.ColumnDefinitions.Add(new ColumnDefinition() { Width = new GridLength(207) });
+            grid1.ColumnDefinitions.Add(new ColumnDefinition() { Width = new GridLength(190) });
+            grid1.ColumnDefinitions.Add(new ColumnDefinition() { Width = new GridLength(90) });
+            grid1.ColumnDefinitions.Add(new ColumnDefinition() { Width = new GridLength(210) });
+            border1.Child = grid1;
+
+            TextBlock textBlock = new TextBlock()
+            {
+                Text = "Searching:",
+                FontWeight = FontWeights.Bold,
+                FontSize = 30,
+                Foreground = new SolidColorBrush("#FF2F5588".ToColor()),
+                HorizontalAlignment = HorizontalAlignment.Center,
+                VerticalAlignment = VerticalAlignment.Center,
+                Height = 40,
+                Width = 147
+            };
+            Grid.SetColumn(textBlock, 0);
+            Grid.SetRow(textBlock, 0);
+
+            TextBlock textBlock1 = new TextBlock()
+            {
+                Text = "Sorting:",
+                FontWeight = FontWeights.Bold,
+                FontSize = 30,
+                Foreground = new SolidColorBrush("#FF2F5588".ToColor()),
+                HorizontalAlignment = HorizontalAlignment.Center,
+                VerticalAlignment = VerticalAlignment.Center,
+                Height = 40,
+                Width = 147
+            };
+            Grid.SetColumn(textBlock1, 0);
+            Grid.SetRow(textBlock1, 1);
+
+            grid1.Children.Add(textBlock);
+            grid1.Children.Add(textBlock1);
+
+
+        } // loading customer list
         private void CustomersClick(object sender, RoutedEventArgs e)
         {
             HelpingClass.CleanGrid(MainGrid);
+            LoadingCustomerScreen();
             // Changing  mainGird
         } // button customer
         private void HistoryClick(object sender, RoutedEventArgs e)
