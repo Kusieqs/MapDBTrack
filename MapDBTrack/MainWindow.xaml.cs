@@ -104,34 +104,37 @@ namespace MapDBTrack
         } // loading map 
         private void LoadingCustomerScreen()
         {
-            Border mapBorder = new Border();
-            Grid.SetColumn(mapBorder, 2);
-            Grid.SetRow(mapBorder, 0);
-            MainGrid.Children.Add(mapBorder);
+            #region Creating grid
+            Border mainWindowBorder = new Border();
+            Grid.SetColumn(mainWindowBorder, 2);
+            Grid.SetRow(mainWindowBorder, 0);
+            MainGrid.Children.Add(mainWindowBorder);
             
-            Grid grid = new Grid();
-            grid.RowDefinitions.Add(new RowDefinition() { Height = new GridLength(180) });
-            grid.RowDefinitions.Add(new RowDefinition() { Height = new GridLength(2) });
-            grid.RowDefinitions.Add(new RowDefinition() { Height = new GridLength(1, GridUnitType.Star) });
-            mapBorder.Child = grid;
+            Grid nainWindowBorderGrid = new Grid();
+            nainWindowBorderGrid.RowDefinitions.Add(new RowDefinition() { Height = new GridLength(180) });
+            nainWindowBorderGrid.RowDefinitions.Add(new RowDefinition() { Height = new GridLength(2) });
+            nainWindowBorderGrid.RowDefinitions.Add(new RowDefinition() { Height = new GridLength(1, GridUnitType.Star) });
+            mainWindowBorder.Child = nainWindowBorderGrid;
 
-            Border border1 = new Border();
-            Grid.SetColumn(border1, 0);
-            Grid.SetRow(border1, 0);
-            grid.Children.Add(border1);
+            Border menuBorder = new Border();
+            Grid.SetColumn(menuBorder, 0);
+            Grid.SetRow(menuBorder, 0);
+            nainWindowBorderGrid.Children.Add(menuBorder);
 
 
-            Grid grid1 = new Grid();
-            grid1.RowDefinitions.Add(new RowDefinition() { Height = new GridLength(1, GridUnitType.Star) });
-            grid1.RowDefinitions.Add(new RowDefinition() { Height = new GridLength(1, GridUnitType.Star) });
-            grid1.ColumnDefinitions.Add(new ColumnDefinition() { Width = new GridLength(202) });
-            grid1.ColumnDefinitions.Add(new ColumnDefinition() { Width = new GridLength(207) });
-            grid1.ColumnDefinitions.Add(new ColumnDefinition() { Width = new GridLength(190) });
-            grid1.ColumnDefinitions.Add(new ColumnDefinition() { Width = new GridLength(90) });
-            grid1.ColumnDefinitions.Add(new ColumnDefinition() { Width = new GridLength(210) });
-            border1.Child = grid1;
+            Grid menuBorderGrid = new Grid();
+            menuBorderGrid.RowDefinitions.Add(new RowDefinition() { Height = new GridLength(1, GridUnitType.Star) });
+            menuBorderGrid.RowDefinitions.Add(new RowDefinition() { Height = new GridLength(1, GridUnitType.Star) });
+            menuBorderGrid.ColumnDefinitions.Add(new ColumnDefinition() { Width = new GridLength(202) });
+            menuBorderGrid.ColumnDefinitions.Add(new ColumnDefinition() { Width = new GridLength(207) });
+            menuBorderGrid.ColumnDefinitions.Add(new ColumnDefinition() { Width = new GridLength(190) });
+            menuBorderGrid.ColumnDefinitions.Add(new ColumnDefinition() { Width = new GridLength(90) });
+            menuBorderGrid.ColumnDefinitions.Add(new ColumnDefinition() { Width = new GridLength(210) });
+            menuBorder.Child = menuBorderGrid;
 
-            TextBlock textBlock = new TextBlock()
+            #endregion Creating grid
+
+            TextBlock searching = new TextBlock()
             {
                 Text = "Searching:",
                 FontWeight = FontWeights.Bold,
@@ -142,10 +145,10 @@ namespace MapDBTrack
                 Height = 40,
                 Width = 147
             };
-            Grid.SetColumn(textBlock, 0);
-            Grid.SetRow(textBlock, 0);
+            Grid.SetColumn(searching, 0);
+            Grid.SetRow(searching, 0);
 
-            TextBlock textBlock1 = new TextBlock()
+            TextBlock sorting  = new TextBlock()
             {
                 Text = "Sorting:",
                 FontWeight = FontWeights.Bold,
@@ -156,14 +159,160 @@ namespace MapDBTrack
                 Height = 40,
                 Width = 147
             };
-            Grid.SetColumn(textBlock1, 0);
-            Grid.SetRow(textBlock1, 1);
+            Grid.SetColumn(sorting, 0);
+            Grid.SetRow(sorting, 1);
 
-            grid1.Children.Add(textBlock);
-            grid1.Children.Add(textBlock1);
+            Button removeSearching = new Button()
+            {
+                Style = FindResource("ButtonRoundedRemove") as Style,
+                Margin = new Thickness(26,25,24,25),
+            };
+            removeSearching.Click += RemoveSearching;
+            Grid.SetColumn(removeSearching, 3);
+            Grid.SetRow(removeSearching, 0);
 
+            TextBlock x = new TextBlock()
+            {
+                Text = "x",
+                Foreground = Brushes.White,
+                VerticalAlignment = VerticalAlignment.Top,
+                HorizontalAlignment = HorizontalAlignment.Center,
+                FontSize = 30,
+                FontWeight = FontWeights.Bold,
+                Height = 41,
+                Width = 16,
+                IsHitTestVisible = false,
+                Margin = new Thickness(0,21,0,0)
+            };
+            Grid.SetColumn(x, 3);
+            Grid.SetRow(x, 0);
+
+            Button removeSorting = new Button()
+            {
+                Style = FindResource("ButtonRoundedRemove") as Style,
+                Margin = new Thickness(26, 25, 24, 25),
+            };
+            removeSorting.Click += RemoveSorting;
+            Grid.SetColumn(removeSorting, 3);
+            Grid.SetRow(removeSorting, 1);
+
+            TextBlock x1 = new TextBlock()
+            {
+                Text = "x",
+                Foreground = Brushes.White,
+                VerticalAlignment = VerticalAlignment.Top,
+                HorizontalAlignment = HorizontalAlignment.Center,
+                FontSize = 30,
+                FontWeight = FontWeights.Bold,
+                Height = 41,
+                Width = 16,
+                IsHitTestVisible = false,
+                Margin = new Thickness(0, 21, 0, 0)
+            };
+            Grid.SetColumn(x1, 3);
+            Grid.SetRow(x1, 1);
+
+            TextBox sortingBox = new TextBox()
+            {
+                Name = "Sorting",
+                Style = FindResource("RoundedTextBox") as Style,
+                VerticalAlignment = VerticalAlignment.Center,
+                HorizontalAlignment = HorizontalAlignment.Center,
+                Height = 40,
+                Width = 318
+            };
+            sortingBox.TextChanged += SortingChanged;
+            Grid.SetColumnSpan(sortingBox, 2);
+            Grid.SetColumn(sortingBox, 1);
+            Grid.SetRow(sortingBox, 0);
+
+            ComboBox comboName = new ComboBox()
+            {
+                Name = "ComboName",
+                Style = FindResource("RoundedComboBox") as Style,
+                Margin = new Thickness(41,25,40,25)
+            };
+            comboName.SelectionChanged += ComboBoxChanged;
+            Grid.SetColumnSpan(comboName, 2);
+            Grid.SetColumn(comboName, 1);
+            Grid.SetRow(comboName, 1);
+
+            Button raport = new Button();
+            raport.Style = FindResource("ButtonRounded") as Style;
+            raport.Click += RaportClick;
+            Grid.SetColumn(raport, 4);
+            Grid.SetRow(raport, 0);
+
+            Button clear = new Button();
+            clear.Style = FindResource("ButtonRounded") as Style;
+            clear.Click += ClearClick;
+            Grid.SetColumn(clear, 4);
+            Grid.SetRow(clear, 1);
+
+            TextBlock raportText = new TextBlock()
+            {
+                Text = "Raport",
+                VerticalAlignment = VerticalAlignment.Center,
+                HorizontalAlignment = HorizontalAlignment.Center,
+                Foreground = Brushes.White,
+                FontSize = 30,
+                IsHitTestVisible = false,
+                FontWeight = FontWeights.DemiBold
+            };
+            Grid.SetColumn(raportText, 4);
+            Grid.SetRow(raportText, 0);
+
+            TextBlock clearText = new TextBlock()
+            {
+                Text = "Clear",
+                VerticalAlignment = VerticalAlignment.Center,
+                HorizontalAlignment = HorizontalAlignment.Center,
+                Foreground = Brushes.White,
+                FontSize = 30,
+                IsHitTestVisible = false,
+                FontWeight = FontWeights.DemiBold
+            };
+            Grid.SetColumn(clearText, 4);
+            Grid.SetRow(clearText, 1);
+
+            menuBorderGrid.Children.Add(searching);
+            menuBorderGrid.Children.Add(sorting);
+            menuBorderGrid.Children.Add(removeSearching);
+            menuBorderGrid.Children.Add(removeSorting);
+            menuBorderGrid.Children.Add(x);
+            menuBorderGrid.Children.Add(x1);
+            menuBorderGrid.Children.Add(sortingBox);
+            menuBorderGrid.Children.Add(comboName);
+            menuBorderGrid.Children.Add(raport);
+            menuBorderGrid.Children.Add(clear);
+            menuBorderGrid.Children.Add(raportText);
+            menuBorderGrid.Children.Add(clearText);
 
         } // loading customer list
+        private void ComboBoxChanged(object sender, EventArgs e)
+        {
+
+        }
+        private void RaportClick(object sender, EventArgs e)
+        {
+
+        }
+        private void ClearClick(object sender, EventArgs e)
+        {
+
+        }
+        private void SortingChanged(object sender, EventArgs e)
+        {
+
+        }
+        private void RemoveSearching(object sender, EventArgs e)
+        {
+
+        }
+        private void RemoveSorting(object sender, EventArgs e)
+        {
+
+        }
         private void CustomersClick(object sender, RoutedEventArgs e)
         {
             HelpingClass.CleanGrid(MainGrid);
