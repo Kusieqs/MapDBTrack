@@ -24,73 +24,94 @@ namespace MapDBTrack
 
         public static int idOfEmployee;
         public static string loginOfEmployee;
-
         public static List<Place> places = new List<Place>();
-        public static List<Place> newCustomers = new List<Place>();
         private Button adding;
         private AddingCustomer addingCustomer;
         private Grid mapGrid;
         private Map map;
         private bool pinned = false;
+
         public MainWindow(int id, string login)
         {
             InitializeComponent();
             idOfEmployee = id;
             loginOfEmployee = login;
             LoadingMapScreen();
-            LoginName.Text = "Welcome " + loginOfEmployee;
+
+            // Text on the top of menu buttons
+            LoginName.Text = "Welcome " + loginOfEmployee; 
         }
 
         private void MapClick(object sender, RoutedEventArgs e)
         {
             LoadingMapScreen();
-        } // button method
+        } // button to load map
         private void LoadingMapScreen()
         {
-            HelpingClass.NetworkCheck(this);
+            // Checking network connection
+            HelpingClass.NetworkCheck(this); 
 
-            Border mapBorder = new Border();
-            mapBorder.Background = new SolidColorBrush("#FFFFF7FC".ToColor()); 
-            Grid.SetColumn(mapBorder, 2);
-            Grid.SetRow(mapBorder, 0);
-
+            // creating grid for map
             mapGrid = new Grid();
             mapGrid.Name = "Content";
-            map = new Map();
-            map.CredentialsProvider = new ApplicationIdCredentialsProvider(HelpingClass.connectMap);
-            map.Mode = new AerialMode(true);
-            map.Center = new Location(52.2387, 19.0478);
-            map.Culture = "en-US";
-            map.ZoomLevel = 6.7;
+
+            // Creating map
+            map = new Map()
+            {
+                CredentialsProvider = new ApplicationIdCredentialsProvider(HelpingClass.connectMap), // Api key
+                Mode = new AerialMode(true), // setting satelite map
+                Center = new Location(52.2387, 19.0478), // setting center of map
+                Culture = "en-US", // setting language
+                ZoomLevel = 6.7, // setting starting zoom
+
+            };
+
+            // Special method to putting pins on map
             map.MouseLeftButtonDown += MapPuttingPins;
 
+            // Putting border on grid
             mapGrid.Children.Add(map);
+
+            // creating border for map grid
+            Border mapBorder = new Border();
+            mapBorder.Background = new SolidColorBrush("#FFFFF7FC".ToColor());
+            Grid.SetColumn(mapBorder, 2);
+            Grid.SetRow(mapBorder, 0);
             mapBorder.Child = mapGrid;
 
-            Border buttonBorder = new Border();
-            buttonBorder.Width = 60;
-            buttonBorder.Height = 60;
-            buttonBorder.Margin = new Thickness(0, 650, 0, 0);
-            buttonBorder.Background = new SolidColorBrush("#FF2C3C96".ToColor()); 
+            // creating border for button
+            Border buttonBorder = new Border()
+            {
+                Width = 60,
+                Height = 60,
+                Margin = new Thickness(0, 650, 0, 0),
+                Background = new SolidColorBrush("#FF2C3C96".ToColor()),
+
+            };
             buttonBorder.CornerRadius = new CornerRadius(100);
             Grid.SetColumn(buttonBorder, 2);
             Grid.SetRow(buttonBorder, 0);
 
+            // creating button to add pin
             adding = new Button();
             adding.Style = FindResource("ButtonsAddPins") as Style; 
             adding.Click += AddPin;
 
-            TextBlock plusText = new TextBlock();
-            plusText.Text = "+";
-            plusText.FontSize = 71;
-            plusText.FontWeight = FontWeights.DemiBold;
-            plusText.Foreground = Brushes.White;
-            plusText.VerticalAlignment = VerticalAlignment.Top;
-            plusText.HorizontalAlignment = HorizontalAlignment.Left;
-            plusText.Margin = new Thickness(6, -26, 0, 0);
-            plusText.Width = 42;
-            plusText.IsHitTestVisible = false;
+            // Setting textblock on button
+            TextBlock plusText = new TextBlock()
+            {
+                Text = "+",
+                FontSize = 71,
+                FontWeight = FontWeights.DemiBold,
+                Foreground = Brushes.White,
+                VerticalAlignment = VerticalAlignment.Center,
+                HorizontalAlignment = HorizontalAlignment.Left,
+                Margin = new Thickness(6,-26,0,0),
+                Width = 42,
+                IsHitTestVisible = false,
+            };
 
+            // creating grid for all objects and adding to main window
             Grid buttonGrid = new Grid();
             buttonGrid.Children.Add(adding);
             buttonGrid.Children.Add(plusText);
@@ -104,22 +125,24 @@ namespace MapDBTrack
         } // loading map 
         private void LoadingCustomerScreen()
         {
+            HelpingClass.NetworkCheck(this); // Checking network connection
+
             #region Creating grid
             Border mainWindowBorder = new Border();
             Grid.SetColumn(mainWindowBorder, 2);
             Grid.SetRow(mainWindowBorder, 0);
             MainGrid.Children.Add(mainWindowBorder);
             
-            Grid nainWindowBorderGrid = new Grid();
-            nainWindowBorderGrid.RowDefinitions.Add(new RowDefinition() { Height = new GridLength(180) });
-            nainWindowBorderGrid.RowDefinitions.Add(new RowDefinition() { Height = new GridLength(2) });
-            nainWindowBorderGrid.RowDefinitions.Add(new RowDefinition() { Height = new GridLength(1, GridUnitType.Star) });
-            mainWindowBorder.Child = nainWindowBorderGrid;
+            Grid mainWindowBorderGrid = new Grid();
+            mainWindowBorderGrid.RowDefinitions.Add(new RowDefinition() { Height = new GridLength(180) });
+            mainWindowBorderGrid.RowDefinitions.Add(new RowDefinition() { Height = new GridLength(2) });
+            mainWindowBorderGrid.RowDefinitions.Add(new RowDefinition() { Height = new GridLength(1, GridUnitType.Star) });
+            mainWindowBorder.Child = mainWindowBorderGrid;
 
             Border menuBorder = new Border();
             Grid.SetColumn(menuBorder, 0);
             Grid.SetRow(menuBorder, 0);
-            nainWindowBorderGrid.Children.Add(menuBorder);
+            mainWindowBorderGrid.Children.Add(menuBorder);
 
 
             Grid menuBorderGrid = new Grid();
@@ -134,6 +157,7 @@ namespace MapDBTrack
 
             #endregion Creating grid
 
+            #region Creaing menu (sroting searching)
             TextBlock searching = new TextBlock()
             {
                 Text = "Searching:",
@@ -274,6 +298,37 @@ namespace MapDBTrack
             };
             Grid.SetColumn(clearText, 4);
             Grid.SetRow(clearText, 1);
+
+            #endregion
+
+            #region Creating line
+            Border line = new Border();
+            line.Background = new SolidColorBrush("#FF2C3C96".ToColor());
+            Grid.SetColumn(line, 0);
+            Grid.SetRow(line, 1);
+            mainWindowBorderGrid.Children.Add(line);
+            #endregion
+
+            if(places.Count == 0)
+            {
+                TextBlock Error = new TextBlock()
+                {
+                    Text = "List is empty",
+                    VerticalAlignment = VerticalAlignment.Center,
+                    HorizontalAlignment = HorizontalAlignment.Center,
+                    Foreground = new SolidColorBrush("#FF2C3C96".ToColor()),
+                    FontSize = 50,
+                    FontWeight = FontWeights.DemiBold
+                };
+                Grid.SetColumn(Error, 0);
+                Grid.SetRow(Error, 2);
+                mainWindowBorderGrid.Children.Add(Error);
+            }
+            else
+            {
+                // Scroll view
+            }
+
 
             menuBorderGrid.Children.Add(searching);
             menuBorderGrid.Children.Add(sorting);
