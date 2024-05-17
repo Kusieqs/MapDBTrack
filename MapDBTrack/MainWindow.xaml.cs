@@ -63,7 +63,6 @@ namespace MapDBTrack
                 Center = new Location(52.2387, 19.0478), // setting center of map
                 Culture = "en-US", // setting language
                 ZoomLevel = 6.7, // setting starting zoom
-
             };
 
             // Special method to putting pins on map
@@ -136,6 +135,7 @@ namespace MapDBTrack
             Grid mainWindowBorderGrid = new Grid();
             mainWindowBorderGrid.RowDefinitions.Add(new RowDefinition() { Height = new GridLength(180) });
             mainWindowBorderGrid.RowDefinitions.Add(new RowDefinition() { Height = new GridLength(2) });
+            mainWindowBorderGrid.RowDefinitions.Add(new RowDefinition() { Height = new GridLength(60) });
             mainWindowBorderGrid.RowDefinitions.Add(new RowDefinition() { Height = new GridLength(1, GridUnitType.Star) });
             mainWindowBorder.Child = mainWindowBorderGrid;
 
@@ -152,7 +152,8 @@ namespace MapDBTrack
             menuBorderGrid.ColumnDefinitions.Add(new ColumnDefinition() { Width = new GridLength(207) });
             menuBorderGrid.ColumnDefinitions.Add(new ColumnDefinition() { Width = new GridLength(190) });
             menuBorderGrid.ColumnDefinitions.Add(new ColumnDefinition() { Width = new GridLength(90) });
-            menuBorderGrid.ColumnDefinitions.Add(new ColumnDefinition() { Width = new GridLength(210) });
+            menuBorderGrid.ColumnDefinitions.Add(new ColumnDefinition() { Width = new GridLength(1, GridUnitType.Star) });
+            menuBorderGrid.ColumnDefinitions.Add(new ColumnDefinition() { Width = new GridLength(1, GridUnitType.Star) });
             menuBorder.Child = menuBorderGrid;
 
             #endregion Creating grid
@@ -273,6 +274,18 @@ namespace MapDBTrack
             Grid.SetColumn(clear, 4);
             Grid.SetRow(clear, 1);
 
+            Button mode = new Button();
+            mode.Style = FindResource("ButtonRounded") as Style;
+            mode.Click += ModeClick;
+            Grid.SetColumn(mode, 5);
+            Grid.SetRow(mode, 0);
+
+            Button test = new Button();
+            test.Style = FindResource("ButtonRounded") as Style;
+            test.Click += TestClick;
+            Grid.SetColumn(test, 5);
+            Grid.SetRow(test, 1);
+
             TextBlock raportText = new TextBlock()
             {
                 Text = "Raport",
@@ -299,6 +312,31 @@ namespace MapDBTrack
             Grid.SetColumn(clearText, 4);
             Grid.SetRow(clearText, 1);
 
+            TextBlock modeText = new TextBlock()
+            {
+                Text = "Mode",
+                VerticalAlignment = VerticalAlignment.Center,
+                HorizontalAlignment = HorizontalAlignment.Center,
+                Foreground = Brushes.White,
+                FontSize = 30,
+                IsHitTestVisible = false,
+                FontWeight = FontWeights.DemiBold
+            };
+            Grid.SetColumn(modeText, 5);
+            Grid.SetRow(modeText, 0);
+
+            TextBlock testText = new TextBlock()
+            {
+                Text = "Test",
+                VerticalAlignment = VerticalAlignment.Center,
+                HorizontalAlignment = HorizontalAlignment.Center,
+                Foreground = Brushes.White,
+                FontSize = 30,
+                IsHitTestVisible = false,
+                FontWeight = FontWeights.DemiBold
+            };
+            Grid.SetColumn(testText, 5);
+            Grid.SetRow(testText, 1);
             #endregion
 
             #region Creating line
@@ -309,26 +347,35 @@ namespace MapDBTrack
             mainWindowBorderGrid.Children.Add(line);
             #endregion
 
-            if(places.Count == 0)
-            {
-                TextBlock Error = new TextBlock()
-                {
-                    Text = "List is empty",
-                    VerticalAlignment = VerticalAlignment.Center,
-                    HorizontalAlignment = HorizontalAlignment.Center,
-                    Foreground = new SolidColorBrush("#FF2C3C96".ToColor()),
-                    FontSize = 50,
-                    FontWeight = FontWeights.DemiBold
-                };
-                Grid.SetColumn(Error, 0);
-                Grid.SetRow(Error, 2);
-                mainWindowBorderGrid.Children.Add(Error);
-            }
-            else
-            {
-                // Scroll view
-            }
+            #region Theme of category
+            Border themeBorder = new Border();
+            Grid.SetRow(themeBorder, 2);
+            Grid.SetColumn(themeBorder, 0);
 
+            Grid themeGrid = new Grid();
+            themeGrid.ColumnDefinitions.Add(new ColumnDefinition() { Width = new GridLength(1, GridUnitType.Star) });
+            themeGrid.ColumnDefinitions.Add(new ColumnDefinition() { Width = new GridLength(1, GridUnitType.Star) });
+            themeGrid.ColumnDefinitions.Add(new ColumnDefinition() { Width = new GridLength(1, GridUnitType.Star) });
+            themeGrid.ColumnDefinitions.Add(new ColumnDefinition() { Width = new GridLength(1, GridUnitType.Star) });
+            themeGrid.ColumnDefinitions.Add(new ColumnDefinition() { Width = new GridLength(1, GridUnitType.Star) });
+            themeGrid.ColumnDefinitions.Add(new ColumnDefinition() { Width = new GridLength(1, GridUnitType.Star) });
+            themeBorder.Child = themeGrid;
+
+
+            for(int i = 0; i < 6; i++)
+            {
+                TextBlock theme = new TextBlock()
+                {
+                    Text =  i==0 ? "Added by" : i == 1 ? "Name" : i == 2 ? "Last name" : i == 3 ? "City" : i == 4 ? "Street" : "Number",
+                    HorizontalAlignment = HorizontalAlignment.Center,
+                    VerticalAlignment = VerticalAlignment.Center,
+                };
+                Grid.SetColumn(theme, i);
+                Grid.SetRow(theme, 0);
+                themeGrid.Children.Add(theme);
+            }
+            mainWindowBorderGrid.Children.Add(themeBorder);
+            #endregion
 
             menuBorderGrid.Children.Add(searching);
             menuBorderGrid.Children.Add(sorting);
@@ -342,8 +389,20 @@ namespace MapDBTrack
             menuBorderGrid.Children.Add(clear);
             menuBorderGrid.Children.Add(raportText);
             menuBorderGrid.Children.Add(clearText);
+            menuBorderGrid.Children.Add(mode);
+            menuBorderGrid.Children.Add(modeText);
+            menuBorderGrid.Children.Add(test);
+            menuBorderGrid.Children.Add(testText);
 
         } // loading customer list
+        private void TestClick(object sender, EventArgs e)
+        {
+
+        }
+        private void ModeClick(object sender, EventArgs e)
+        {
+
+        }
         private void ComboBoxChanged(object sender, EventArgs e)
         {
 
@@ -372,8 +431,7 @@ namespace MapDBTrack
         {
             HelpingClass.CleanGrid(MainGrid);
             LoadingCustomerScreen();
-            // Changing  mainGird
-        } // button customer
+        } // Changing view to customer window
         private void HistoryClick(object sender, RoutedEventArgs e)
         {
 
