@@ -126,6 +126,7 @@ namespace MapDBTrack
         {
             HelpingClass.NetworkCheck(this); // Checking network connection
 
+            // creating menu grid on the right side
             #region Creating grid
             Border mainWindowBorder = new Border();
             Grid.SetColumn(mainWindowBorder, 2);
@@ -158,7 +159,10 @@ namespace MapDBTrack
 
             #endregion Creating grid
 
-            #region Creaing menu (sroting searching)
+            // creating menu with diffrent buttons and features
+            #region Creating menu (sorting searching)
+
+            // textblock searching
             TextBlock searching = new TextBlock()
             {
                 Text = "Searching:",
@@ -173,6 +177,7 @@ namespace MapDBTrack
             Grid.SetColumn(searching, 0);
             Grid.SetRow(searching, 0);
 
+            // textblock sorting
             TextBlock sorting  = new TextBlock()
             {
                 Text = "Sorting:",
@@ -187,6 +192,7 @@ namespace MapDBTrack
             Grid.SetColumn(sorting, 0);
             Grid.SetRow(sorting, 1);
 
+            // button to remove searching
             Button removeSearching = new Button()
             {
                 Style = FindResource("ButtonRoundedRemove") as Style,
@@ -196,6 +202,17 @@ namespace MapDBTrack
             Grid.SetColumn(removeSearching, 3);
             Grid.SetRow(removeSearching, 0);
 
+            // button to remove sorting
+            Button removeSorting = new Button()
+            {
+                Style = FindResource("ButtonRoundedRemove") as Style,
+                Margin = new Thickness(26, 25, 24, 25),
+            };
+            removeSorting.Click += RemoveSorting;
+            Grid.SetColumn(removeSorting, 3);
+            Grid.SetRow(removeSorting, 1);
+
+            // content to button searching
             TextBlock x = new TextBlock()
             {
                 Text = "x",
@@ -212,15 +229,7 @@ namespace MapDBTrack
             Grid.SetColumn(x, 3);
             Grid.SetRow(x, 0);
 
-            Button removeSorting = new Button()
-            {
-                Style = FindResource("ButtonRoundedRemove") as Style,
-                Margin = new Thickness(26, 25, 24, 25),
-            };
-            removeSorting.Click += RemoveSorting;
-            Grid.SetColumn(removeSorting, 3);
-            Grid.SetRow(removeSorting, 1);
-
+            // content to button sorting
             TextBlock x1 = new TextBlock()
             {
                 Text = "x",
@@ -237,6 +246,7 @@ namespace MapDBTrack
             Grid.SetColumn(x1, 3);
             Grid.SetRow(x1, 1);
 
+            // special place when user can put text to search by
             TextBox sortingBox = new TextBox()
             {
                 Name = "Sorting",
@@ -251,6 +261,7 @@ namespace MapDBTrack
             Grid.SetColumn(sortingBox, 1);
             Grid.SetRow(sortingBox, 0);
 
+            // combo box to choose witch category user can sort
             ComboBox comboName = new ComboBox()
             {
                 Name = "ComboName",
@@ -262,33 +273,38 @@ namespace MapDBTrack
             Grid.SetColumn(comboName, 1);
             Grid.SetRow(comboName, 1);
 
-            Button raport = new Button();
-            raport.Style = FindResource("ButtonRounded") as Style;
-            raport.Click += RaportClick;
-            Grid.SetColumn(raport, 4);
-            Grid.SetRow(raport, 0);
+            // button to open new window to choose mode to report
+            Button report = new Button();
+            report.Style = FindResource("ButtonRounded") as Style;
+            report.Click += RaportClick;
+            Grid.SetColumn(report, 4);
+            Grid.SetRow(report, 0);
 
+            // button to clear the list ????????????????
             Button clear = new Button();
             clear.Style = FindResource("ButtonRounded") as Style;
             clear.Click += ClearClick;
             Grid.SetColumn(clear, 4);
             Grid.SetRow(clear, 1);
 
+            // button to see all places
             Button mode = new Button();
             mode.Style = FindResource("ButtonRounded") as Style;
             mode.Click += ModeClick;
             Grid.SetColumn(mode, 5);
             Grid.SetRow(mode, 0);
 
+            // test button
             Button test = new Button();
             test.Style = FindResource("ButtonRounded") as Style;
             test.Click += TestClick;
             Grid.SetColumn(test, 5);
             Grid.SetRow(test, 1);
 
-            TextBlock raportText = new TextBlock()
+            // content to report button
+            TextBlock reportText = new TextBlock()
             {
-                Text = "Raport",
+                Text = "Report",
                 VerticalAlignment = VerticalAlignment.Center,
                 HorizontalAlignment = HorizontalAlignment.Center,
                 Foreground = Brushes.White,
@@ -296,9 +312,10 @@ namespace MapDBTrack
                 IsHitTestVisible = false,
                 FontWeight = FontWeights.DemiBold
             };
-            Grid.SetColumn(raportText, 4);
-            Grid.SetRow(raportText, 0);
+            Grid.SetColumn(reportText, 4);
+            Grid.SetRow(reportText, 0);
 
+            // content to clear button
             TextBlock clearText = new TextBlock()
             {
                 Text = "Clear",
@@ -312,6 +329,7 @@ namespace MapDBTrack
             Grid.SetColumn(clearText, 4);
             Grid.SetRow(clearText, 1);
 
+            // content to mode button
             TextBlock modeText = new TextBlock()
             {
                 Text = "Mode",
@@ -325,6 +343,7 @@ namespace MapDBTrack
             Grid.SetColumn(modeText, 5);
             Grid.SetRow(modeText, 0);
 
+            // content to test button
             TextBlock testText = new TextBlock()
             {
                 Text = "Test",
@@ -339,6 +358,7 @@ namespace MapDBTrack
             Grid.SetRow(testText, 1);
             #endregion
 
+            //creating line 
             #region Creating line
             Border line = new Border();
             line.Background = new SolidColorBrush("#FF2C3C96".ToColor());
@@ -347,6 +367,7 @@ namespace MapDBTrack
             mainWindowBorderGrid.Children.Add(line);
             #endregion
 
+            // setting theme category to scroll viewer
             #region Theme of category
             Border themeBorder = new Border();
             Grid.SetRow(themeBorder, 2);
@@ -377,6 +398,42 @@ namespace MapDBTrack
             mainWindowBorderGrid.Children.Add(themeBorder);
             #endregion
 
+            // creating scroll view with customers
+            #region Creating Sroll view
+            StackPanel panel = null;
+            StackPanel mainPanel = new StackPanel();
+            ScrollViewer list = new ScrollViewer();
+
+            for (int i = 0; i < places.Count; i++)
+            {
+                panel = new StackPanel();
+                panel.Orientation = Orientation.Horizontal;
+                TextBlock info = null;
+
+                for (int j = 0; j < 6; j++)
+                {
+                    // creating content to panel
+                    info = new TextBlock()
+                    {
+                        Text = j == 0 ? places[i].employee_id.ToString() : j == 1 ? places[i].first_name : j == 2 ? places[i].last_name : j == 3 ? places[i].city : j == 4 ? places[i].street : places[i].contact_number,
+                        HorizontalAlignment = HorizontalAlignment.Center,
+                        VerticalAlignment = VerticalAlignment.Center,
+                        Height = 50,
+                        Width = 150,
+                    };
+                    panel.Children.Add(info);
+                }
+                mainPanel.Children.Add(panel);
+            }
+            list.Content = mainPanel;
+            Grid.SetColumn(list, 0);
+            Grid.SetRow(list, 3);
+            mainWindowBorderGrid.Children.Add(list);
+
+            #endregion
+
+            // adding all elemnts to gird
+            #region Adding elemnts to grid
             menuBorderGrid.Children.Add(searching);
             menuBorderGrid.Children.Add(sorting);
             menuBorderGrid.Children.Add(removeSearching);
@@ -385,14 +442,15 @@ namespace MapDBTrack
             menuBorderGrid.Children.Add(x1);
             menuBorderGrid.Children.Add(sortingBox);
             menuBorderGrid.Children.Add(comboName);
-            menuBorderGrid.Children.Add(raport);
+            menuBorderGrid.Children.Add(report);
             menuBorderGrid.Children.Add(clear);
-            menuBorderGrid.Children.Add(raportText);
+            menuBorderGrid.Children.Add(reportText);
             menuBorderGrid.Children.Add(clearText);
             menuBorderGrid.Children.Add(mode);
             menuBorderGrid.Children.Add(modeText);
             menuBorderGrid.Children.Add(test);
             menuBorderGrid.Children.Add(testText);
+            #endregion
 
         } // loading customer list
         private void TestClick(object sender, EventArgs e)
