@@ -233,5 +233,7 @@ namespace MapDBTrack
             string[] exp = engExp; // warunek czy pol czy eng
             return exp[num];
         } // excpetions words
+
+
     }
 }

@@ -6,13 +6,13 @@
         xmlns:m="clr-namespace:Microsoft.Maps.MapControl.WPF;assembly=Microsoft.Maps.MapControl.WPF"
         xmlns:local="clr-namespace:MapDBTrack"
         mc:Ignorable="d"
-        Title="MainWindow" Height="800" Width="1200" ResizeMode="NoResize" >
+        Title="MainWindow" Height="800" Width="1400" ResizeMode="NoResize" >
 
     <Grid x:Name="MainGrid">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="300"/>
             <ColumnDefinition Width="2"/>
-            <ColumnDefinition Width="898"/>
+            <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
         <Border x:Name="Menu" Grid.Column="0" Background="#FFD1E1EC">
             <Grid>
@@ -110,6 +110,7 @@
         </Border>
         <TextBlock x:Name="LoginName" Text="" Foreground="#FF2F5588" FontWeight="DemiBold" VerticalAlignment="Top" TextAlignment="Left" FontSize="22" Height="41" Margin="21,200,0,0"/>
         <Image Source="/Pictures/Map.png" Grid.Row="0" Margin="36,77,36,598" IsHitTestVisible="False"/>
+
 
     </Grid>
 </Window>
