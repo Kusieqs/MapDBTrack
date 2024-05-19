@@ -423,6 +423,15 @@ namespace MapDBTrack
                     };
                     panel.Children.Add(info);
                 }
+
+                // button to open menu of customer
+                Button menu = new Button()
+                {
+                    Content = "click",
+                };
+                menu.Click += MenuOfCustomerClick;
+
+                panel.Children.Add(menu);
                 mainPanel.Children.Add(panel);
             }
             list.Content = mainPanel;
@@ -453,6 +462,10 @@ namespace MapDBTrack
             #endregion
 
         } // loading customer list
+        private void MenuOfCustomerClick(object sender, EventArgs e)
+        {
+
+        }
         private void TestClick(object sender, EventArgs e)
         {
 
