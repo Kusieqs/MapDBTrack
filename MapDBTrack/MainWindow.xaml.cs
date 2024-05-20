@@ -166,6 +166,7 @@ namespace MapDBTrack
             TextBlock searching = new TextBlock()
             {
                 Text = "Searching:",
+                FontFamily = new FontFamily("Calibri"),
                 FontWeight = FontWeights.Bold,
                 FontSize = 30,
                 Foreground = new SolidColorBrush("#FF2F5588".ToColor()),
@@ -181,6 +182,7 @@ namespace MapDBTrack
             TextBlock sorting  = new TextBlock()
             {
                 Text = "Sorting:",
+                FontFamily = new FontFamily("Calibri"),
                 FontWeight = FontWeights.Bold,
                 FontSize = 30,
                 Foreground = new SolidColorBrush("#FF2F5588".ToColor()),
@@ -192,64 +194,11 @@ namespace MapDBTrack
             Grid.SetColumn(sorting, 0);
             Grid.SetRow(sorting, 1);
 
-            // button to remove searching
-            Button removeSearching = new Button()
-            {
-                Style = FindResource("ButtonRoundedRemove") as Style,
-                Margin = new Thickness(26,25,24,25),
-            };
-            removeSearching.Click += RemoveSearching;
-            Grid.SetColumn(removeSearching, 3);
-            Grid.SetRow(removeSearching, 0);
-
-            // button to remove sorting
-            Button removeSorting = new Button()
-            {
-                Style = FindResource("ButtonRoundedRemove") as Style,
-                Margin = new Thickness(26, 25, 24, 25),
-            };
-            removeSorting.Click += RemoveSorting;
-            Grid.SetColumn(removeSorting, 3);
-            Grid.SetRow(removeSorting, 1);
-
-            // content to button searching
-            TextBlock x = new TextBlock()
-            {
-                Text = "x",
-                Foreground = Brushes.White,
-                VerticalAlignment = VerticalAlignment.Top,
-                HorizontalAlignment = HorizontalAlignment.Center,
-                FontSize = 30,
-                FontWeight = FontWeights.Bold,
-                Height = 41,
-                Width = 16,
-                IsHitTestVisible = false,
-                Margin = new Thickness(0,21,0,0)
-            };
-            Grid.SetColumn(x, 3);
-            Grid.SetRow(x, 0);
-
-            // content to button sorting
-            TextBlock x1 = new TextBlock()
-            {
-                Text = "x",
-                Foreground = Brushes.White,
-                VerticalAlignment = VerticalAlignment.Top,
-                HorizontalAlignment = HorizontalAlignment.Center,
-                FontSize = 30,
-                FontWeight = FontWeights.Bold,
-                Height = 41,
-                Width = 16,
-                IsHitTestVisible = false,
-                Margin = new Thickness(0, 21, 0, 0)
-            };
-            Grid.SetColumn(x1, 3);
-            Grid.SetRow(x1, 1);
-
             // special place when user can put text to search by
             TextBox sortingBox = new TextBox()
             {
                 Name = "Sorting",
+                FontFamily = new FontFamily("Calibri"),
                 Style = FindResource("RoundedTextBox") as Style,
                 VerticalAlignment = VerticalAlignment.Center,
                 HorizontalAlignment = HorizontalAlignment.Center,
@@ -273,38 +222,52 @@ namespace MapDBTrack
             Grid.SetColumn(comboName, 1);
             Grid.SetRow(comboName, 1);
 
+
             // button to open new window to choose mode to report
-            Button report = new Button();
+            Button report = new Button()
+            {
+                Width = 180,
+            };
             report.Style = FindResource("ButtonRounded") as Style;
             report.Click += RaportClick;
-            Grid.SetColumn(report, 4);
+            Grid.SetColumn(report, 3);
             Grid.SetRow(report, 0);
 
             // button to clear the list ????????????????
-            Button clear = new Button();
+            Button clear = new Button()
+            {
+                Width = 180,
+            };
             clear.Style = FindResource("ButtonRounded") as Style;
             clear.Click += ClearClick;
-            Grid.SetColumn(clear, 4);
+            Grid.SetColumn(clear, 3);
             Grid.SetRow(clear, 1);
 
             // button to see all places
-            Button mode = new Button();
+            Button mode = new Button()
+            {
+                Width = 180,
+            };
             mode.Style = FindResource("ButtonRounded") as Style;
             mode.Click += ModeClick;
-            Grid.SetColumn(mode, 5);
+            Grid.SetColumn(mode, 4);
             Grid.SetRow(mode, 0);
 
             // test button
-            Button test = new Button();
+            Button test = new Button()
+            {
+                Width = 180,
+            };
             test.Style = FindResource("ButtonRounded") as Style;
             test.Click += TestClick;
-            Grid.SetColumn(test, 5);
+            Grid.SetColumn(test, 4);
             Grid.SetRow(test, 1);
 
             // content to report button
             TextBlock reportText = new TextBlock()
             {
                 Text = "Report",
+                FontFamily = new FontFamily("Calibri"),
                 VerticalAlignment = VerticalAlignment.Center,
                 HorizontalAlignment = HorizontalAlignment.Center,
                 Foreground = Brushes.White,
@@ -312,13 +275,14 @@ namespace MapDBTrack
                 IsHitTestVisible = false,
                 FontWeight = FontWeights.DemiBold
             };
-            Grid.SetColumn(reportText, 4);
+            Grid.SetColumn(reportText, 3);
             Grid.SetRow(reportText, 0);
 
             // content to clear button
             TextBlock clearText = new TextBlock()
             {
                 Text = "Clear",
+                FontFamily = new FontFamily("Calibri"),
                 VerticalAlignment = VerticalAlignment.Center,
                 HorizontalAlignment = HorizontalAlignment.Center,
                 Foreground = Brushes.White,
@@ -326,13 +290,14 @@ namespace MapDBTrack
                 IsHitTestVisible = false,
                 FontWeight = FontWeights.DemiBold
             };
-            Grid.SetColumn(clearText, 4);
+            Grid.SetColumn(clearText, 3);
             Grid.SetRow(clearText, 1);
 
             // content to mode button
             TextBlock modeText = new TextBlock()
             {
                 Text = "Mode",
+                FontFamily = new FontFamily("Calibri"),
                 VerticalAlignment = VerticalAlignment.Center,
                 HorizontalAlignment = HorizontalAlignment.Center,
                 Foreground = Brushes.White,
@@ -340,13 +305,14 @@ namespace MapDBTrack
                 IsHitTestVisible = false,
                 FontWeight = FontWeights.DemiBold
             };
-            Grid.SetColumn(modeText, 5);
+            Grid.SetColumn(modeText, 4);
             Grid.SetRow(modeText, 0);
 
             // content to test button
             TextBlock testText = new TextBlock()
             {
                 Text = "Test",
+                FontFamily = new FontFamily("Calibri"),
                 VerticalAlignment = VerticalAlignment.Center,
                 HorizontalAlignment = HorizontalAlignment.Center,
                 Foreground = Brushes.White,
@@ -354,7 +320,7 @@ namespace MapDBTrack
                 IsHitTestVisible = false,
                 FontWeight = FontWeights.DemiBold
             };
-            Grid.SetColumn(testText, 5);
+            Grid.SetColumn(testText, 4);
             Grid.SetRow(testText, 1);
             #endregion
 
@@ -487,14 +453,6 @@ namespace MapDBTrack
 
         }
         private void SortingChanged(object sender, EventArgs e)
-        {
-
-        }
-        private void RemoveSearching(object sender, EventArgs e)
-        {
-
-        }
-        private void RemoveSorting(object sender, EventArgs e)
         {
 
         }

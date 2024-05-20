@@ -37,7 +37,7 @@
 
                 <Border Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2">
                     <Grid>
-                        <TextBlock Text="MapDBTrack" FontSize="40" FontWeight="Bold" Foreground="#FF2F5588" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,22,0,0"/>
+                        <TextBlock Text="MapDBTrack" FontSize="43" FontWeight="Bold" Foreground="#FF2F5588" HorizontalAlignment="Center" VerticalAlignment="Top"  FontFamily="Calibri" Margin="0,23,0,0"/>
                         <Button Opacity="0" Click="Information" Cursor="Hand" Margin="5,5,270,83" />
                         <Image Source="/Pictures/Info.png" Margin="5,5,270,83" IsHitTestVisible="False"/>
                     </Grid>
@@ -52,8 +52,8 @@
                             <ColumnDefinition Width="80"/>
                             <ColumnDefinition Width="*"/>
                         </Grid.ColumnDefinitions>
-                        <Button x:Name="Map" Grid.Column="0" Grid.ColumnSpan="2" Style="{StaticResource ButtonRounded}" Click="MapClick" Width="250" Height="72"/>
-                        <TextBlock Text="Map" Grid.Column="1" Style="{StaticResource TexBlocks}" IsHitTestVisible="False"/>
+                        <Button x:Name="Map" Grid.Column="0" Grid.ColumnSpan="2" Style="{StaticResource ButtonRounded}" Click="MapClick" Width="250" Height="NaN" Margin="5,0,5,1"/>
+                        <TextBlock Text="Map" Grid.Column="1" Style="{StaticResource TextBlocks}" IsHitTestVisible="False"/>
                         <Image Source="/Pictures/Pin.png" Grid.Column="0" IsHitTestVisible="False" Margin="3,6,1,6"/>
                     </Grid>
                 </Border>
@@ -64,8 +64,8 @@
                             <ColumnDefinition Width="80"/>
                             <ColumnDefinition Width="*"/>
                         </Grid.ColumnDefinitions>
-                        <Button Grid.Column="0" Grid.ColumnSpan="2" Style="{StaticResource ButtonRounded}" Click="CustomersClick" Width="250" Height="72"/>
-                        <TextBlock Text="Customers" Grid.Column="1" Style="{StaticResource TexBlocks}" IsHitTestVisible="False"/>
+                        <Button Grid.Column="0" Grid.ColumnSpan="2" Style="{StaticResource ButtonRounded}" Click="CustomersClick" Width="250" Height="NaN" Margin="5,0,5,1"/>
+                        <TextBlock Text="Customers" Grid.Column="1" Style="{StaticResource TextBlocks}" IsHitTestVisible="False"/>
                         <Image Source="/Pictures/Customer.png" Grid.Column="0" IsHitTestVisible="False" Margin="3,6,1,6"/>
                     </Grid>
                 </Border>
@@ -76,8 +76,8 @@
                             <ColumnDefinition Width="80"/>
                             <ColumnDefinition Width="*"/>
                         </Grid.ColumnDefinitions>
-                        <Button Grid.Column="0" Grid.ColumnSpan="2" Style="{StaticResource ButtonRounded}" Click="HistoryClick" Width="250" Height="72"/>
-                        <TextBlock Text="History" Grid.Column="1" Style="{StaticResource TexBlocks}" IsHitTestVisible="False"/>
+                        <Button Grid.Column="0" Grid.ColumnSpan="2" Style="{StaticResource ButtonRounded}" Click="HistoryClick" Width="250" Height="NaN" Margin="5,0,5,1"/>
+                        <TextBlock Text="History" Grid.Column="1" Style="{StaticResource TextBlocks}" IsHitTestVisible="False"/>
                         <Image Source="/Pictures/History.png" Grid.Column="0" IsHitTestVisible="False" Margin="0,5,0,5"/>
                     </Grid>
                 </Border>
@@ -88,8 +88,8 @@
                             <ColumnDefinition Width="80"/>
                             <ColumnDefinition Width="*"/>
                         </Grid.ColumnDefinitions>
-                        <Button x:Name="Logout" Grid.Column="0" Grid.ColumnSpan="2" Style="{StaticResource ButtonRounded}" Click="LogoutClick" Width="250" Height="72"/>
-                        <TextBlock Text="Log out" Grid.Column="1" Style="{StaticResource TexBlocks}" IsHitTestVisible="False"/>
+                        <Button x:Name="Logout" Grid.Column="0" Grid.ColumnSpan="2" Style="{StaticResource ButtonRounded}" Click="LogoutClick" Width="250" Height="NaN" Margin="5,0,5,1"/>
+                        <TextBlock Text="Log out" Grid.Column="1" Style="{StaticResource TextBlocks}" IsHitTestVisible="False"/>
                         <Image Source="/Pictures/Logout.png" Grid.Column="0" IsHitTestVisible="False" Margin="8,9,4,9"/>
                     </Grid>
                 </Border>
@@ -100,15 +100,15 @@
                             <ColumnDefinition Width="80"/>
                             <ColumnDefinition Width="*"/>
                         </Grid.ColumnDefinitions>
-                        <Button x:Name="Exit" Grid.Column="0" Grid.ColumnSpan="2" Style="{StaticResource ButtonRounded}" Click="ExitClick" Width="250" Height="72"/>
-                        <TextBlock Text="Exit" Grid.Column="1" Style="{StaticResource TexBlocks}" IsHitTestVisible="False"/>
+                        <Button x:Name="Exit" Grid.Column="0" Grid.ColumnSpan="2" Style="{StaticResource ButtonRounded}" Click="ExitClick" Width="250" Height="NaN" Margin="5,0,5,1"/>
+                        <TextBlock Text="Exit" Grid.Column="1" Style="{StaticResource TextBlocks}" IsHitTestVisible="False"/>
                         <Image Source="/Pictures/Exit.png" Grid.Column="0" IsHitTestVisible="False" Margin="1,-2,2,1"/>
                     </Grid>
                 </Border>
 
             </Grid>
         </Border>
-        <TextBlock x:Name="LoginName" Text="" Foreground="#FF2F5588" FontWeight="DemiBold" VerticalAlignment="Top" TextAlignment="Left" FontSize="22" Height="41" Margin="21,200,0,0"/>
+        <TextBlock x:Name="LoginName" Text="" Foreground="#FF2F5588" FontWeight="DemiBold" VerticalAlignment="Top" TextAlignment="Left" FontSize="22" Height="41" Margin="21,200,0,0" FontFamily="Calibri"/>
         <Image Source="/Pictures/Map.png" Grid.Row="0" Margin="36,77,36,598" IsHitTestVisible="False"/>
 
 

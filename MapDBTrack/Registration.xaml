@@ -25,28 +25,29 @@
                     <ColumnDefinition Width="*"/>
                     <ColumnDefinition Width="*"/>
                 </Grid.ColumnDefinitions>
-                
-                <Button Content="Back" Click="Back" Grid.Column="0" Grid.Row="6" Style="{StaticResource ButtonRounded}"/>
-                <Button Content="Accept" Click="SignUp" Grid.Column="1" Grid.Row="6" Style="{StaticResource ButtonRounded}"/>
-                
-                <TextBlock Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" Foreground="#FF2F5588" Text="REGISTRATION" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="35" FontWeight="DemiBold"/>
+
+
+                <TextBlock Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" Foreground="#FF2F5588" Text="REGISTRATION" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="35" FontWeight="DemiBold" FontFamily="Calibri"/>
                 <Border Grid.Row="1" Grid.Column="0"  Grid.ColumnSpan="2" Background="#FF2F5588" />
                 
                 <TextBox x:Name="Login" Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2" TextChanged="LoginChanged"  Style="{StaticResource RoundedTextBox}"/>
                 <TextBox x:Name="Email" Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="2" TextChanged="EmailChanged"  Style="{StaticResource RoundedTextBoxEmail}"/>
                 <TextBox x:Name="Password" Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="2" TextChanged="PasswordChanged"   Style="{StaticResource RoundedTextBox}"/>
                 <TextBox x:Name="RepeatPassword" Grid.Row="5" Grid.Column="0" Grid.ColumnSpan="2" TextChanged="RepeatPasswordChanged"  Style="{StaticResource RoundedTextBox}"/>
-                
-                
-                <TextBlock Text="User name" Grid.Row="2" Width="60" Height="20" Margin="39,24,100,83" Foreground="#FF2F5588" FontWeight="DemiBold" RenderTransformOrigin="0.325,0.51"/>
-                <TextBlock Text="Email" Grid.Row="3" Width="60" Height="20" Margin="39,24,100,83" Foreground="#FF2F5588" FontWeight="DemiBold"/>
-                <TextBlock Text="Password" Grid.Row="4" Width="60" Height="20" Margin="39,24,100,83" Foreground="#FF2F5588" FontWeight="DemiBold"/>
-                <TextBlock Text="Repeat password" Grid.Row="5" Height="20" Margin="39,24,63,83" Foreground="#FF2F5588" FontWeight="DemiBold"/>
-                
-                <TextBlock x:Name="LoginFailed" Text="" Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="2" Width="200" Height="20" Margin="39,83,157,24" FontSize="10" FontWeight="DemiBold" Foreground="Red"/>
-                <TextBlock x:Name="EmailFailed" Text="" Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="3" Width="200" Height="20" Margin="39,83,157,24" FontSize="10" FontWeight="DemiBold" Foreground="Red"/>
-                <TextBlock x:Name="PasswordFailed" Text="" Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="4" Width="200" Height="20" Margin="39,83,157,24" FontSize="10" FontWeight="DemiBold" Foreground="Red"/>
-                <TextBlock x:Name="RepeatPasswordFailed" Text="" Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="5" Width="200" Height="20" Margin="39,83,157,24" FontSize="10" FontWeight="DemiBold" Foreground="Red"/>
+
+
+                <TextBlock Text="User name" Grid.Row="2" Width="60" Height="20" Margin="47,24,91,83" Foreground="#FF2F5588" FontWeight="DemiBold" FontFamily="Calibri"/>
+                <TextBlock Text="Email" Grid.Row="3" Width="60" Height="20" Margin="47,24,91,83" Foreground="#FF2F5588" FontWeight="DemiBold" FontFamily="Calibri"/>
+                <TextBlock Text="Password" Grid.Row="4" Width="60" Height="20" Margin="47,24,91,83" Foreground="#FF2F5588" FontWeight="DemiBold" FontFamily="Calibri"/>
+                <TextBlock Text="Repeat password" Grid.Row="5" Height="20" Margin="47,24,63,83" Foreground="#FF2F5588" FontWeight="DemiBold" FontFamily="Calibri"/>
+
+                <TextBlock x:Name="LoginFailed" Text="" Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="2" Width="200" Height="20" Margin="47,83,149,24" FontSize="10" FontWeight="DemiBold" Foreground="Red" FontFamily="Calibri"/>
+                <TextBlock x:Name="EmailFailed" Text="" Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="3" Width="200" Height="20" Margin="47,83,157,24" FontSize="10" FontWeight="DemiBold" Foreground="Red" FontFamily="Calibri"/>
+                <TextBlock x:Name="PasswordFailed" Text="" Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="4" Width="200" Height="20" Margin="47,83,157,24" FontSize="10" FontWeight="DemiBold" Foreground="Red" FontFamily="Calibri"/>
+                <TextBlock x:Name="RepeatPasswordFailed" Text="" Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="5" Width="200" Height="20" Margin="47,83,157,24" FontSize="10" FontWeight="DemiBold" Foreground="Red" FontFamily="Calibri"/>
+
+                <Button Content="Back" Click="Back" Grid.Column="0" Grid.Row="6" Style="{StaticResource ButtonRounded}"/>
+                <Button Content="Accept" Click="SignUp" Grid.Column="1" Grid.Row="6" Style="{StaticResource ButtonRounded}"/>
 
             </Grid>
         </Border>
