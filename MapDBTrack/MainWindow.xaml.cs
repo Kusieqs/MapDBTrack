@@ -1,5 +1,4 @@
-﻿
-using Microsoft.Maps.MapControl.WPF;
+﻿using Microsoft.Maps.MapControl.WPF;
 using Microsoft.Win32;
 using System;
 using System.Collections.Generic;
@@ -26,6 +25,7 @@ namespace MapDBTrack
         public static string loginOfEmployee;
         public static List<Place> places = new List<Place>();
         private Button adding;
+        private Button removing;
         private AddingCustomer addingCustomer;
         private Grid mapGrid;
         private Map map;
@@ -39,7 +39,7 @@ namespace MapDBTrack
             LoadingMapScreen();
 
             // Text on the top of menu buttons
-            LoginName.Text = "Welcome " + loginOfEmployee; 
+            LoginName.Text = "Hi, " + loginOfEmployee;
         }
 
         private void MapClick(object sender, RoutedEventArgs e)
@@ -49,7 +49,7 @@ namespace MapDBTrack
         private void LoadingMapScreen()
         {
             // Checking network connection
-            HelpingClass.NetworkCheck(this); 
+            HelpingClass.NetworkCheck(this);
 
             // creating grid for map
             mapGrid = new Grid();
@@ -67,8 +67,6 @@ namespace MapDBTrack
 
             // Special method to putting pins on map
             map.MouseLeftButtonDown += MapPuttingPins;
-
-            // Putting border on grid
             mapGrid.Children.Add(map);
 
             // creating border for map grid
@@ -81,41 +79,63 @@ namespace MapDBTrack
             // creating border for button
             Border buttonBorder = new Border()
             {
-                Width = 60,
+                Width = 150,
                 Height = 60,
                 Margin = new Thickness(0, 650, 0, 0),
                 Background = new SolidColorBrush("#FF2C3C96".ToColor()),
 
             };
-            buttonBorder.CornerRadius = new CornerRadius(100);
+            buttonBorder.CornerRadius = new CornerRadius(20);
             Grid.SetColumn(buttonBorder, 2);
             Grid.SetRow(buttonBorder, 0);
 
+            // creating grid for buttons
+            Grid buttonsMap = new Grid();
+            buttonsMap.ColumnDefinitions.Add(new ColumnDefinition() { Width = new GridLength(1, GridUnitType.Star) });
+            buttonsMap.ColumnDefinitions.Add(new ColumnDefinition() { Width = new GridLength(1) });
+            buttonsMap.ColumnDefinitions.Add(new ColumnDefinition() { Width = new GridLength(1, GridUnitType.Star) });
+
+            // creating line beetwen two buttons
+            Border border = new Border();
+            border.Background = Brushes.Gray;
+            Grid.SetColumn(border, 1);
+            Grid.SetRow(border, 0);
+            buttonsMap.Children.Add(border);
+
             // creating button to add pin
             adding = new Button();
-            adding.Style = FindResource("ButtonsAddPins") as Style; 
+            adding.Style = FindResource("ButtonsAddPins") as Style;
             adding.Click += AddPin;
-
-            // Setting textblock on button
-            TextBlock plusText = new TextBlock()
+            System.Windows.Controls.Image imageAdd = new System.Windows.Controls.Image
             {
-                Text = "+",
-                FontSize = 71,
-                FontWeight = FontWeights.DemiBold,
-                Foreground = Brushes.White,
-                VerticalAlignment = VerticalAlignment.Center,
-                HorizontalAlignment = HorizontalAlignment.Left,
-                Margin = new Thickness(6,-26,0,0),
+                Source = new BitmapImage(new Uri("pack://application:,,,/Pictures/add.png")),
                 Width = 42,
-                IsHitTestVisible = false,
+                Height = 42,
             };
+            RenderOptions.SetBitmapScalingMode(imageAdd, BitmapScalingMode.HighQuality);
+            adding.Content = imageAdd;
+            Grid.SetColumn(adding, 0);
+            Grid.SetRow(adding, 0);
+            buttonsMap.Children.Add(adding);
+
+            // creating button do remove pin
+            removing = new Button();
+            removing.Style = FindResource("ButtonsRemovePins") as Style;
+            removing.Click += RemovePin;
+            System.Windows.Controls.Image imageRemove = new System.Windows.Controls.Image
+            {
+                Source = new BitmapImage(new Uri("pack://application:,,,/Pictures/bin.png")),
+                Width = 42,
+                Height = 42,
+            };
+            RenderOptions.SetBitmapScalingMode(imageRemove, BitmapScalingMode.HighQuality);
+            removing.Content = imageRemove;
+            Grid.SetColumn(removing, 2);
+            Grid.SetRow(removing, 2);
+            buttonsMap.Children.Add(removing);
 
             // creating grid for all objects and adding to main window
-            Grid buttonGrid = new Grid();
-            buttonGrid.Children.Add(adding);
-            buttonGrid.Children.Add(plusText);
-            buttonBorder.Child = buttonGrid;
-
+            buttonBorder.Child = buttonsMap;
             MainGrid.Children.Add(mapBorder);
             MainGrid.Children.Add(buttonBorder);
 
@@ -132,7 +152,7 @@ namespace MapDBTrack
             Grid.SetColumn(mainWindowBorder, 2);
             Grid.SetRow(mainWindowBorder, 0);
             MainGrid.Children.Add(mainWindowBorder);
-            
+
             Grid mainWindowBorderGrid = new Grid();
             mainWindowBorderGrid.RowDefinitions.Add(new RowDefinition() { Height = new GridLength(180) });
             mainWindowBorderGrid.RowDefinitions.Add(new RowDefinition() { Height = new GridLength(2) });
@@ -179,7 +199,7 @@ namespace MapDBTrack
             Grid.SetRow(searching, 0);
 
             // textblock sorting
-            TextBlock sorting  = new TextBlock()
+            TextBlock sorting = new TextBlock()
             {
                 Text = "Sorting:",
                 FontFamily = new FontFamily("Calibri"),
@@ -215,7 +235,7 @@ namespace MapDBTrack
             {
                 Name = "ComboName",
                 Style = FindResource("RoundedComboBox") as Style,
-                Margin = new Thickness(41,25,40,25)
+                Margin = new Thickness(41, 25, 40, 25)
             };
             comboName.SelectionChanged += ComboBoxChanged;
             Grid.SetColumnSpan(comboName, 2);
@@ -349,11 +369,11 @@ namespace MapDBTrack
             themeBorder.Child = themeGrid;
 
 
-            for(int i = 0; i < 6; i++)
+            for (int i = 0; i < 6; i++)
             {
                 TextBlock theme = new TextBlock()
                 {
-                    Text =  i==0 ? "Added by" : i == 1 ? "Name" : i == 2 ? "Last name" : i == 3 ? "City" : i == 4 ? "Street" : "Number",
+                    Text = i == 0 ? "Added by" : i == 1 ? "Name" : i == 2 ? "Last name" : i == 3 ? "City" : i == 4 ? "Street" : "Number",
                     HorizontalAlignment = HorizontalAlignment.Center,
                     VerticalAlignment = VerticalAlignment.Center,
                 };
@@ -411,10 +431,6 @@ namespace MapDBTrack
             #region Adding elemnts to grid
             menuBorderGrid.Children.Add(searching);
             menuBorderGrid.Children.Add(sorting);
-            menuBorderGrid.Children.Add(removeSearching);
-            menuBorderGrid.Children.Add(removeSorting);
-            menuBorderGrid.Children.Add(x);
-            menuBorderGrid.Children.Add(x1);
             menuBorderGrid.Children.Add(sortingBox);
             menuBorderGrid.Children.Add(comboName);
             menuBorderGrid.Children.Add(report);
@@ -477,22 +493,27 @@ namespace MapDBTrack
         } // close window
         private void Information(object sender, RoutedEventArgs e)
         {
-            string info = "Version: 1.0\nContact: kus.konrad1@gmail.com\nLicense: MapDBTrack Commercial Use License";
+            string info = $"{HelpingClass.version}\nContact: kus.konrad1@gmail.com\nLicense: MapDBTrack Commercial Use License";
             MessageBox.Show(info, "Information", MessageBoxButton.OK, MessageBoxImage.Information);
         } // special MessageBox with version etc.
         private void AddPin(object sender, RoutedEventArgs e)
         {
-            if(pinned == true)
+            if (pinned == true)
             {
                 pinned = false;
                 Mouse.OverrideCursor = Cursors.Arrow;
             }
-            else 
+            else
             {
                 pinned = true;
                 Mouse.OverrideCursor = Cursors.Hand;
             }
         } // set true for added new pin to map or false
+        private void RemovePin(object sender, RoutedEventArgs e)
+        {
+
+        }
+
         private void MapPuttingPins(object sender, MouseButtonEventArgs e)
         {
             HelpingClass.NetworkCheck(this);
@@ -550,9 +571,9 @@ namespace MapDBTrack
             if (p1 != null)
             {
                 ToolTip tooltip = new ToolTip();
-                tooltip.IsEnabled = true; 
+                tooltip.IsEnabled = true;
                 tooltip.Content = HelpingClass.GetDescTool(p1);
-                pin.ToolTip = tooltip; 
+                pin.ToolTip = tooltip;
                 tooltip.IsOpen = true;
             }
         }
@@ -578,7 +599,7 @@ namespace MapDBTrack
         protected override void OnClosing(CancelEventArgs e)
         {
             base.OnClosing(e);
-            if(addingCustomer != null && addingCustomer.IsVisible)
+            if (addingCustomer != null && addingCustomer.IsVisible)
                 e.Cancel = true;
         } // blocking window 
 

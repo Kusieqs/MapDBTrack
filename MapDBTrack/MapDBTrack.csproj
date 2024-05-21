@@ -10,7 +10,9 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Pictures\add.png" />
     <None Remove="Pictures\Background.jpg" />
+    <None Remove="Pictures\bin.png" />
     <None Remove="Pictures\Customer.png" />
     <None Remove="Pictures\Exit.png" />
     <None Remove="Pictures\History.png" />
@@ -21,6 +23,8 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Resource Include="Pictures\add.png" />
+    <Resource Include="Pictures\bin.png" />
     <Resource Include="Pictures\Customer.png" />
     <Resource Include="Pictures\Exit.png" />
     <Resource Include="Pictures\History.png" />
