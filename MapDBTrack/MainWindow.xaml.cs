@@ -174,7 +174,6 @@ namespace MapDBTrack
             menuBorderGrid.ColumnDefinitions.Add(new ColumnDefinition() { Width = new GridLength(202) });
             menuBorderGrid.ColumnDefinitions.Add(new ColumnDefinition() { Width = new GridLength(207) });
             menuBorderGrid.ColumnDefinitions.Add(new ColumnDefinition() { Width = new GridLength(190) });
-            menuBorderGrid.ColumnDefinitions.Add(new ColumnDefinition() { Width = new GridLength(90) });
             menuBorderGrid.ColumnDefinitions.Add(new ColumnDefinition() { Width = new GridLength(1, GridUnitType.Star) });
             menuBorderGrid.ColumnDefinitions.Add(new ColumnDefinition() { Width = new GridLength(1, GridUnitType.Star) });
             menuBorder.Child = menuBorderGrid;
@@ -239,6 +238,9 @@ namespace MapDBTrack
                 Style = FindResource("RoundedComboBox") as Style,
                 Margin = new Thickness(41, 25, 40, 25)
             };
+            comboName.Items.Add("nwm");
+            comboName.Items.Add("nws");
+            comboName.Items.Add("nw5");
             comboName.SelectionChanged += ComboBoxChanged;
             Grid.SetColumnSpan(comboName, 2);
             Grid.SetColumn(comboName, 1);
@@ -289,14 +291,8 @@ namespace MapDBTrack
             TextBlock reportText = new TextBlock()
             {
                 Text = "Report",
-                FontFamily = new FontFamily("Calibri"),
-                VerticalAlignment = VerticalAlignment.Center,
-                HorizontalAlignment = HorizontalAlignment.Center,
-                Foreground = Brushes.White,
-                FontSize = 30,
-                IsHitTestVisible = false,
-                FontWeight = FontWeights.DemiBold
             };
+            reportText.Style = FindResource("TextBlocksCustomerButtons") as Style;
             Grid.SetColumn(reportText, 3);
             Grid.SetRow(reportText, 0);
 
@@ -304,14 +300,8 @@ namespace MapDBTrack
             TextBlock clearText = new TextBlock()
             {
                 Text = "Clear",
-                FontFamily = new FontFamily("Calibri"),
-                VerticalAlignment = VerticalAlignment.Center,
-                HorizontalAlignment = HorizontalAlignment.Center,
-                Foreground = Brushes.White,
-                FontSize = 30,
-                IsHitTestVisible = false,
-                FontWeight = FontWeights.DemiBold
             };
+            clearText.Style = FindResource("TextBlocksCustomerButtons") as Style;
             Grid.SetColumn(clearText, 3);
             Grid.SetRow(clearText, 1);
 
@@ -319,14 +309,8 @@ namespace MapDBTrack
             TextBlock modeText = new TextBlock()
             {
                 Text = "Mode",
-                FontFamily = new FontFamily("Calibri"),
-                VerticalAlignment = VerticalAlignment.Center,
-                HorizontalAlignment = HorizontalAlignment.Center,
-                Foreground = Brushes.White,
-                FontSize = 30,
-                IsHitTestVisible = false,
-                FontWeight = FontWeights.DemiBold
             };
+            modeText.Style = FindResource("TextBlocksCustomerButtons") as Style;
             Grid.SetColumn(modeText, 4);
             Grid.SetRow(modeText, 0);
 
@@ -334,16 +318,49 @@ namespace MapDBTrack
             TextBlock testText = new TextBlock()
             {
                 Text = "Test",
-                FontFamily = new FontFamily("Calibri"),
-                VerticalAlignment = VerticalAlignment.Center,
-                HorizontalAlignment = HorizontalAlignment.Center,
-                Foreground = Brushes.White,
-                FontSize = 30,
-                IsHitTestVisible = false,
-                FontWeight = FontWeights.DemiBold
             };
+            testText.Style = FindResource("TextBlocksCustomerButtons") as Style;
             Grid.SetColumn(testText, 4);
             Grid.SetRow(testText, 1);
+
+            Image reportImage = new Image()
+            {
+                Source = new BitmapImage(new Uri("pack://application:,,,/Pictures/report.png")),            
+            };
+            reportImage.Style = FindResource("ImageCustomerView") as Style;
+            RenderOptions.SetBitmapScalingMode(reportImage, BitmapScalingMode.HighQuality);
+            Grid.SetColumn(reportImage, 3);
+            Grid.SetRow(reportImage, 0);
+
+            Image clearImage = new Image()
+            {
+                Source = new BitmapImage(new Uri("pack://application:,,,/Pictures/clear.png")),
+            };
+            clearImage.Style = FindResource("ImageCustomerView") as Style;
+            RenderOptions.SetBitmapScalingMode(clearImage, BitmapScalingMode.HighQuality);
+            Grid.SetColumn(clearImage, 3);
+            Grid.SetRow(clearImage, 1);
+
+            Image modeImage = new Image()
+            {
+                Source = new BitmapImage(new Uri("pack://application:,,,/Pictures/mode.png")),
+            };
+            modeImage.Style = FindResource("ImageCustomerView") as Style;
+            modeImage.Width = 38;
+            RenderOptions.SetBitmapScalingMode(modeImage, BitmapScalingMode.HighQuality);
+            Grid.SetColumn(modeImage, 4);
+            Grid.SetRow(modeImage, 0);
+
+            /*
+            Image testImage = new Image()
+            {
+                Source = new BitmapImage(new Uri("pack://application:,,,/Pictures/test.png")),
+            };
+            testImage.Style = FindResource("ImageCustomerView") as Style;
+            RenderOptions.SetBitmapScalingMode(testImage, BitmapScalingMode.HighQuality);
+            Grid.SetColumn(testImage, 4);
+            Grid.SetRow(testImage, 1);
+            */
             #endregion
 
             //creating line 
@@ -443,6 +460,10 @@ namespace MapDBTrack
             menuBorderGrid.Children.Add(modeText);
             menuBorderGrid.Children.Add(test);
             menuBorderGrid.Children.Add(testText);
+
+            menuBorderGrid.Children.Add(reportImage);
+            menuBorderGrid.Children.Add(modeImage);
+            menuBorderGrid.Children.Add(clearImage);
             #endregion
 
         } // loading customer list
@@ -588,7 +609,7 @@ namespace MapDBTrack
                     Mouse.OverrideCursor = Cursors.Arrow;
                 }
             }
-        }
+        } // removing pin from map and DB
         private void LoadingPinns()
         {
             places = HelpingClass.LoadingPlace(idOfEmployee);
@@ -601,7 +622,6 @@ namespace MapDBTrack
             }
 
         } // loading all pins when map is close
-
         private void PinMouseEnter(object sender, MouseEventArgs e)
         {
             Pushpin pin = sender as Pushpin;
@@ -618,15 +638,12 @@ namespace MapDBTrack
                 tooltip.IsOpen = true;
             }
         }
-
         private void PinMouseLeave(object sender, MouseEventArgs e)
         {
             Pushpin pin = sender as Pushpin;
             ToolTip tooltip = pin.ToolTip as ToolTip;
             tooltip.IsOpen = false;
         }
-
-
         private Pushpin SetPinns(Location pinLocation)
         {
             Pushpin pin = new Pushpin();
@@ -637,7 +654,6 @@ namespace MapDBTrack
             pin.MouseLeftButtonDown += RemovePinFromMap;
             return pin;
         } // Setting options for pin
-
         protected override void OnClosing(CancelEventArgs e)
         {
             base.OnClosing(e);
