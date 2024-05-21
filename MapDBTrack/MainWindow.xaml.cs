@@ -30,6 +30,8 @@ namespace MapDBTrack
         private Grid mapGrid;
         private Map map;
         private bool pinned = false;
+        private bool removed = false;
+        
 
         public MainWindow(int id, string login)
         {
@@ -487,10 +489,6 @@ namespace MapDBTrack
             login.Show();
             this.Close();
         } // button logout 
-        private void ExitClick(object sender, RoutedEventArgs e)
-        {
-            this.Close();
-        } // close window
         private void Information(object sender, RoutedEventArgs e)
         {
             string info = $"{HelpingClass.version}\nContact: kus.konrad1@gmail.com\nLicense: MapDBTrack Commercial Use License";
@@ -498,20 +496,39 @@ namespace MapDBTrack
         } // special MessageBox with version etc.
         private void AddPin(object sender, RoutedEventArgs e)
         {
-            if (pinned == true)
+            if(removed == false)
             {
-                pinned = false;
-                Mouse.OverrideCursor = Cursors.Arrow;
-            }
-            else
-            {
-                pinned = true;
-                Mouse.OverrideCursor = Cursors.Hand;
+                if (pinned == true)
+                {
+                    removing.IsEnabled = true;
+                    pinned = false;
+                    Mouse.OverrideCursor = Cursors.Arrow;
+                }
+                else
+                {
+                    removing.IsEnabled = false;
+                    pinned = true;
+                    Mouse.OverrideCursor = Cursors.Hand;
+                }
             }
         } // set true for added new pin to map or false
         private void RemovePin(object sender, RoutedEventArgs e)
         {
-
+            if(pinned == false)
+            {
+                if (removed == true)
+                {
+                    adding.IsEnabled = true;
+                    removed = false;
+                    Mouse.OverrideCursor = Cursors.Arrow;
+                }
+                else
+                {
+                    adding.IsEnabled = false;
+                    removed = true;
+                    Mouse.OverrideCursor = Cursors.Hand;
+                }
+            }
         }
 
         private void MapPuttingPins(object sender, MouseButtonEventArgs e)
@@ -522,8 +539,6 @@ namespace MapDBTrack
             {
                 Point mousePosition = e.GetPosition(mapGrid);
                 Location pinLocation = map.ViewportPointToLocation(mousePosition);
-
-
                 Pushpin pin = SetPinns(pinLocation);
                 map.Children.Add(pin);
 
@@ -545,8 +560,35 @@ namespace MapDBTrack
                     Logout.IsEnabled = true;
                     adding.IsEnabled = true;
                 };
+                removing.IsEnabled = true;
             }
+
         } // puting pins on map when pinned is true
+        private void RemovePinFromMap(object sender, MouseButtonEventArgs e)
+        {
+            HelpingClass.NetworkCheck(this);
+
+            if (removed)
+            {
+                Pushpin pushpin = sender as Pushpin;
+                if (pushpin != null)
+                {
+                    e.Handled = true;
+                    Place p1 = places.Where(x => x.latitude == pushpin.Location.Latitude && x.longitude == pushpin.Location.Longitude).FirstOrDefault();
+                    MessageBoxResult result = MessageBox.Show($"Do you want remove this pin?\n\n{HelpingClass.GetDescTool(p1)}", "Inforamtion",MessageBoxButton.YesNo,MessageBoxImage.Warning);
+
+                    if(result == MessageBoxResult.Yes)
+                    {
+                        map.Children.Remove(pushpin);
+                        HelpingClass.RemoveRecordFromDB(p1);
+                        places.Remove(p1);
+                    }
+                    adding.IsEnabled = true;
+                    removed = false;
+                    Mouse.OverrideCursor = Cursors.Arrow;
+                }
+            }
+        }
         private void LoadingPinns()
         {
             places = HelpingClass.LoadingPlace(idOfEmployee);
@@ -557,7 +599,6 @@ namespace MapDBTrack
                 Pushpin pin = SetPinns(pinLocation);
                 map.Children.Add(pin);
             }
-
 
         } // loading all pins when map is close
 
@@ -593,6 +634,7 @@ namespace MapDBTrack
             pin.Background = Brushes.DarkBlue;
             pin.MouseEnter += PinMouseEnter;
             pin.MouseLeave += PinMouseLeave;
+            pin.MouseLeftButtonDown += RemovePinFromMap;
             return pin;
         } // Setting options for pin
 
@@ -602,8 +644,12 @@ namespace MapDBTrack
             if (addingCustomer != null && addingCustomer.IsVisible)
                 e.Cancel = true;
         } // blocking window 
-
+        private void ExitClick(object sender, RoutedEventArgs e)
+        {
+            this.Close();
+        } // close window
     }
+
     public static class StringExtensions
     {
         public static Color ToColor(this string color)

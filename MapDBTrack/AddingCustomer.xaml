@@ -36,8 +36,8 @@
                             <RowDefinition Height="*"/>
                             <RowDefinition Height="*"/>
                         </Grid.RowDefinitions>
-                        <TextBox x:Name="FirstNameBox" Grid.Row="0" Grid.Column="1" Margin="10,26,10,15" Style="{StaticResource RoundedTextBox}" TextChanged="FirstChanged"/>
-                        <TextBox x:Name="LastNameBox" Grid.Row="0" Grid.Column="0" Margin="10,26,10,15" Style="{StaticResource RoundedTextBox}" TextChanged="LastChanged"/>
+                        <TextBox x:Name="FirstNameBox" Grid.Row="0" Grid.Column="0" Margin="10,26,10,15" Style="{StaticResource RoundedTextBox}" TextChanged="FirstChanged"/>
+                        <TextBox x:Name="LastNameBox" Grid.Row="0" Grid.Column="1" Margin="10,26,10,15" Style="{StaticResource RoundedTextBox}" TextChanged="LastChanged"/>
                         
                         <TextBlock Grid.Row="0" Grid.Column="0" Text="First name" Style="{StaticResource TextBlocksStyle}" HorizontalAlignment="Left" Margin="25,5,0,0" VerticalAlignment="Top" Height="16"/>
                         <TextBlock Grid.Row="0" Grid.Column="1" Text="Last name (optional)" Style="{StaticResource TextBlocksStyle}" HorizontalAlignment="Left" Margin="25,5,0,0" VerticalAlignment="Top" Height="18"/>

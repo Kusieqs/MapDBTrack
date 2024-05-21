@@ -227,13 +227,24 @@ namespace MapDBTrack
             return id;
 
         }
-
         public static string Exceptions(int num)
         {
             string[] exp = engExp; // warunek czy pol czy eng
             return exp[num];
         } // excpetions words
 
+        public static void RemoveRecordFromDB(Place p1)
+        {
+            using (SqlConnection sql = new SqlConnection(connectString))
+            {
+                string queryPlace = $"DELETE FROM Place WHERE customer_id = '{p1.customer_id}'" ;
+                string queryCustomer = $"\nDELETE FROM Customer WHERE id = '{p1.customer_id}'";
+                SqlCommand sqlCommand = new SqlCommand(queryPlace+queryCustomer , sql);
+                sql.Open();
+                sqlCommand.ExecuteNonQuery();
+            }
+        }
 
     }
+
 }
