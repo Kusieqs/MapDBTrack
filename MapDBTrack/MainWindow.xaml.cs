@@ -31,6 +31,7 @@ namespace MapDBTrack
         private Map map;
         private bool pinned = false;
         private bool removed = false;
+        public static bool acceptOverridePin = false;
         
 
         public MainWindow(int id, string login)
@@ -560,7 +561,7 @@ namespace MapDBTrack
             {
                 Point mousePosition = e.GetPosition(mapGrid);
                 Location pinLocation = map.ViewportPointToLocation(mousePosition);
-                Pushpin pin = SetPinns(pinLocation);
+                Pushpin pin = SetPinns(pinLocation,true);
                 map.Children.Add(pin);
 
                 pinned = false;
@@ -569,6 +570,7 @@ namespace MapDBTrack
                 addingCustomer = new AddingCustomer(pinLocation, this, pin, map);
                 addingCustomer.Show();
 
+
                 Map.IsEnabled = false;
                 Exit.IsEnabled = false;
                 Logout.IsEnabled = false;
@@ -576,10 +578,20 @@ namespace MapDBTrack
 
                 addingCustomer.Closed += (s, args) =>
                 {
+                    
                     Map.IsEnabled = true;
                     Exit.IsEnabled = true;
                     Logout.IsEnabled = true;
                     adding.IsEnabled = true;
+                    if (acceptOverridePin)
+                    {
+                        map.Children.Remove(pin);
+                        pin.MouseEnter += PinMouseEnter;
+                        pin.MouseLeave += PinMouseLeave;
+                        pin.MouseLeftButtonDown += RemovePinFromMap;
+                        map.Children.Add(pin);
+                    }
+                    acceptOverridePin = false;
                 };
                 removing.IsEnabled = true;
             }
@@ -644,14 +656,17 @@ namespace MapDBTrack
             ToolTip tooltip = pin.ToolTip as ToolTip;
             tooltip.IsOpen = false;
         }
-        private Pushpin SetPinns(Location pinLocation)
+        private Pushpin SetPinns(Location pinLocation, bool creating = false)
         {
             Pushpin pin = new Pushpin();
             pin.Location = pinLocation;
             pin.Background = Brushes.DarkBlue;
-            pin.MouseEnter += PinMouseEnter;
-            pin.MouseLeave += PinMouseLeave;
-            pin.MouseLeftButtonDown += RemovePinFromMap;
+            if (!creating)
+            {
+                pin.MouseEnter += PinMouseEnter;
+                pin.MouseLeave += PinMouseLeave;
+                pin.MouseLeftButtonDown += RemovePinFromMap;
+            }
             return pin;
         } // Setting options for pin
         protected override void OnClosing(CancelEventArgs e)

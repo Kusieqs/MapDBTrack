@@ -39,8 +39,8 @@
                         <TextBox x:Name="FirstNameBox" Grid.Row="0" Grid.Column="0" Margin="10,26,10,15" Style="{StaticResource RoundedTextBox}" TextChanged="FirstChanged"/>
                         <TextBox x:Name="LastNameBox" Grid.Row="0" Grid.Column="1" Margin="10,26,10,15" Style="{StaticResource RoundedTextBox}" TextChanged="LastChanged"/>
                         
-                        <TextBlock Grid.Row="0" Grid.Column="0" Text="First name" Style="{StaticResource TextBlocksStyle}" HorizontalAlignment="Left" Margin="25,5,0,0" VerticalAlignment="Top" Height="16"/>
-                        <TextBlock Grid.Row="0" Grid.Column="1" Text="Last name (optional)" Style="{StaticResource TextBlocksStyle}" HorizontalAlignment="Left" Margin="25,5,0,0" VerticalAlignment="Top" Height="18"/>
+                        <TextBlock Grid.Row="0" Grid.Column="0" Text="First name" Style="{StaticResource TextBlocksStyles}" HorizontalAlignment="Left" Margin="25,5,0,0" VerticalAlignment="Top" Height="16"/>
+                        <TextBlock Grid.Row="0" Grid.Column="1" Text="Last name (optional)" Style="{StaticResource TextBlocksStyles}" HorizontalAlignment="Left" Margin="25,5,0,0" VerticalAlignment="Top" Height="18"/>
 
                         <TextBlock x:Name="FirstNameError" Text="" Grid.Row="0" Grid.Column="0" Style="{StaticResource TextBlokcsError}" HorizontalAlignment="Left" Margin="25,68,0,0" VerticalAlignment="Top"/>
                         <TextBlock x:Name="LastNameError" Text="" Grid.Row="0" Grid.Column="1" Style="{StaticResource TextBlokcsError}" HorizontalAlignment="Left" Margin="25,68,0,0" VerticalAlignment="Top"/>
@@ -48,8 +48,8 @@
                         <TextBox x:Name="ContactBox" Grid.Row="1" Grid.Column="1" Margin="10,26,10,15" Style="{StaticResource RoundedTextBox}" TextChanged="NumberChanged"/>
                         <TextBox x:Name="EmailBox" Grid.Row="1" Grid.Column="0" Margin="10,26,10,15" Style="{StaticResource RoundedTextBox}" TextChanged="EmailChanged"/>
 
-                        <TextBlock Grid.Row="1" Grid.Column="1" Text="Number" Style="{StaticResource ResourceKey=TextBlocksStyle}" HorizontalAlignment="Left"  VerticalAlignment="Top" Margin="25,5,0,0"/>
-                        <TextBlock Grid.Row="1" Text="Email (optional)" Style="{StaticResource ResourceKey=TextBlocksStyle}" HorizontalAlignment="Left"  VerticalAlignment="Top" Margin="25,5,0,0"/>
+                        <TextBlock Grid.Row="1" Grid.Column="1" Text="Number" Style="{StaticResource ResourceKey=TextBlocksStyles}" HorizontalAlignment="Left"  VerticalAlignment="Top" Margin="25,5,0,0"/>
+                        <TextBlock Grid.Row="1" Text="Email (optional)" Style="{StaticResource ResourceKey=TextBlocksStyles}" HorizontalAlignment="Left"  VerticalAlignment="Top" Margin="25,5,0,0"/>
 
                         <TextBlock x:Name="MailError" Text="" Grid.Row="1" Grid.Column="0" Style="{StaticResource TextBlokcsError}" HorizontalAlignment="Left" Margin="12,68,0,0" VerticalAlignment="Top"/>
                         <TextBlock x:Name="ContactError" Text="" Grid.Row="1" Grid.Column="1" Style="{StaticResource TextBlokcsError}" HorizontalAlignment="Left" Margin="12,68,0,0" VerticalAlignment="Top"/>
@@ -73,8 +73,8 @@
                             <RowDefinition Height="*"/>
                         </Grid.RowDefinitions>
 
-                        <TextBlock Grid.Row="0" Text="Province (optional)" Style="{StaticResource TextBlocksStyle}" HorizontalAlignment="Left" Margin="25,5,0,0" VerticalAlignment="Top"/>
-                        <TextBlock Grid.Row="0" Grid.Column="1" Text="City" Style="{StaticResource TextBlocksStyle}" HorizontalAlignment="Left" Margin="25,5,0,0" VerticalAlignment="Top"/>
+                        <TextBlock Grid.Row="0" Text="Province (optional)" Style="{StaticResource TextBlocksStyles}" HorizontalAlignment="Left" Margin="25,5,0,0" VerticalAlignment="Top"/>
+                        <TextBlock Grid.Row="0" Grid.Column="1" Text="City" Style="{StaticResource TextBlocksStyles}" HorizontalAlignment="Left" Margin="25,5,0,0" VerticalAlignment="Top"/>
 
                         <TextBox x:Name="ProvinceBox" Grid.Row="0" Grid.Column="0" Margin="10,26,10,15" Style="{StaticResource RoundedTextBox}" TextChanged="ProvinceChanged"/>
                         <TextBox x:Name="CityBox" Grid.Row="0" Grid.Column="1" Margin="10,26,10,15" Style="{StaticResource RoundedTextBox}" TextChanged="CityChanged"/>
@@ -85,14 +85,14 @@
                         <TextBox x:Name="PostalCodeBox" Grid.Row="1" Grid.Column="0" Margin="10,26,10,15" Style="{StaticResource RoundedTextBox}" TextChanged="PostalChanged"/>
                         <TextBox x:Name="StreetBox" Grid.Row="1" Grid.Column="1" Margin="10,26,10,15" Style="{StaticResource RoundedTextBox}" TextChanged="StreetChanged"/>
 
-                        <TextBlock Grid.Row="1" Grid.Column="0" Text="Postal code" Style="{StaticResource TextBlocksStyle}" HorizontalAlignment="Left" Margin="25,2,0,0" VerticalAlignment="Top"/>
-                        <TextBlock Grid.Row="1" Grid.Column="1" Text="Street" Style="{StaticResource TextBlocksStyle}" HorizontalAlignment="Left" Margin="25,5,0,0" VerticalAlignment="Top"/>
+                        <TextBlock Grid.Row="1" Grid.Column="0" Text="Postal code" Style="{StaticResource TextBlocksStyles}" HorizontalAlignment="Left" Margin="25,2,0,0" VerticalAlignment="Top"/>
+                        <TextBlock Grid.Row="1" Grid.Column="1" Text="Street" Style="{StaticResource TextBlocksStyles}" HorizontalAlignment="Left" Margin="25,5,0,0" VerticalAlignment="Top"/>
 
                         <TextBlock x:Name="PostalError" Text="" Grid.Row="1" Grid.Column="0" Style="{StaticResource TextBlokcsError}" HorizontalAlignment="Left" Margin="25,68,0,0" VerticalAlignment="Top"/>
                         <TextBlock x:Name="StreetError" Text="" Grid.Row="1" Grid.Column="1" Style="{StaticResource TextBlokcsError}" HorizontalAlignment="Left" Margin="25,68,0,0" VerticalAlignment="Top"/>
 
-                        <TextBlock Grid.Row="2" Grid.Column="0" Text="Latitude" Style="{StaticResource TextBlocksStyle}" HorizontalAlignment="Left" Margin="25,5,0,0" VerticalAlignment="Top"/>
-                        <TextBlock Grid.Row="2" Grid.Column="1" Text="Longitude" Style="{StaticResource TextBlocksStyle}" HorizontalAlignment="Left" Margin="25,5,0,0" VerticalAlignment="Top"/>
+                        <TextBlock Grid.Row="2" Grid.Column="0" Text="Latitude" Style="{StaticResource TextBlocksStyles}" HorizontalAlignment="Left" Margin="25,5,0,0" VerticalAlignment="Top"/>
+                        <TextBlock Grid.Row="2" Grid.Column="1" Text="Longitude" Style="{StaticResource TextBlocksStyles}" HorizontalAlignment="Left" Margin="25,5,0,0" VerticalAlignment="Top"/>
 
                         <TextBox x:Name="LatitudeBox" Grid.Row="2" Grid.Column="0" Margin="10,26,10,15" IsEnabled="False" Style="{StaticResource RoundedTextBox}"/>
                         <TextBox x:Name="LongitudeBox" Grid.Row="2" Grid.Column="1" Margin="10,26,10,15" IsEnabled="False" Style="{StaticResource RoundedTextBox}"/>

@@ -11,6 +11,7 @@ namespace MapDBTrack
         private Location location;
         private Pushpin Pushpin;
         private Map map;
+        private Window mainWindow;
         public AddingCustomer(Location location, Window window, Pushpin pin, Map map)
         {
             InitializeComponent();
@@ -19,6 +20,7 @@ namespace MapDBTrack
             this.Pushpin = pin;
             this.map = map;
             Closing += CloseWindow;
+            mainWindow = window;
         }
         public void AcceptClick(object sender, RoutedEventArgs e)
         {
@@ -48,10 +50,11 @@ namespace MapDBTrack
                     double.Parse(LatitudeBox.Text),
                     double.Parse(LongitudeBox.Text)
                     );
-                
+
                 MainWindow.places.Add(place);
                 HelpingClass.AddingNewCustomer(place);
                 correctClose = true;
+                MainWindow.acceptOverridePin = true;
                 this.Close();
             }
             else
