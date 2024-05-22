@@ -104,7 +104,7 @@ namespace MapDBTrack
             if (!reader.HasRows)
             {
                 PasswordFailed.Text = "Password is not correct";
-                PasswordReminder.Text = "Click to to remind password";
+                PasswordReminder.Text = "Forget password?";
                 Reset.IsEnabled = true;
                 Reset.IsHitTestVisible = true;
                 reader.Close();

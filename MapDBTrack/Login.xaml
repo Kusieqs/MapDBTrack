@@ -13,9 +13,9 @@
             <ColumnDefinition Width="*"/>
             <ColumnDefinition Width="1.5*"/>
         </Grid.ColumnDefinitions>
-        
-        
-        
+
+
+
         <Border Background="#FF7B4BA5" CornerRadius="15,0,0,15" >
             <Grid>
                 <Image Source="/Pictures/PinLogin.png" Margin="25,12,225,368" Style="{StaticResource LoginPinImage}">
@@ -76,14 +76,14 @@
                         <RowDefinition Height="107*"/>
                     </Grid.RowDefinitions>
                     <TextBlock Text="Sign up" Grid.Row="1" Foreground="White" Style="{StaticResource TopicTextBlock}" />
-                    <TextBlock Text="Register now to create an account." Grid.Row="2" Foreground="White" Style="{StaticResource TopicTextBlock}" FontSize="17" />
+                    <TextBlock Text="Register now to create an account." Grid.Row="2" Foreground="White" Style="{StaticResource TopicTextBlock}" FontSize="20" />
                     <Button Grid.Row="3" Style="{StaticResource ButtonSign}" Content="Sign up" Click="SignUp" Margin="80,28,80,126" />
                 </Grid>
             </Grid>
         </Border>
-        
-        
-        
+
+
+
         <Border Grid.Column="1" Background="White" CornerRadius="0,15,15,0">
             <Grid>
                 <Grid.RowDefinitions>
@@ -93,8 +93,8 @@
                     <RowDefinition Height="*"/>
                 </Grid.RowDefinitions>
 
-                <Image Source="/Pictures/close.png" Margin="457,10,10,90" Opacity="0.4" RenderOptions.BitmapScalingMode="HighQuality" IsHitTestVisible="False"/>
-                <Button Margin="457,10,10,90" BorderBrush="Transparent" Background="Transparent" Click="ExitClick" Cursor="Hand">
+                <Image Source="/Pictures/close.png" Margin="453,10,10,86" Opacity="0.4" RenderOptions.BitmapScalingMode="HighQuality" IsHitTestVisible="False"/>
+                <Button Margin="453,10,10,86" BorderBrush="Transparent" Background="Transparent" Click="ExitClick" Cursor="Hand">
                     <Button.Template>
                         <ControlTemplate TargetType="Button">
                             <Border Background="Transparent" Padding="{TemplateBinding Padding}">
@@ -110,24 +110,24 @@
                 </Button>
                 <TextBlock Text="Sign in to App" Foreground="#FF7B4BA5" Style="{StaticResource TopicTextBlock}"/>
                 <Button Grid.Row="3" Style="{StaticResource ButtonSign}" Content="Sign in" Click="SignIn"/>
-                <Border Grid.Row="1" CornerRadius="5" Margin="70,37,70,37" BorderThickness="1" BorderBrush="Gray">
+                <Border Grid.Row="1" CornerRadius="5" Margin="70,34,70,34" BorderThickness="1" BorderBrush="Gray">
                     <Grid>
-                        <TextBlock x:Name="LoginTheme" Text="Login" Style="{StaticResource TextBlockOnBox}" Width="43" Height="25" Margin="36,0,0,0" />
-                        <TextBox x:Name="LoginBox" TextChanged="LoginTextChanged" Style="{StaticResource TextBoxMain}"/>
+                        <TextBlock x:Name="LoginTheme" Text="Login" Style="{StaticResource TextBlockOnBox}" Width="48" Height="30" Margin="36,0,0,0" />
+                        <TextBox x:Name="LoginBox" TextChanged="LoginTextChanged" Style="{StaticResource TextBoxMain}" Height="30" Margin="35,0,2,0"/>
                         <Image Source="/Pictures/User.png" Opacity="0.4" RenderOptions.BitmapScalingMode="HighQuality" Margin="0,0,300,0" Width="25" />
                     </Grid>
                 </Border>
-                <Border Grid.Row="2" CornerRadius="5" Margin="70,37,70,37" BorderThickness="1" BorderBrush="Gray">
+                <Border Grid.Row="2" CornerRadius="5" Margin="70,34,70,34" BorderThickness="1" BorderBrush="Gray">
                     <Grid>
-                        <TextBlock x:Name="PasswordTheme" Text="Password" Style="{StaticResource TextBlockOnBox}" Width="73" Height="25" Margin="36,0,0,0"  />
-                        <PasswordBox x:Name="PasswordBox"  PasswordChanged="PassTextChanged" Style="{StaticResource TextBoxPass}"/>
+                        <TextBlock x:Name="PasswordTheme" Text="Password" Style="{StaticResource TextBlockOnBox}" Width="83" Height="25" Margin="36,0,0,0"  />
+                        <PasswordBox x:Name="PasswordBox"  PasswordChanged="PassTextChanged" Style="{StaticResource TextBoxPass}" Margin="35,0,2,0" Height="25"/>
                         <Image Source="/Pictures/key.png" Opacity="0.4" RenderOptions.BitmapScalingMode="HighQuality" Margin="0,0,300,0" Width="25"/>
                     </Grid>
                 </Border>
                 <TextBlock x:Name="LoginFailed" Grid.Row="1" Text="" Style="{StaticResource TextBlokcsError}" HorizontalAlignment="Left" Margin="80,78,0,0" VerticalAlignment="Top"/>
                 <TextBlock x:Name="PasswordFailed" Grid.Row="2" Text="" Style="{StaticResource TextBlokcsError}" HorizontalAlignment="Left" Margin="80,78,0,0" VerticalAlignment="Top"/>
-                <TextBlock x:Name="PasswordReminder" Text="" Grid.Row="2" TextDecorations="Underline" IsEnabled="False" IsHitTestVisible="False" Style="{StaticResource TextBlokcsError}" HorizontalAlignment="Left" Margin="81,93,0,0" VerticalAlignment="Top"/>
-                <Button x:Name="Reset" Cursor="Hand" IsEnabled="False" Grid.Row="2" FontSize="10" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="80,94,0,0" Height="12" Width="114" Background="Transparent" BorderBrush="Transparent" Click="ResetPassword">
+                <TextBlock x:Name="PasswordReminder" Text="" Grid.Row="2" TextDecorations="Underline" IsEnabled="False" IsHitTestVisible="False" Style="{StaticResource TextBlokcsError}" Foreground="#FF7B4BA5" HorizontalAlignment="Left" Margin="295,78,0,0" VerticalAlignment="Top"/>
+                <Button x:Name="Reset" Cursor="Hand" IsEnabled="False" Grid.Row="2" FontSize="10" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="295,81,0,0" Height="13" Width="107" Background="Transparent" BorderBrush="Transparent" Click="ResetPassword">
                     <Button.Template>
                         <ControlTemplate TargetType="Button">
                             <Border Background="Transparent" Padding="{TemplateBinding Padding}">

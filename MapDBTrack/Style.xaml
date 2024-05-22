@@ -16,7 +16,7 @@
         <Setter Property="FontWeight" Value="Medium"/>
     </Style>
     <Style x:Key="TextBlokcsError" TargetType="TextBlock">
-        <Setter Property="FontSize" Value="10"/>
+        <Setter Property="FontSize" Value="15"/>
         <Setter Property="VerticalAlignment" Value="Center"/>
         <Setter Property="Foreground" Value="Red"/>
         <Setter Property="HorizontalAlignment" Value="Center"/>
@@ -28,7 +28,7 @@
         <Setter Property="Height" Value="60"/>
         <Setter Property="Background" Value="#FF7B4BA5"/>
         <Setter Property="BorderThickness" Value="2"/>
-        <Setter Property="FontSize" Value="17"/>
+        <Setter Property="FontSize" Value="25"/>
         <Setter Property="Foreground" Value="White"/>
         <Setter Property="BorderBrush" Value="White"/>
         <Setter Property="FontFamily" Value="Calibri"/>
@@ -88,7 +88,7 @@
         <Setter Property="HorizontalAlignment" Value="Left"/>
         <Setter Property ="VerticalAlignment" Value="Center"/>
         <Setter Property="Foreground" Value="LightGray"/>
-        <Setter Property="FontSize" Value="17"/>
+        <Setter Property="FontSize" Value="20"/>
         <Setter Property="FontFamily" Value="Segoe UI"/>
         <Setter Property="FontWeight" Value="Regular"/>
         <Setter Property="Panel.ZIndex" Value="1"/>
@@ -98,7 +98,7 @@
         <Setter Property="BorderBrush" Value="Transparent"/>
         <Setter Property="BorderThickness" Value="0"/>
         <Setter Property="Margin" Value="35,1,2,1"/>
-        <Setter Property="FontSize" Value="17"/>
+        <Setter Property="FontSize" Value="20"/>
         <Setter Property="FontFamily" Value="Segoe UI"/>
         <Setter Property="FontWeight" Value="Regular"/>
         <Setter Property="VerticalAlignment" Value="Center"/>
@@ -108,7 +108,7 @@
         <Setter Property="BorderBrush" Value="Transparent"/>
         <Setter Property="BorderThickness" Value="0"/>
         <Setter Property="Margin" Value="35,1,2,1"/>
-        <Setter Property="FontSize" Value="17"/>
+        <Setter Property="FontSize" Value="20"/>
         <Setter Property="FontFamily" Value="Segoe UI"/>
         <Setter Property="FontWeight" Value="Regular"/>
         <Setter Property="VerticalAlignment" Value="Center"/>
