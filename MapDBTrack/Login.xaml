@@ -4,58 +4,144 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:MapDBTrack"
-        mc:Ignorable="d"
-        Title="Login" Height="550" Width="600" ResizeMode="NoResize">
-    
-    <Grid>
-        <Image Source="Pictures/Background.jpg" Stretch="Fill"/>
-        <Border Grid.Column="0" Grid.Row="0" Width="400" Height="400" CornerRadius="30" BorderThickness="2" Background="#FFD1E1EC">
+        mc:Ignorable="d" WindowStartupLocation="CenterScreen" WindowStyle="None" AllowsTransparency="True"
+        Background="Transparent"
+        Title="MainWindow" Height="450" Width="800">
+
+    <Grid MouseDown="BorderClick">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="1.5*"/>
+        </Grid.ColumnDefinitions>
+        
+        
+        
+        <Border Background="#FF7B4BA5" CornerRadius="15,0,0,15" >
+            <Grid>
+                <Image Source="/Pictures/PinLogin.png" Margin="25,12,225,368" Style="{StaticResource LoginPinImage}">
+                    <Image.RenderTransform>
+                        <TransformGroup>
+                            <ScaleTransform/>
+                            <SkewTransform/>
+                            <RotateTransform Angle="66.012"/>
+                            <TranslateTransform/>
+                        </TransformGroup>
+                    </Image.RenderTransform>
+                </Image>
+                <Image Source="/Pictures/PinLogin.png" Margin="219,28,31,352" Style="{StaticResource LoginPinImage}">
+                    <Image.RenderTransform>
+                        <TransformGroup>
+                            <ScaleTransform/>
+                            <SkewTransform/>
+                            <RotateTransform Angle="170.632"/>
+                            <TranslateTransform/>
+                        </TransformGroup>
+                    </Image.RenderTransform>
+                </Image>
+                <Image Source="/Pictures/PinLogin.png" Margin="22,200,228,180" Style="{StaticResource LoginPinImage}">
+                    <Image.RenderTransform>
+                        <TransformGroup>
+                            <ScaleTransform/>
+                            <SkewTransform/>
+                            <RotateTransform Angle="-0.856"/>
+                            <TranslateTransform/>
+                        </TransformGroup>
+                    </Image.RenderTransform>
+                </Image>
+                <Image Source="/Pictures/PinLogin.png" Margin="206,246,44,134" Style="{StaticResource LoginPinImage}">
+                    <Image.RenderTransform>
+                        <TransformGroup>
+                            <ScaleTransform/>
+                            <SkewTransform/>
+                            <RotateTransform Angle="-74.402"/>
+                            <TranslateTransform/>
+                        </TransformGroup>
+                    </Image.RenderTransform>
+                </Image>
+                <Image Source="/Pictures/PinLogin.png" Margin="101,346,149,34" Style="{StaticResource LoginPinImage}">
+                    <Image.RenderTransform>
+                        <TransformGroup>
+                            <ScaleTransform/>
+                            <SkewTransform/>
+                            <RotateTransform Angle="25.655"/>
+                            <TranslateTransform/>
+                        </TransformGroup>
+                    </Image.RenderTransform>
+                </Image>
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="50*"/>
+                        <RowDefinition Height="79"/>
+                        <RowDefinition Height="57"/>
+                        <RowDefinition Height="107*"/>
+                    </Grid.RowDefinitions>
+                    <TextBlock Text="Sign up" Grid.Row="1" Foreground="White" Style="{StaticResource TopicTextBlock}" />
+                    <TextBlock Text="Register now to create an account." Grid.Row="2" Foreground="White" Style="{StaticResource TopicTextBlock}" FontSize="17" />
+                    <Button Grid.Row="3" Style="{StaticResource ButtonSign}" Content="Sign up" Click="SignUp" Margin="80,28,80,126" />
+                </Grid>
+            </Grid>
+        </Border>
+        
+        
+        
+        <Border Grid.Column="1" Background="White" CornerRadius="0,15,15,0">
             <Grid>
                 <Grid.RowDefinitions>
-                    <RowDefinition Height="80"/>
-                    <RowDefinition Height="2"/>
                     <RowDefinition Height="*"/>
                     <RowDefinition Height="*"/>
-                    <RowDefinition Height="90"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
                 </Grid.RowDefinitions>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="*"/>
-                    <ColumnDefinition Width="*"/>
-                </Grid.ColumnDefinitions>
 
-
-                <TextBlock Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" Foreground="#FF2F5588" Text="USER LOGIN" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="35" FontWeight="DemiBold" FontFamily="Calibri"/>
-                <Border Grid.Row="1" Grid.Column="0"  Grid.ColumnSpan="2" Background="#FF2F5588" />
-                
-                <TextBox x:Name="LoginBox" Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2" TextChanged="LoginChanged" Style="{StaticResource RoundedTextBox}"/>
-                <TextBox x:Name="PasswordBox" Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="2" TextChanged="PasswordChanged" Style="{StaticResource RoundedTextBox}"/>
-
-                <TextBlock Text="User name" Grid.Row="2" Width="60" Height="20" Margin="47,17,91,75" Foreground="#FF2F5588" FontWeight="DemiBold" FontFamily="Calibri"/>
-                <TextBlock Text="Password" Grid.Row="3" Width="60" Height="20" Margin="47,17,91,75" Foreground="#FF2F5588" FontWeight="DemiBold" FontFamily="Calibri"/>
-                <Button x:Name="Reset" Click="ResetPassword" Grid.Column="0" Grid.Row="3" Height="20" Margin="39,85,29,7" HorizontalContentAlignment="Left" FontSize="10" IsEnabled="False" FontWeight="DemiBold" Cursor="Hand" Foreground="Red" FontFamily="Calibri">
+                <Image Source="/Pictures/close.png" Margin="457,10,10,90" Opacity="0.4" RenderOptions.BitmapScalingMode="HighQuality" IsHitTestVisible="False"/>
+                <Button Margin="457,10,10,90" BorderBrush="Transparent" Background="Transparent" Click="ExitClick" Cursor="Hand">
                     <Button.Template>
                         <ControlTemplate TargetType="Button">
-                            <Border Background="#FFD1E1EC" Padding="{TemplateBinding Padding}">
+                            <Border Background="Transparent" Padding="{TemplateBinding Padding}">
                                 <ContentPresenter HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}" />
                             </Border>
                             <ControlTemplate.Triggers>
                                 <Trigger Property="IsEnabled" Value="False">
-                                    <Setter Property="Background" Value="#FFD1E1EC" />
+                                    <Setter Property="Background" Value="Transparent" />
                                 </Trigger>
                             </ControlTemplate.Triggers>
                         </ControlTemplate>
                     </Button.Template>
                 </Button>
-
-                <TextBlock x:Name="LoginFailed" Text="" Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="2" Width="200" Height="20" Margin="47,76,149,16" FontSize="10" FontWeight="DemiBold" Foreground="Red" FontFamily="Calibri"/>
-                <TextBlock x:Name="PasswordFailed" Text="" Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="3" Width="200" Height="20" Margin="47,76,149,16" FontSize="10" FontWeight="DemiBold" Foreground="Red" FontFamily="Calibri"/>
-                <TextBlock x:Name="PasswordReminder" Text="" Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="3" Height="20" Margin="47,92,173,0" FontSize="10" FontWeight="Bold" Foreground="Red" TextDecorations="Underline" IsEnabled="False" IsHitTestVisible="False" FontFamily="Calibri"/>
-                
-                <Button Content="Sign in" Click="SignIn" Grid.Column="0" Grid.Row="4" Style="{StaticResource ButtonRounded}"/>
-                <Button Content="Sign up" Click="SignUp" Grid.Column="1" Grid.Row="4" Style="{StaticResource ButtonRounded}"/>
-
+                <TextBlock Text="Sign in to App" Foreground="#FF7B4BA5" Style="{StaticResource TopicTextBlock}"/>
+                <Button Grid.Row="3" Style="{StaticResource ButtonSign}" Content="Sign in" Click="SignIn"/>
+                <Border Grid.Row="1" CornerRadius="5" Margin="70,37,70,37" BorderThickness="1" BorderBrush="Gray">
+                    <Grid>
+                        <TextBlock x:Name="LoginTheme" Text="Login" Style="{StaticResource TextBlockOnBox}" Width="43" Height="25" Margin="36,0,0,0" />
+                        <TextBox x:Name="LoginBox" TextChanged="LoginTextChanged" Style="{StaticResource TextBoxMain}"/>
+                        <Image Source="/Pictures/User.png" Opacity="0.4" RenderOptions.BitmapScalingMode="HighQuality" Margin="0,0,300,0" Width="25" />
+                    </Grid>
+                </Border>
+                <Border Grid.Row="2" CornerRadius="5" Margin="70,37,70,37" BorderThickness="1" BorderBrush="Gray">
+                    <Grid>
+                        <TextBlock x:Name="PasswordTheme" Text="Password" Style="{StaticResource TextBlockOnBox}" Width="73" Height="25" Margin="36,0,0,0"  />
+                        <PasswordBox x:Name="PasswordBox"  PasswordChanged="PassTextChanged" Style="{StaticResource TextBoxPass}"/>
+                        <Image Source="/Pictures/key.png" Opacity="0.4" RenderOptions.BitmapScalingMode="HighQuality" Margin="0,0,300,0" Width="25"/>
+                    </Grid>
+                </Border>
+                <TextBlock x:Name="LoginFailed" Grid.Row="1" Text="" Style="{StaticResource TextBlokcsError}" HorizontalAlignment="Left" Margin="80,78,0,0" VerticalAlignment="Top"/>
+                <TextBlock x:Name="PasswordFailed" Grid.Row="2" Text="" Style="{StaticResource TextBlokcsError}" HorizontalAlignment="Left" Margin="80,78,0,0" VerticalAlignment="Top"/>
+                <TextBlock x:Name="PasswordReminder" Text="" Grid.Row="2" TextDecorations="Underline" IsEnabled="False" IsHitTestVisible="False" Style="{StaticResource TextBlokcsError}" HorizontalAlignment="Left" Margin="81,93,0,0" VerticalAlignment="Top"/>
+                <Button x:Name="Reset" Cursor="Hand" IsEnabled="False" Grid.Row="2" FontSize="10" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="80,94,0,0" Height="12" Width="114" Background="Transparent" BorderBrush="Transparent" Click="ResetPassword">
+                    <Button.Template>
+                        <ControlTemplate TargetType="Button">
+                            <Border Background="Transparent" Padding="{TemplateBinding Padding}">
+                                <ContentPresenter HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}" />
+                            </Border>
+                            <ControlTemplate.Triggers>
+                                <Trigger Property="IsEnabled" Value="False">
+                                    <Setter Property="Background" Value="Transparent"/>
+                                </Trigger>
+                            </ControlTemplate.Triggers>
+                        </ControlTemplate>
+                    </Button.Template>
+                </Button>
             </Grid>
         </Border>
-
     </Grid>
 </Window>

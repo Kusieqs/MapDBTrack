@@ -14,21 +14,26 @@
     <None Remove="Pictures\Background.jpg" />
     <None Remove="Pictures\bin.png" />
     <None Remove="Pictures\clear.png" />
+    <None Remove="Pictures\close.png" />
     <None Remove="Pictures\Customer.png" />
     <None Remove="Pictures\Exit.png" />
     <None Remove="Pictures\History.png" />
     <None Remove="Pictures\Info.png" />
+    <None Remove="Pictures\key.png" />
     <None Remove="Pictures\Logout.png" />
     <None Remove="Pictures\MainWindowBack.jpg" />
     <None Remove="Pictures\mode.png" />
     <None Remove="Pictures\Pin.png" />
+    <None Remove="Pictures\PinLogin.png" />
     <None Remove="Pictures\report.png" />
+    <None Remove="Pictures\user.png" />
   </ItemGroup>
 
   <ItemGroup>
     <Resource Include="Pictures\add.png" />
     <Resource Include="Pictures\bin.png" />
     <Resource Include="Pictures\clear.png" />
+    <Resource Include="Pictures\close.png" />
     <Resource Include="Pictures\Customer.png" />
     <Resource Include="Pictures\Exit.png" />
     <Resource Include="Pictures\History.png" />
@@ -42,6 +47,7 @@
   <ItemGroup>
     <Resource Include="Pictures\Background.jpg" />
     <Resource Include="Pictures\Info.png" />
+    <Resource Include="Pictures\key.png" />
     <Resource Include="Pictures\Logout.png" />
     <Resource Include="Pictures\MainWindowBack.jpg" />
     <Resource Include="Pictures\Map.png">
@@ -51,7 +57,9 @@
     <Resource Include="Pictures\Pin.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Resource>
+    <Resource Include="Pictures\PinLogin.png" />
     <Resource Include="Pictures\report.png" />
+    <Resource Include="Pictures\user.png" />
   </ItemGroup>
 
 </Project>

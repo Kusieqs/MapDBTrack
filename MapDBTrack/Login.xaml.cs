@@ -29,7 +29,7 @@ namespace MapDBTrack
             HelpingClass.NetworkCheck(this);
 
             string login = LoginBox.Text;
-            string password = PasswordBox.Text;
+            string password = PasswordBox.Password;
 
             if (!CheckingEmptyText(login, password))
                 return;
@@ -106,6 +106,7 @@ namespace MapDBTrack
                 PasswordFailed.Text = "Password is not correct";
                 PasswordReminder.Text = "Click to to remind password";
                 Reset.IsEnabled = true;
+                Reset.IsHitTestVisible = true;
                 reader.Close();
                 sql.Close();
                 return false;
@@ -134,16 +135,34 @@ namespace MapDBTrack
             MessageBox.Show("Password was sent to your email", "Information", MessageBoxButton.OK, MessageBoxImage.Information);
         } // resseting password
 
-        private void LoginChanged(object sender, RoutedEventArgs e)
-        {
-            LoginFailed.Text = string.Empty;
-        } // if login box will change, red text will disappear
 
-        private void PasswordChanged(object sender, RoutedEventArgs e)
+        private void BorderClick(object sender, MouseButtonEventArgs e)
         {
+            if (e.ChangedButton == MouseButton.Left)
+                this.DragMove();
+        } // feature to moving window
+        private void LoginTextChanged(object sender, RoutedEventArgs e)
+        {
+            if (!string.IsNullOrEmpty(LoginBox.Text) && LoginBox.Text.Length > 0)
+                LoginTheme.Visibility = Visibility.Collapsed;
+            else
+                LoginTheme.Visibility = Visibility.Visible;
+            LoginFailed.Text = string.Empty;
+        } // disappearing text from textbox
+        private void PassTextChanged(object sender, RoutedEventArgs e)
+        {
+            if (!string.IsNullOrEmpty(PasswordBox.Password) && PasswordBox.Password.Length > 0)
+                PasswordTheme.Visibility = Visibility.Collapsed;
+            else
+                PasswordTheme.Visibility = Visibility.Visible;
+
             PasswordFailed.Text = string.Empty;
             Reset.IsEnabled = false;
-            PasswordReminder.Text = string.Empty; 
-        } // if password box will change, red text will disappear
+            PasswordReminder.Text = string.Empty;
+        }// disappearing text from passwordbox
+        private void ExitClick(object sender, RoutedEventArgs e)
+        {
+            this.Close();
+        } // Exit button
     }
 }

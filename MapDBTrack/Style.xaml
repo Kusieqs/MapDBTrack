@@ -1,6 +1,124 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
 
+    <Style x:Key="LoginPinImage" TargetType="Image">
+        <Setter Property="IsHitTestVisible" Value="False"/>
+        <Setter Property="RenderOptions.BitmapScalingMode" Value="HighQuality"/>
+        <Setter Property="Width" Value="70"/>
+        <Setter Property="Height" Value="70"/>
+        <Setter Property="RenderTransformOrigin" Value="0.5,0.5"/>
+    </Style>
+    <Style x:Key="TopicTextBlock" TargetType="TextBlock">
+        <Setter Property="VerticalAlignment" Value="Center"/>
+        <Setter Property="HorizontalAlignment" Value="Center"/>
+        <Setter Property="FontSize" Value="50"/>
+        <Setter Property="FontFamily" Value="Calibri"/>
+        <Setter Property="FontWeight" Value="Medium"/>
+    </Style>
+    <Style x:Key="TextBlokcsError" TargetType="TextBlock">
+        <Setter Property="FontSize" Value="10"/>
+        <Setter Property="VerticalAlignment" Value="Center"/>
+        <Setter Property="Foreground" Value="Red"/>
+        <Setter Property="HorizontalAlignment" Value="Center"/>
+        <Setter Property="FontFamily" Value="Calibri"/>
+        <Setter Property="FontWeight" Value="Medium"/>
+    </Style>
+    <Style x:Key="ButtonSign" TargetType="Button">
+        <Setter Property="Width" Value="160"/>
+        <Setter Property="Height" Value="60"/>
+        <Setter Property="Background" Value="#FF7B4BA5"/>
+        <Setter Property="BorderThickness" Value="2"/>
+        <Setter Property="FontSize" Value="17"/>
+        <Setter Property="Foreground" Value="White"/>
+        <Setter Property="BorderBrush" Value="White"/>
+        <Setter Property="FontFamily" Value="Calibri"/>
+        <Setter Property="FontWeight" Value="Medium"/>
+        <Setter Property="Cursor" Value="Hand"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="Button">
+                    <Border x:Name="border" Background="{TemplateBinding Background}"
+                        BorderBrush="{TemplateBinding BorderBrush}"
+                        BorderThickness="{TemplateBinding BorderThickness}"
+                        CornerRadius="25">
+                        <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <EventTrigger RoutedEvent="MouseEnter">
+                            <BeginStoryboard>
+                                <Storyboard>
+                                    <ColorAnimation Storyboard.TargetProperty="(Border.Background).(SolidColorBrush.Color)"
+                                                To="#FF9C5ED2" Duration="0:0:0.3"/>
+                                </Storyboard>
+                            </BeginStoryboard>
+                        </EventTrigger>
+                        <EventTrigger RoutedEvent="MouseLeave">
+                            <BeginStoryboard>
+                                <Storyboard>
+                                    <ColorAnimation Storyboard.TargetProperty="(Border.Background).(SolidColorBrush.Color)"
+                                                To="#FF7B4BA5" Duration="0:0:0.3"/>
+                                </Storyboard>
+                            </BeginStoryboard>
+                        </EventTrigger>
+                        <EventTrigger RoutedEvent="PreviewMouseDown">
+                            <BeginStoryboard>
+                                <Storyboard>
+                                    <ColorAnimation Storyboard.TargetProperty="(Border.Background).(SolidColorBrush.Color)"
+                                                To="#FF9C76BD" Duration="0:0:0.1"/>
+                                </Storyboard>
+                            </BeginStoryboard>
+                        </EventTrigger>
+                        <EventTrigger RoutedEvent="PreviewMouseUp">
+                            <BeginStoryboard>
+                                <Storyboard>
+                                    <ColorAnimation Storyboard.TargetProperty="(Border.Background).(SolidColorBrush.Color)"
+                                                To="#FF9C5ED2" Duration="0:0:0.1"/>
+                                </Storyboard>
+                            </BeginStoryboard>
+                        </EventTrigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+    <Style x:Key="TextBlockOnBox" TargetType="TextBlock">
+        <Setter Property="Width" Value="340"/>
+        <Setter Property="Height" Value="40"/>
+        <Setter Property="Background" Value="Transparent"/>
+        <Setter Property="HorizontalAlignment" Value="Left"/>
+        <Setter Property ="VerticalAlignment" Value="Center"/>
+        <Setter Property="Foreground" Value="LightGray"/>
+        <Setter Property="FontSize" Value="17"/>
+        <Setter Property="FontFamily" Value="Segoe UI"/>
+        <Setter Property="FontWeight" Value="Regular"/>
+        <Setter Property="Panel.ZIndex" Value="1"/>
+        <Setter Property="IsHitTestVisible" Value="False"/>
+    </Style>
+    <Style x:Key="TextBoxMain" TargetType="TextBox">
+        <Setter Property="BorderBrush" Value="Transparent"/>
+        <Setter Property="BorderThickness" Value="0"/>
+        <Setter Property="Margin" Value="35,1,2,1"/>
+        <Setter Property="FontSize" Value="17"/>
+        <Setter Property="FontFamily" Value="Segoe UI"/>
+        <Setter Property="FontWeight" Value="Regular"/>
+        <Setter Property="VerticalAlignment" Value="Center"/>
+        <Setter Property="VerticalAlignment" Value="Center"/>
+    </Style>
+    <Style x:Key="TextBoxPass" TargetType="PasswordBox">
+        <Setter Property="BorderBrush" Value="Transparent"/>
+        <Setter Property="BorderThickness" Value="0"/>
+        <Setter Property="Margin" Value="35,1,2,1"/>
+        <Setter Property="FontSize" Value="17"/>
+        <Setter Property="FontFamily" Value="Segoe UI"/>
+        <Setter Property="FontWeight" Value="Regular"/>
+        <Setter Property="VerticalAlignment" Value="Center"/>
+        <Setter Property="VerticalAlignment" Value="Center"/>
+    </Style>
+    
+    
+    
+    
+    
 
     <Style x:Key="ButtonRounded" TargetType="Button">
         <Setter Property="Width" Value="120"/>
@@ -116,7 +234,7 @@
 
 
 
-    <Style x:Key="TextBlocksStyle" TargetType="TextBlock">
+    <Style x:Key="TextBlocksStyles" TargetType="TextBlock">
         <Setter Property="FontSize" Value="15"/>
         <Setter Property="FontWeight" Value="DemiBold"/>
         <Setter Property="VerticalAlignment" Value="Center"/>
@@ -124,13 +242,6 @@
         <Setter Property="Foreground" Value="#FF2F5588"/>
     </Style>
 
-
-    <Style x:Key="TextBlokcsError" TargetType="TextBlock">
-        <Setter Property="FontSize" Value="10"/>
-        <Setter Property="VerticalAlignment" Value="Center"/>
-        <Setter Property="Foreground" Value="Red"/>
-        <Setter Property="HorizontalAlignment" Value="Center"/>
-    </Style>
 
     <Style x:Key="ImageCustomerView" TargetType="Image">
         <Setter Property="Width" Value="40"/>
