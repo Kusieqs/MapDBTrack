@@ -10,12 +10,14 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Pictures\add-group.png" />
     <None Remove="Pictures\add.png" />
     <None Remove="Pictures\Background.jpg" />
     <None Remove="Pictures\bin.png" />
     <None Remove="Pictures\clear.png" />
     <None Remove="Pictures\close.png" />
     <None Remove="Pictures\Customer.png" />
+    <None Remove="Pictures\enter.png" />
     <None Remove="Pictures\Exit.png" />
     <None Remove="Pictures\History.png" />
     <None Remove="Pictures\Info.png" />
@@ -30,16 +32,19 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Resource Include="Pictures\add-group.png" />
     <Resource Include="Pictures\add.png" />
     <Resource Include="Pictures\bin.png" />
     <Resource Include="Pictures\clear.png" />
     <Resource Include="Pictures\close.png" />
     <Resource Include="Pictures\Customer.png" />
+    <Resource Include="Pictures\enter.png" />
     <Resource Include="Pictures\Exit.png" />
     <Resource Include="Pictures\History.png" />
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="MaterialDesignThemes" Version="4.3.0" />
     <PackageReference Include="Microsoft.Maps.MapControl.WPF" Version="1.0.0.3" />
     <PackageReference Include="System.Data.SqlClient" Version="4.8.6" />
   </ItemGroup>

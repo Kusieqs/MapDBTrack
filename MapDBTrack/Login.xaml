@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:MapDBTrack"
         mc:Ignorable="d" WindowStartupLocation="CenterScreen" WindowStyle="None" AllowsTransparency="True"
         Background="Transparent"
-        Title="MainWindow" Height="450" Width="800">
+        Title="MainWindow" Height="450" Width="800" ResizeMode="NoResize">
 
     <Grid MouseDown="BorderClick">
         <Grid.ColumnDefinitions>
@@ -93,7 +93,8 @@
                     <RowDefinition Height="*"/>
                 </Grid.RowDefinitions>
 
-                <Image Source="/Pictures/close.png" Margin="453,10,10,86" Opacity="0.4" RenderOptions.BitmapScalingMode="HighQuality" IsHitTestVisible="False"/>
+                <Image Source="/Pictures/close.png" Margin="453,10,10,86" RenderOptions.BitmapScalingMode="HighQuality" IsHitTestVisible="False"/>
+
                 <Button Margin="453,10,10,86" BorderBrush="Transparent" Background="Transparent" Click="ExitClick" Cursor="Hand">
                     <Button.Template>
                         <ControlTemplate TargetType="Button">

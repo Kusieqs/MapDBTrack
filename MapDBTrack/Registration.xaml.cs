@@ -42,7 +42,7 @@ namespace MapDBTrack
                 return;
 
             string sqlQuery = "Insert Into Employee (login, password, email)";
-            string values = $"\nValues ('{Login.Text}','{Password.Text}','{Email.Text}')";
+            string values = $"\nValues ('{Login.Text}','{Password.Password}','{Email.Text}')";
 
             sqlQuery += values;
             SqlCommand command = new SqlCommand(sqlQuery, sql);
@@ -62,13 +62,13 @@ namespace MapDBTrack
                 correct = false;
             }
 
-            if (string.IsNullOrEmpty(Password.Text))
+            if (string.IsNullOrEmpty(Password.Password))
             {
                 PasswordFailed.Text = "Password is empty";
                 correct = false;
             }
 
-            if (string.IsNullOrEmpty(RepeatPassword.Text))
+            if (string.IsNullOrEmpty(RepeatPassword.Password))
             {
                 RepeatPasswordFailed.Text = "Password repeat is empty";
                 correct = false;
@@ -120,7 +120,7 @@ namespace MapDBTrack
         } // Checking login (new login can not be in db before)
         private bool PasswordCheck()
         {
-            if (Password.Text.Length < 6)
+            if (Password.Password.Length < 6)
             {
                 PasswordFailed.Text = "Password is too short";
                 return false;
@@ -137,7 +137,7 @@ namespace MapDBTrack
         } // Checking password (correct length)
         private bool RepeatPasswordCheck()
         {
-            if (RepeatPassword.Text.Trim() != Password.Text.Trim())
+            if (RepeatPassword.Password.Trim() != Password.Password.Trim())
             {
                 RepeatPasswordFailed.Text = "Passwords are not the same";
                 return false;
@@ -168,7 +168,20 @@ namespace MapDBTrack
 
             return true;
         } // Checking email (new email can not be in db before)
-
+        private void BorderClick(object sender, MouseButtonEventArgs e)
+        {
+            if (e.ChangedButton == MouseButton.Left)
+                this.DragMove();
+        } // feature to moving window
+        private void ExitClick(object sender, RoutedEventArgs e)
+        {
+            this.Close();
+        } // Exit button
+        private void InfoClick(object sender, RoutedEventArgs e)
+        {
+            string info = $"{HelpingClass.version}\nContact: kus.konrad1@gmail.com\nLicense: MapDBTrack Commercial Use License";
+            MessageBox.Show(info, "Information", MessageBoxButton.OK, MessageBoxImage.Information);
+        }
         #endregion
 
         #region Features to clean information about uncorrect registration
