@@ -3,10 +3,11 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
         xmlns:local="clr-namespace:MapDBTrack"
         mc:Ignorable="d" WindowStartupLocation="CenterScreen" WindowStyle="None" AllowsTransparency="True"
         Background="Transparent"
-        Title="MainWindow" Height="450" Width="800" ResizeMode="NoResize">
+        Title="MainWindow" Height="400" Width="800" ResizeMode="NoResize" FontFamily="{DynamicResource MaterialDesignFont}">
 
     <Grid MouseDown="BorderClick">
         <Grid.ColumnDefinitions>
@@ -69,15 +70,9 @@
                     </Image.RenderTransform>
                 </Image>
                 <Grid>
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="50*"/>
-                        <RowDefinition Height="79"/>
-                        <RowDefinition Height="57"/>
-                        <RowDefinition Height="107*"/>
-                    </Grid.RowDefinitions>
-                    <TextBlock Text="Sign up" Grid.Row="1" Foreground="White" Style="{StaticResource TopicTextBlock}" />
-                    <TextBlock Text="Register now to create an account." Grid.Row="2" Foreground="White" Style="{StaticResource TopicTextBlock}" FontSize="20" />
-                    <Button Grid.Row="3" Style="{StaticResource ButtonSign}" Content="Sign up" Click="SignUp" Margin="80,28,80,126" />
+                    <TextBlock Text="Sign up" Foreground="White" Style="{StaticResource TopicTextBlock}" HorizontalAlignment="Left" Margin="85,75,0,0" VerticalAlignment="Top" />
+                    <TextBlock Text="Register now to create an account." Foreground="White" Style="{StaticResource TopicTextBlock}" FontSize="20" Margin="0,170,0,0" VerticalAlignment="Top" />
+                    <Button Style="{StaticResource ButtonSign}" Content="Sign up" Click="SignUp" Margin="80,290,80,50" />
                 </Grid>
             </Grid>
         </Border>
@@ -86,16 +81,11 @@
 
         <Border Grid.Column="1" Background="White" CornerRadius="0,15,15,0">
             <Grid>
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="*"/>
-                    <RowDefinition Height="*"/>
-                    <RowDefinition Height="*"/>
-                    <RowDefinition Height="*"/>
-                </Grid.RowDefinitions>
+                <Image Source="/Pictures/close.png" Margin="453,10,10,373" RenderOptions.BitmapScalingMode="HighQuality" IsHitTestVisible="False" />
+                <Image Source="/Pictures/info.png" Margin="423,10,40,373" RenderOptions.BitmapScalingMode="HighQuality" IsHitTestVisible="False" />
 
-                <Image Source="/Pictures/close.png" Margin="453,10,10,86" RenderOptions.BitmapScalingMode="HighQuality" IsHitTestVisible="False"/>
 
-                <Button Margin="453,10,10,86" BorderBrush="Transparent" Background="Transparent" Click="ExitClick" Cursor="Hand">
+                <Button Margin="453,10,10,573" BorderBrush="Transparent" Background="Transparent" Click="ExitClick" Cursor="Hand" Height="17" Width="17">
                     <Button.Template>
                         <ControlTemplate TargetType="Button">
                             <Border Background="Transparent" Padding="{TemplateBinding Padding}">
@@ -109,26 +99,8 @@
                         </ControlTemplate>
                     </Button.Template>
                 </Button>
-                <TextBlock Text="Sign in to App" Foreground="#FF7B4BA5" Style="{StaticResource TopicTextBlock}"/>
-                <Button Grid.Row="3" Style="{StaticResource ButtonSign}" Content="Sign in" Click="SignIn"/>
-                <Border Grid.Row="1" CornerRadius="5" Margin="70,34,70,34" BorderThickness="1" BorderBrush="Gray">
-                    <Grid>
-                        <TextBlock x:Name="LoginTheme" Text="Login" Style="{StaticResource TextBlockOnBox}" Width="48" Height="30" Margin="36,0,0,0" />
-                        <TextBox x:Name="LoginBox" TextChanged="LoginTextChanged" Style="{StaticResource TextBoxMain}" Height="30" Margin="35,0,2,0"/>
-                        <Image Source="/Pictures/User.png" Opacity="0.4" RenderOptions.BitmapScalingMode="HighQuality" Margin="0,0,300,0" Width="25" />
-                    </Grid>
-                </Border>
-                <Border Grid.Row="2" CornerRadius="5" Margin="70,34,70,34" BorderThickness="1" BorderBrush="Gray">
-                    <Grid>
-                        <TextBlock x:Name="PasswordTheme" Text="Password" Style="{StaticResource TextBlockOnBox}" Width="83" Height="25" Margin="36,0,0,0"  />
-                        <PasswordBox x:Name="PasswordBox"  PasswordChanged="PassTextChanged" Style="{StaticResource TextBoxPass}" Margin="35,0,2,0" Height="25"/>
-                        <Image Source="/Pictures/key.png" Opacity="0.4" RenderOptions.BitmapScalingMode="HighQuality" Margin="0,0,300,0" Width="25"/>
-                    </Grid>
-                </Border>
-                <TextBlock x:Name="LoginFailed" Grid.Row="1" Text="" Style="{StaticResource TextBlokcsError}" HorizontalAlignment="Left" Margin="80,78,0,0" VerticalAlignment="Top"/>
-                <TextBlock x:Name="PasswordFailed" Grid.Row="2" Text="" Style="{StaticResource TextBlokcsError}" HorizontalAlignment="Left" Margin="80,78,0,0" VerticalAlignment="Top"/>
-                <TextBlock x:Name="PasswordReminder" Text="" Grid.Row="2" TextDecorations="Underline" IsEnabled="False" IsHitTestVisible="False" Style="{StaticResource TextBlokcsError}" Foreground="#FF7B4BA5" HorizontalAlignment="Left" Margin="295,78,0,0" VerticalAlignment="Top"/>
-                <Button x:Name="Reset" Cursor="Hand" IsEnabled="False" Grid.Row="2" FontSize="10" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="295,81,0,0" Height="13" Width="107" Background="Transparent" BorderBrush="Transparent" Click="ResetPassword">
+
+                <Button BorderBrush="Transparent" Background="Transparent" Click="InfoClick" Cursor="Hand" Height="17" Width="17" Margin="423,10,40,573">
                     <Button.Template>
                         <ControlTemplate TargetType="Button">
                             <Border Background="Transparent" Padding="{TemplateBinding Padding}">
@@ -136,12 +108,28 @@
                             </Border>
                             <ControlTemplate.Triggers>
                                 <Trigger Property="IsEnabled" Value="False">
-                                    <Setter Property="Background" Value="Transparent"/>
+                                    <Setter Property="Background" Value="Transparent" />
                                 </Trigger>
                             </ControlTemplate.Triggers>
                         </ControlTemplate>
                     </Button.Template>
                 </Button>
+
+
+
+
+                <Button Style="{StaticResource ButtonSign}" Content="Sign in" Click="SignIn" Margin="160,290,160,50"/>
+
+                <StackPanel HorizontalAlignment="Center" Margin="0,70,0,0" VerticalAlignment="Top" Width="340"  >
+                    <TextBox x:Name="LoginBox" TextChanged="LoginTextChanged" Height="50" FontSize="17" BorderThickness="0 0 0 1.5" BorderBrush="#C5C8CC" materialDesign:HintAssist.FloatingOffset="0,-20" materialDesign:HintAssist.Hint="Username" Margin="0,0,0,10" Text="" Style="{StaticResource MaterialDesignFloatingHintTextBox}" />
+                    <TextBlock x:Name="LogFailed" Text="" Style="{StaticResource TextBlokcsError}" Margin="2,0,0,15" HorizontalAlignment="Left"/>
+                    <PasswordBox x:Name="PasswordBox" PasswordChanged="PassTextChanged" Height="50" FontSize="17" BorderThickness="0 0 0 1.5" BorderBrush="#C5C8CC" materialDesign:HintAssist.FloatingOffset="0,-20" materialDesign:HintAssist.Hint="Password" Password=""  Style="{StaticResource MaterialDesignFloatingHintPasswordBox}" />
+                    <TextBlock x:Name="PasswordFailed" Style="{StaticResource TextBlokcsError}" HorizontalAlignment="Left" Margin="2,0,0,15"/>
+                </StackPanel>
+
+                <TextBlock x:Name="PasswordReminder" TextDecorations="Underline" IsEnabled="False" IsHitTestVisible="False" Style="{StaticResource TextBlokcsError}" Foreground="#FF7B4BA5" HorizontalAlignment="Left" Margin="302,213,0,0" VerticalAlignment="Top" Height="18"/>
+                <Button x:Name="Reset" Cursor="Hand" IsEnabled="False" FontSize="10" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="302,216,0,0" Height="13" Width="107" Background="Transparent" BorderBrush="Transparent" Click="ResetPassword"/>
+
             </Grid>
         </Border>
     </Grid>

@@ -22,7 +22,6 @@ namespace MapDBTrack
 
     public static class HelpingClass
     {
-
         public const string version = "1.1";
         public static string[] engExp = new string[]
         {

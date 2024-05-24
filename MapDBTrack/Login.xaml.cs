@@ -59,7 +59,7 @@ namespace MapDBTrack
             if (string.IsNullOrEmpty(login))
             {
                 log = false;
-                LoginFailed.Text = "Username not provided";
+                LogFailed.Text = "Username not provided";
             }
 
             if (string.IsNullOrEmpty(password))
@@ -89,7 +89,7 @@ namespace MapDBTrack
 
             if (!reader.HasRows)
             {
-                LoginFailed.Text = "User doesn't exist";
+                LogFailed.Text = "User doesn't exist";
                 reader.Close();
                 sql.Close();
                 return false;
@@ -143,19 +143,10 @@ namespace MapDBTrack
         } // feature to moving window
         private void LoginTextChanged(object sender, RoutedEventArgs e)
         {
-            if (!string.IsNullOrEmpty(LoginBox.Text) && LoginBox.Text.Length > 0)
-                LoginTheme.Visibility = Visibility.Collapsed;
-            else
-                LoginTheme.Visibility = Visibility.Visible;
-            LoginFailed.Text = string.Empty;
+            LogFailed.Text = string.Empty;
         } // disappearing text from textbox
         private void PassTextChanged(object sender, RoutedEventArgs e)
         {
-            if (!string.IsNullOrEmpty(PasswordBox.Password) && PasswordBox.Password.Length > 0)
-                PasswordTheme.Visibility = Visibility.Collapsed;
-            else
-                PasswordTheme.Visibility = Visibility.Visible;
-
             PasswordFailed.Text = string.Empty;
             Reset.IsEnabled = false;
             PasswordReminder.Text = string.Empty;
@@ -164,5 +155,10 @@ namespace MapDBTrack
         {
             this.Close();
         } // Exit button
+        private void InfoClick(object sender, RoutedEventArgs e)
+        {
+            string info = $"{HelpingClass.version}\nContact: kus.konrad1@gmail.com\nLicense: MapDBTrack Commercial Use License";
+            MessageBox.Show(info, "Information", MessageBoxButton.OK, MessageBoxImage.Information);
+        }
     }
 }
