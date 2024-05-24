@@ -19,7 +19,7 @@
 
         <Border Background="#FF7B4BA5" CornerRadius="15,0,0,15" >
             <Grid>
-                <Image Source="/Pictures/PinLogin.png" Margin="25,12,225,368" Style="{StaticResource LoginPinImage}">
+                <Image Source="/Pictures/PinLogin.png" Margin="26,13,224,317" Style="{StaticResource LoginPinImage}">
                     <Image.RenderTransform>
                         <TransformGroup>
                             <ScaleTransform/>
@@ -29,7 +29,7 @@
                         </TransformGroup>
                     </Image.RenderTransform>
                 </Image>
-                <Image Source="/Pictures/PinLogin.png" Margin="219,28,31,352" Style="{StaticResource LoginPinImage}">
+                <Image Source="/Pictures/PinLogin.png" Margin="219,31,31,299" Style="{StaticResource LoginPinImage}">
                     <Image.RenderTransform>
                         <TransformGroup>
                             <ScaleTransform/>
@@ -39,7 +39,7 @@
                         </TransformGroup>
                     </Image.RenderTransform>
                 </Image>
-                <Image Source="/Pictures/PinLogin.png" Margin="22,200,228,180" Style="{StaticResource LoginPinImage}">
+                <Image Source="/Pictures/PinLogin.png" Margin="22,203,228,127" Style="{StaticResource LoginPinImage}">
                     <Image.RenderTransform>
                         <TransformGroup>
                             <ScaleTransform/>
@@ -49,17 +49,17 @@
                         </TransformGroup>
                     </Image.RenderTransform>
                 </Image>
-                <Image Source="/Pictures/PinLogin.png" Margin="206,246,44,134" Style="{StaticResource LoginPinImage}">
+                <Image Source="/Pictures/PinLogin.png" Margin="201,166,49,164" Style="{StaticResource LoginPinImage}">
                     <Image.RenderTransform>
                         <TransformGroup>
                             <ScaleTransform/>
                             <SkewTransform/>
-                            <RotateTransform Angle="-74.402"/>
+                            <RotateTransform Angle="-166.285"/>
                             <TranslateTransform/>
                         </TransformGroup>
                     </Image.RenderTransform>
                 </Image>
-                <Image Source="/Pictures/PinLogin.png" Margin="101,346,149,34" Style="{StaticResource LoginPinImage}">
+                <Image Source="/Pictures/PinLogin.png" Margin="164,319,86,11" Style="{StaticResource LoginPinImage}">
                     <Image.RenderTransform>
                         <TransformGroup>
                             <ScaleTransform/>
@@ -81,40 +81,6 @@
 
         <Border Grid.Column="1" Background="White" CornerRadius="0,15,15,0">
             <Grid>
-                <Image Source="/Pictures/close.png" Margin="453,10,10,373" RenderOptions.BitmapScalingMode="HighQuality" IsHitTestVisible="False" />
-                <Image Source="/Pictures/info.png" Margin="423,10,40,373" RenderOptions.BitmapScalingMode="HighQuality" IsHitTestVisible="False" />
-
-
-                <Button Margin="453,10,10,573" BorderBrush="Transparent" Background="Transparent" Click="ExitClick" Cursor="Hand" Height="17" Width="17">
-                    <Button.Template>
-                        <ControlTemplate TargetType="Button">
-                            <Border Background="Transparent" Padding="{TemplateBinding Padding}">
-                                <ContentPresenter HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}" />
-                            </Border>
-                            <ControlTemplate.Triggers>
-                                <Trigger Property="IsEnabled" Value="False">
-                                    <Setter Property="Background" Value="Transparent" />
-                                </Trigger>
-                            </ControlTemplate.Triggers>
-                        </ControlTemplate>
-                    </Button.Template>
-                </Button>
-
-                <Button BorderBrush="Transparent" Background="Transparent" Click="InfoClick" Cursor="Hand" Height="17" Width="17" Margin="423,10,40,573">
-                    <Button.Template>
-                        <ControlTemplate TargetType="Button">
-                            <Border Background="Transparent" Padding="{TemplateBinding Padding}">
-                                <ContentPresenter HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}" />
-                            </Border>
-                            <ControlTemplate.Triggers>
-                                <Trigger Property="IsEnabled" Value="False">
-                                    <Setter Property="Background" Value="Transparent" />
-                                </Trigger>
-                            </ControlTemplate.Triggers>
-                        </ControlTemplate>
-                    </Button.Template>
-                </Button>
-
 
 
 
@@ -122,13 +88,19 @@
 
                 <StackPanel HorizontalAlignment="Center" Margin="0,70,0,0" VerticalAlignment="Top" Width="340"  >
                     <TextBox x:Name="LoginBox" TextChanged="LoginTextChanged" Height="50" FontSize="17" BorderThickness="0 0 0 1.5" BorderBrush="#C5C8CC" materialDesign:HintAssist.FloatingOffset="0,-20" materialDesign:HintAssist.Hint="Username" Margin="0,0,0,10" Text="" Style="{StaticResource MaterialDesignFloatingHintTextBox}" />
-                    <TextBlock x:Name="LogFailed" Text="" Style="{StaticResource TextBlokcsError}" Margin="2,0,0,15" HorizontalAlignment="Left"/>
-                    <PasswordBox x:Name="PasswordBox" PasswordChanged="PassTextChanged" Height="50" FontSize="17" BorderThickness="0 0 0 1.5" BorderBrush="#C5C8CC" materialDesign:HintAssist.FloatingOffset="0,-20" materialDesign:HintAssist.Hint="Password" Password=""  Style="{StaticResource MaterialDesignFloatingHintPasswordBox}" />
+                    <TextBlock x:Name="LogFailed" Text="" Style="{StaticResource TextBlokcsError}" Margin="2,0,0,30" HorizontalAlignment="Left"/>
+                    <PasswordBox x:Name="PasswordBox" PasswordChanged="PassTextChanged" Height="50" FontSize="17" BorderThickness="0 0 0 1.5" BorderBrush="#C5C8CC" materialDesign:HintAssist.FloatingOffset="0,-20" materialDesign:HintAssist.Hint="Password"  Margin="0,0,0,10" Password=""  Style="{StaticResource MaterialDesignFloatingHintPasswordBox}" />
                     <TextBlock x:Name="PasswordFailed" Style="{StaticResource TextBlokcsError}" HorizontalAlignment="Left" Margin="2,0,0,15"/>
                 </StackPanel>
 
-                <TextBlock x:Name="PasswordReminder" TextDecorations="Underline" IsEnabled="False" IsHitTestVisible="False" Style="{StaticResource TextBlokcsError}" Foreground="#FF7B4BA5" HorizontalAlignment="Left" Margin="302,213,0,0" VerticalAlignment="Top" Height="18"/>
-                <Button x:Name="Reset" Cursor="Hand" IsEnabled="False" FontSize="10" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="302,216,0,0" Height="13" Width="107" Background="Transparent" BorderBrush="Transparent" Click="ResetPassword"/>
+                <TextBlock x:Name="PasswordReminder" TextDecorations="Underline" IsEnabled="False" IsHitTestVisible="False" Style="{StaticResource TextBlokcsError}" Foreground="#FF7B4BA5" HorizontalAlignment="Left" Margin="302,238,0,0" VerticalAlignment="Top" Height="18"/>
+                <Button x:Name="Reset" Cursor="Hand" IsEnabled="False" FontSize="10" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="302,241,0,0" Height="13" Width="107" Background="Transparent" BorderBrush="Transparent" Click="ResetPassword"/>
+
+
+                <Image Source="/Pictures/close.png" Margin="453,10,10,373" RenderOptions.BitmapScalingMode="HighQuality" IsHitTestVisible="False" />
+                <Image Source="/Pictures/info.png" Margin="423,10,40,373" RenderOptions.BitmapScalingMode="HighQuality" IsHitTestVisible="False" />
+                <Button Margin="453,10,10,373" BorderBrush="Transparent" Background="Transparent" Click="ExitClick" Cursor="Hand" Height="17" Width="17"/>
+                <Button BorderBrush="Transparent" Background="Transparent" Click="InfoClick" Cursor="Hand" Height="17" Width="17" Margin="423,10,40,373" />
 
             </Grid>
         </Border>

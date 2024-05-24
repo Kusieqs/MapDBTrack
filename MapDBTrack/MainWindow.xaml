@@ -31,11 +31,6 @@
                     <RowDefinition Height="*"/>
                 </Grid.RowDefinitions>
 
-
-
-
-
-
                 <Border Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2">
                     <Grid>
                         <TextBlock Text="MapDBTrack" FontSize="43" FontWeight="Bold" Foreground="#FF2F5588" HorizontalAlignment="Center" VerticalAlignment="Top"  FontFamily="Calibri" Margin="0,23,0,0"/>
@@ -43,8 +38,6 @@
                         <Image Source="/Pictures/Info.png" Margin="5,5,270,83" IsHitTestVisible="False" RenderOptions.BitmapScalingMode="HighQuality"/>
                     </Grid>
                 </Border>
-
-
 
 
                 <Border Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2" CornerRadius="20" Margin="20">

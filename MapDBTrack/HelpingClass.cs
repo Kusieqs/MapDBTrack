@@ -232,7 +232,6 @@ namespace MapDBTrack
             string[] exp = engExp; // warunek czy pol czy eng
             return exp[num];
         } // excpetions words
-
         public static void RemoveRecordFromDB(Place p1)
         {
             using (SqlConnection sql = new SqlConnection(connectString))

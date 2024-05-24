@@ -12,7 +12,6 @@
   <ItemGroup>
     <None Remove="Pictures\add-group.png" />
     <None Remove="Pictures\add.png" />
-    <None Remove="Pictures\Background.jpg" />
     <None Remove="Pictures\bin.png" />
     <None Remove="Pictures\clear.png" />
     <None Remove="Pictures\close.png" />
@@ -50,7 +49,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Resource Include="Pictures\Background.jpg" />
     <Resource Include="Pictures\Info.png" />
     <Resource Include="Pictures\key.png" />
     <Resource Include="Pictures\Logout.png" />

@@ -646,6 +646,8 @@ namespace MapDBTrack
                 ToolTip tooltip = new ToolTip();
                 tooltip.IsEnabled = true;
                 tooltip.Content = HelpingClass.GetDescTool(p1);
+                tooltip.PlacementTarget = pin;
+                tooltip.Placement = System.Windows.Controls.Primitives.PlacementMode.Mouse;
                 pin.ToolTip = tooltip;
                 tooltip.IsOpen = true;
             }
