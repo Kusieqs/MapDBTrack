@@ -114,29 +114,26 @@
         <Setter Property="VerticalAlignment" Value="Center"/>
         <Setter Property="VerticalAlignment" Value="Center"/>
     </Style>
-    
-    
-    
-    
-    
+
+
+
+
+
 
     <Style x:Key="ButtonRounded" TargetType="Button">
-        <Setter Property="Width" Value="120"/>
-        <Setter Property="Height" Value="60"/>
-        <Setter Property="Background" Value="#FF2F5588"/>
+        <Setter Property="Background" Value="#FF7B4BA5"/>
         <Setter Property="BorderThickness" Value="2"/>
         <Setter Property="FontSize" Value="20"/>
         <Setter Property="FontWeight" Value="DemiBold"/>
         <Setter Property="Foreground" Value="White"/>
-        <Setter Property="BorderBrush" Value="Gray"/>
+        <Setter Property="BorderBrush" Value="Transparent"/>
         <Setter Property="Cursor" Value="Hand"/>
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="Button">
                     <Border x:Name="border" Background="{TemplateBinding Background}"
                         BorderBrush="{TemplateBinding BorderBrush}"
-                        BorderThickness="{TemplateBinding BorderThickness}"
-                        CornerRadius="15">
+                        BorderThickness="{TemplateBinding BorderThickness}">
                         <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
                     </Border>
                     <ControlTemplate.Triggers>
@@ -144,7 +141,7 @@
                             <BeginStoryboard>
                                 <Storyboard>
                                     <ColorAnimation Storyboard.TargetProperty="(Border.Background).(SolidColorBrush.Color)"
-                                                To="#FF638EC8" Duration="0:0:0.3"/>
+                                                To="#FF9C5ED2" Duration="0:0:0.3"/>
                                 </Storyboard>
                             </BeginStoryboard>
                         </EventTrigger>
@@ -152,7 +149,7 @@
                             <BeginStoryboard>
                                 <Storyboard>
                                     <ColorAnimation Storyboard.TargetProperty="(Border.Background).(SolidColorBrush.Color)"
-                                                To="#FF2F5588" Duration="0:0:0.3"/>
+                                                To="#FF7B4BA5" Duration="0:0:0.3"/>
                                 </Storyboard>
                             </BeginStoryboard>
                         </EventTrigger>
@@ -160,7 +157,7 @@
                             <BeginStoryboard>
                                 <Storyboard>
                                     <ColorAnimation Storyboard.TargetProperty="(Border.Background).(SolidColorBrush.Color)"
-                                                To="#FF4F7CAF" Duration="0:0:0.1"/>
+                                                To="#FF9C76BD" Duration="0:0:0.1"/>
                                 </Storyboard>
                             </BeginStoryboard>
                         </EventTrigger>
@@ -168,7 +165,7 @@
                             <BeginStoryboard>
                                 <Storyboard>
                                     <ColorAnimation Storyboard.TargetProperty="(Border.Background).(SolidColorBrush.Color)"
-                                                To="#FF638EC8" Duration="0:0:0.1"/>
+                                                To="#FF9C5ED2" Duration="0:0:0.1"/>
                                 </Storyboard>
                             </BeginStoryboard>
                         </EventTrigger>
@@ -278,8 +275,8 @@
         </Setter>
     </Style>
 
-    
-    
+
+
     <Style x:Key="BorderStyle">
         <Setter Property="Control.BorderBrush" Value="#A0A1A2" />
         <Setter Property="Control.BorderThickness" Value="1" />
@@ -408,12 +405,12 @@
     <Style x:Key="TextBlocks" TargetType="TextBlock">
         <Setter Property="FontSize" Value="26"/>
         <Setter Property="FontWeight" Value="DemiBold"/>
-        <Setter Property="Foreground" Value="#F7EEDD"/>
+        <Setter Property="Foreground" Value="white"/>
         <Setter Property="VerticalAlignment" Value="Center"/>
         <Setter Property="HorizontalAlignment" Value="Center"/>
         <Setter Property="FontFamily" Value="Calibri"/>
     </Style>
-    
+
     <Style x:Key="TextBlocksCustomerButtons" TargetType="TextBlock">
         <Setter Property="FontSize" Value="30"/>
         <Setter Property="VerticalAlignment" Value="Center"/>
@@ -426,7 +423,8 @@
     </Style>
 
     <Style x:Key="ButtonsAddPins" TargetType="Button">
-        <Setter Property="Background" Value="#FF2C3C96"/>
+        <Setter Property="Background" Value="#FF7B4BA5"/>
+        <Setter Property="BorderBrush" Value="Transparent"/>
         <Setter Property="FontWeight" Value="DemiBold"/>
         <Setter Property="Cursor" Value="Hand"/>
         <Setter Property="FontSize" Value="45"/>
@@ -449,7 +447,7 @@
                             <BeginStoryboard>
                                 <Storyboard>
                                     <ColorAnimation Storyboard.TargetProperty="(Border.Background).(SolidColorBrush.Color)"
-                                                To="#FF638EC8" Duration="0:0:0.3"/>
+                                                To="#FF9C5ED2" Duration="0:0:0.3"/>
                                 </Storyboard>
                             </BeginStoryboard>
                         </EventTrigger>
@@ -457,7 +455,7 @@
                             <BeginStoryboard>
                                 <Storyboard>
                                     <ColorAnimation Storyboard.TargetProperty="(Border.Background).(SolidColorBrush.Color)"
-                                                To="#FF2F5588" Duration="0:0:0.3"/>
+                                                To="#FF7B4BA5" Duration="0:0:0.3"/>
                                 </Storyboard>
                             </BeginStoryboard>
                         </EventTrigger>
@@ -465,7 +463,7 @@
                             <BeginStoryboard>
                                 <Storyboard>
                                     <ColorAnimation Storyboard.TargetProperty="(Border.Background).(SolidColorBrush.Color)"
-                                                To="#FF4F7CAF" Duration="0:0:0.1"/>
+                                                To="#FF9C76BD" Duration="0:0:0.1"/>
                                 </Storyboard>
                             </BeginStoryboard>
                         </EventTrigger>
@@ -473,7 +471,7 @@
                             <BeginStoryboard>
                                 <Storyboard>
                                     <ColorAnimation Storyboard.TargetProperty="(Border.Background).(SolidColorBrush.Color)"
-                                                To="#FF638EC8" Duration="0:0:0.1"/>
+                                                To="#FF9C5ED2" Duration="0:0:0.1"/>
                                 </Storyboard>
                             </BeginStoryboard>
                         </EventTrigger>
@@ -485,7 +483,8 @@
     </Style>
 
     <Style x:Key="ButtonsRemovePins" TargetType="Button">
-        <Setter Property="Background" Value="#FF2C3C96"/>
+        <Setter Property="Background" Value="#FF7B4BA5"/>
+        <Setter Property="BorderBrush" Value="Transparent"/>
         <Setter Property="FontWeight" Value="DemiBold"/>
         <Setter Property="Cursor" Value="Hand"/>
         <Setter Property="FontSize" Value="45"/>
@@ -508,7 +507,7 @@
                             <BeginStoryboard>
                                 <Storyboard>
                                     <ColorAnimation Storyboard.TargetProperty="(Border.Background).(SolidColorBrush.Color)"
-                                                To="#FF638EC8" Duration="0:0:0.3"/>
+                                                To="#FF9C5ED2" Duration="0:0:0.3"/>
                                 </Storyboard>
                             </BeginStoryboard>
                         </EventTrigger>
@@ -516,7 +515,7 @@
                             <BeginStoryboard>
                                 <Storyboard>
                                     <ColorAnimation Storyboard.TargetProperty="(Border.Background).(SolidColorBrush.Color)"
-                                                To="#FF2F5588" Duration="0:0:0.3"/>
+                                                To="#FF7B4BA5" Duration="0:0:0.3"/>
                                 </Storyboard>
                             </BeginStoryboard>
                         </EventTrigger>
@@ -524,7 +523,7 @@
                             <BeginStoryboard>
                                 <Storyboard>
                                     <ColorAnimation Storyboard.TargetProperty="(Border.Background).(SolidColorBrush.Color)"
-                                                To="#FF4F7CAF" Duration="0:0:0.1"/>
+                                                To="#FF9C76BD" Duration="0:0:0.1"/>
                                 </Storyboard>
                             </BeginStoryboard>
                         </EventTrigger>
@@ -532,7 +531,7 @@
                             <BeginStoryboard>
                                 <Storyboard>
                                     <ColorAnimation Storyboard.TargetProperty="(Border.Background).(SolidColorBrush.Color)"
-                                                To="#FF638EC8" Duration="0:0:0.1"/>
+                                                To="#FF9C5ED2" Duration="0:0:0.1"/>
                                 </Storyboard>
                             </BeginStoryboard>
                         </EventTrigger>

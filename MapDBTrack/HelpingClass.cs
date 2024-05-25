@@ -90,17 +90,16 @@ namespace MapDBTrack
             smtClient.Send(message);
 
         } // Sending password reminder to user email
-        public static void CleanGrid(Grid MainGrid)
+        public static void CleanGrid(Grid grid)
         {
-            for (int i = MainGrid.Children.Count - 1; i >= 0; i--)
-            {
-                UIElement child = MainGrid.Children[i];
-                int column = Grid.GetColumn(child);
-                if (column == 2)
-                {
-                    MainGrid.Children.Remove(child);
-                }
-            }
+            // Usunięcie wszystkich dzieci z Grid
+            grid.Children.Clear();
+
+            // Wyczyść definicje wierszy
+            grid.RowDefinitions.Clear();
+
+            // Wyczyść definicje kolumn
+            grid.ColumnDefinitions.Clear();
         } // cleaning Grid 
         public static RootObject ReadLocation(Location location)
         {

@@ -3,108 +3,82 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
         xmlns:m="clr-namespace:Microsoft.Maps.MapControl.WPF;assembly=Microsoft.Maps.MapControl.WPF"
         xmlns:local="clr-namespace:MapDBTrack"
-        mc:Ignorable="d"
-        Title="MainWindow" Height="800" Width="1400" ResizeMode="NoResize" >
+        mc:Ignorable="d" WindowStartupLocation="CenterScreen" WindowStyle="None" AllowsTransparency="True"
+        Background="Transparent"
+        Title="MainWindow" Height="800" Width="1400" ResizeMode="NoResize" FontFamily="{DynamicResource MaterialDesignFont}" >
 
     <Grid x:Name="MainGrid">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="300"/>
-            <ColumnDefinition Width="2"/>
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
-        <Border Grid.Column="1" Background="#FF2F5588"/>
-        <Border x:Name="Menu" Grid.Column="0" Background="#FFD1E1EC">
+        <Border x:Name="Menu" Grid.Column="0" Background="White" CornerRadius="15,0,0,15">
             <Grid>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="100"/>
-                    <ColumnDefinition Width="*"/>
-                </Grid.ColumnDefinitions>
                 <Grid.RowDefinitions>
-                    <RowDefinition Height="*"/>
-                    <RowDefinition Height="*"/>
-                    <RowDefinition Height="*"/>
-                    <RowDefinition Height="*"/>
-                    <RowDefinition Height="*"/>
-                    <RowDefinition Height="*"/>
-                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="9*"/>
+                    <RowDefinition Height="41*"/>
                 </Grid.RowDefinitions>
-
-                <Border Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2">
+                <Image Source="/Pictures/info.png" Width="17" Height="17" Margin="15,10,268,117"  RenderOptions.BitmapScalingMode="HighQuality" IsHitTestVisible="False"/>
+                <Button Cursor="Hand" Background="Transparent" BorderBrush="Transparent" Width="17" Height="17" Margin="15,10,268,117" Click="Information"/>
+                <TextBlock Text="MapDBTrack" FontSize="50" FontWeight="Bold" Foreground="#FF7B4BA5" HorizontalAlignment="Left" VerticalAlignment="Center" FontFamily="Calibri" Margin="15,0,0,0"/>
+                <Border Grid.Row="1" Background="#FF7B4BA5" CornerRadius="0,120,0,0">
                     <Grid>
-                        <TextBlock Text="MapDBTrack" FontSize="43" FontWeight="Bold" Foreground="#FF2F5588" HorizontalAlignment="Center" VerticalAlignment="Top"  FontFamily="Calibri" Margin="0,23,0,0"/>
-                        <Button Opacity="0" Click="Information" Cursor="Hand" Margin="5,5,270,83" />
-                        <Image Source="/Pictures/Info.png" Margin="5,5,270,83" IsHitTestVisible="False" RenderOptions.BitmapScalingMode="HighQuality"/>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="151*"/>
+                            <RowDefinition Height="505*"/>
+                        </Grid.RowDefinitions>
+                        <Image Source="/Pictures/Map.png" Grid.Row="0" IsHitTestVisible="False" RenderOptions.BitmapScalingMode="HighQuality" Margin="15,5,98,4"/>
+                        <Border Grid.Row="1">
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="3*"/>
+                                    <ColumnDefinition Width="7*"/>
+                                </Grid.ColumnDefinitions>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="40"/>
+                                    <RowDefinition Height="*"/>
+                                    <RowDefinition Height="*"/>
+                                    <RowDefinition Height="*"/>
+                                    <RowDefinition Height="*"/>
+                                    <RowDefinition Height="*"/>
+                                </Grid.RowDefinitions>
+                                <TextBlock x:Name="LoginName" Foreground="White" FontWeight="DemiBold" TextAlignment="Center" VerticalAlignment="Top" FontSize="22"  FontFamily="Calibri" Grid.ColumnSpan="2" Margin="15,10,15,0" />
+
+
+                                <Button x:Name="Map" Grid.Row="1" Grid.ColumnSpan="2" Grid.Column="0" Style="{StaticResource ButtonRounded}" Click="MapClick"/>
+                                <Image Source="/Pictures/Pin.png" Grid.Row="1" Width="65" IsHitTestVisible="False" RenderOptions.BitmapScalingMode="HighQuality"/>
+                                <TextBlock Text="Map" Grid.Row="1" Grid.Column="1" Style="{StaticResource TextBlocks}" IsHitTestVisible="False"/>
+
+                                <Button x:Name="Customer"  Grid.Row="2" Grid.ColumnSpan="2" Grid.Column="0" Style="{StaticResource ButtonRounded}" Click="CustomersClick"/>
+                                <Image Source="/Pictures/Customer.png" Grid.Row="2" Width="60" IsHitTestVisible="False" RenderOptions.BitmapScalingMode="HighQuality"/>
+                                <TextBlock Text="Customers" Grid.Row="2" Grid.Column="1" Style="{StaticResource TextBlocks}" IsHitTestVisible="False"/>
+
+                                <Button x:Name="History" Grid.Row="3" Grid.ColumnSpan="2" Grid.Column="0" Style="{StaticResource ButtonRounded}" Click="HistoryClick"/>
+                                <Image Source="/Pictures/History.png" Grid.Row="3" Width="65" IsHitTestVisible="False" RenderOptions.BitmapScalingMode="HighQuality"/>
+                                <TextBlock Text="History" Grid.Row="3" Grid.Column="1" Style="{StaticResource TextBlocks}" IsHitTestVisible="False"/>
+
+                                <Button x:Name="Logout" Grid.Row="4" Grid.ColumnSpan="2" Grid.Column="0" Style="{StaticResource ButtonRounded}" Click="LogoutClick"/>
+                                <Image Source="/Pictures/Logout.png" Grid.Row="4" IsHitTestVisible="False" RenderOptions.BitmapScalingMode="HighQuality" Margin="21,0,13,0"/>
+                                <TextBlock Text="Log out" Grid.Row="4" Grid.Column="1" Style="{StaticResource TextBlocks}" IsHitTestVisible="False"/>
+
+                                <Button x:Name="Exit" Grid.Row="5" Grid.ColumnSpan="2" Grid.Column="0" Style="{StaticResource ButtonRounded}" Click="ExitClick"/>
+                                <Image Source="/Pictures/Exit.png" Grid.Row="5" Width="75" IsHitTestVisible="False" RenderOptions.BitmapScalingMode="HighQuality"/>
+                                <TextBlock Text="Exit" Grid.Row="5" Grid.Column="1" Style="{StaticResource TextBlocks}" IsHitTestVisible="False"/>
+
+                            </Grid>
+                        </Border>
                     </Grid>
                 </Border>
-
-
-                <Border Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2" CornerRadius="20" Margin="20">
-                    <Grid>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="80"/>
-                            <ColumnDefinition Width="*"/>
-                        </Grid.ColumnDefinitions>
-                        <Button x:Name="Map" Grid.Column="0" Grid.ColumnSpan="2" Style="{StaticResource ButtonRounded}" Click="MapClick" Width="250" Height="NaN" Margin="5,0,5,1"/>
-                        <TextBlock Text="Map" Grid.Column="1" Style="{StaticResource TextBlocks}" IsHitTestVisible="False"/>
-                        <Image Source="/Pictures/Pin.png" Grid.Column="0" IsHitTestVisible="False" Margin="3,6,1,6" RenderOptions.BitmapScalingMode="HighQuality" Width="50"/>
-                    </Grid>
-                </Border>
-
-                <Border Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="2" CornerRadius="20" Margin="20">
-                    <Grid>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="80"/>
-                            <ColumnDefinition Width="*"/>
-                        </Grid.ColumnDefinitions>
-                        <Button Grid.Column="0" Grid.ColumnSpan="2" Style="{StaticResource ButtonRounded}" Click="CustomersClick" Width="250" Height="NaN" Margin="5,0,5,1"/>
-                        <TextBlock Text="Customers" Grid.Column="1" Style="{StaticResource TextBlocks}" IsHitTestVisible="False"/>
-                        <Image Source="/Pictures/Customer.png" Grid.Column="0" IsHitTestVisible="False" Margin="3,6,1,6" RenderOptions.BitmapScalingMode="HighQuality" Width="46"/>
-                    </Grid>
-                </Border>
-
-                <Border Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="2" CornerRadius="20" Margin="20" >
-                    <Grid>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="80"/>
-                            <ColumnDefinition Width="*"/>
-                        </Grid.ColumnDefinitions>
-                        <Button Grid.Column="0" Grid.ColumnSpan="2" Style="{StaticResource ButtonRounded}" Click="HistoryClick" Width="250" Height="NaN" Margin="5,0,5,1"/>
-                        <TextBlock Text="History" Grid.Column="1" Style="{StaticResource TextBlocks}" IsHitTestVisible="False"/>
-                        <Image Source="/Pictures/History.png" Grid.Column="0" IsHitTestVisible="False" Margin="0,5,0,5" RenderOptions.BitmapScalingMode="HighQuality" Width="50"/>
-                    </Grid>
-                </Border>
-
-                <Border Grid.Row="5" Grid.Column="0" Grid.ColumnSpan="2" CornerRadius="20" Margin="20">
-                    <Grid>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="80"/>
-                            <ColumnDefinition Width="*"/>
-                        </Grid.ColumnDefinitions>
-                        <Button x:Name="Logout" Grid.Column="0" Grid.ColumnSpan="2" Style="{StaticResource ButtonRounded}" Click="LogoutClick" Width="250" Height="NaN" Margin="5,0,5,1"/>
-                        <TextBlock Text="Log out" Grid.Column="1" Style="{StaticResource TextBlocks}" IsHitTestVisible="False"/>
-                        <Image Source="/Pictures/Logout.png" Grid.Column="0" IsHitTestVisible="False" Margin="8,9,4,9" RenderOptions.BitmapScalingMode="HighQuality" Width="40"/>
-                    </Grid>
-                </Border>
-
-                <Border Grid.Row="6" Grid.Column="0" Grid.ColumnSpan="2" CornerRadius="20" Margin="20">
-                    <Grid>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="80"/>
-                            <ColumnDefinition Width="*"/>
-                        </Grid.ColumnDefinitions>
-                        <Button x:Name="Exit" Grid.Column="0" Grid.ColumnSpan="2" Style="{StaticResource ButtonRounded}" Click="ExitClick" Width="250" Height="NaN" Margin="5,0,5,1"/>
-                        <TextBlock Text="Exit" Grid.Column="1" Style="{StaticResource TextBlocks}" IsHitTestVisible="False"/>
-                        <Image Source="/Pictures/Exit.png" Grid.Column="0" IsHitTestVisible="False" Margin="1,0,5,1" RenderOptions.BitmapScalingMode="HighQuality" Width="60"/>
-                    </Grid>
-                </Border>
+            </Grid>
+        </Border>
+        <Border CornerRadius="0,15,15,0" Background="White" Grid.Column="1">
+            <Grid x:Name="mapBorder">
 
             </Grid>
         </Border>
-        <TextBlock x:Name="LoginName" Text="" Foreground="#FF2F5588" FontWeight="DemiBold" VerticalAlignment="Top" TextAlignment="Center" FontSize="22" Height="41"  FontFamily="Calibri" Margin="10,192,10,0"/>
-        <Image Source="/Pictures/Map.png" Grid.Row="0" Margin="36,77,36,598" IsHitTestVisible="False" RenderOptions.BitmapScalingMode="HighQuality"/>
-
 
     </Grid>
 </Window>

@@ -20,14 +20,11 @@
     <None Remove="Pictures\Exit.png" />
     <None Remove="Pictures\History.png" />
     <None Remove="Pictures\Info.png" />
-    <None Remove="Pictures\key.png" />
     <None Remove="Pictures\Logout.png" />
-    <None Remove="Pictures\MainWindowBack.jpg" />
     <None Remove="Pictures\mode.png" />
     <None Remove="Pictures\Pin.png" />
     <None Remove="Pictures\PinLogin.png" />
     <None Remove="Pictures\report.png" />
-    <None Remove="Pictures\user.png" />
   </ItemGroup>
 
   <ItemGroup>
@@ -50,9 +47,7 @@
 
   <ItemGroup>
     <Resource Include="Pictures\Info.png" />
-    <Resource Include="Pictures\key.png" />
     <Resource Include="Pictures\Logout.png" />
-    <Resource Include="Pictures\MainWindowBack.jpg" />
     <Resource Include="Pictures\Map.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Resource>
@@ -62,7 +57,6 @@
     </Resource>
     <Resource Include="Pictures\PinLogin.png" />
     <Resource Include="Pictures\report.png" />
-    <Resource Include="Pictures\user.png" />
   </ItemGroup>
 
 </Project>

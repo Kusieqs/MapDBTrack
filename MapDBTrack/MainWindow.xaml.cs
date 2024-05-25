@@ -27,12 +27,11 @@ namespace MapDBTrack
         private Button adding;
         private Button removing;
         private AddingCustomer addingCustomer;
-        private Grid mapGrid;
         private Map map;
         private bool pinned = false;
         private bool removed = false;
         public static bool acceptOverridePin = false;
-        
+
 
         public MainWindow(int id, string login)
         {
@@ -47,6 +46,7 @@ namespace MapDBTrack
 
         private void MapClick(object sender, RoutedEventArgs e)
         {
+            HelpingClass.CleanGrid(mapBorder);
             LoadingMapScreen();
         } // button to load map
         private void LoadingMapScreen()
@@ -54,9 +54,9 @@ namespace MapDBTrack
             // Checking network connection
             HelpingClass.NetworkCheck(this);
 
-            // creating grid for map
-            mapGrid = new Grid();
-            mapGrid.Name = "Content";
+            // setting grid row definitions
+            mapBorder.RowDefinitions.Add(new RowDefinition() { Height = new GridLength(4, GridUnitType.Star) });
+            mapBorder.RowDefinitions.Add(new RowDefinition() { Height = new GridLength(1, GridUnitType.Star) });
 
             // Creating map
             map = new Map()
@@ -70,40 +70,27 @@ namespace MapDBTrack
 
             // Special method to putting pins on map
             map.MouseLeftButtonDown += MapPuttingPins;
-            mapGrid.Children.Add(map);
-
-            // creating border for map grid
-            Border mapBorder = new Border();
-            mapBorder.Background = new SolidColorBrush("#FFFFF7FC".ToColor());
-            Grid.SetColumn(mapBorder, 2);
-            Grid.SetRow(mapBorder, 0);
-            mapBorder.Child = mapGrid;
+            Grid.SetRowSpan(map, 2);
+            Grid.SetRow(map, 0);
+            mapBorder.Children.Add(map);
 
             // creating border for button
             Border buttonBorder = new Border()
             {
                 Width = 150,
                 Height = 60,
-                Margin = new Thickness(0, 650, 0, 0),
-                Background = new SolidColorBrush("#FF2C3C96".ToColor()),
+                Margin = new Thickness(0, 0, 0, 0),
+                Background = new SolidColorBrush("#FF7B4BA5".ToColor()),
 
             };
             buttonBorder.CornerRadius = new CornerRadius(20);
-            Grid.SetColumn(buttonBorder, 2);
-            Grid.SetRow(buttonBorder, 0);
+            Grid.SetColumn(buttonBorder, 0);
+            Grid.SetRow(buttonBorder, 1);
 
             // creating grid for buttons
             Grid buttonsMap = new Grid();
             buttonsMap.ColumnDefinitions.Add(new ColumnDefinition() { Width = new GridLength(1, GridUnitType.Star) });
-            buttonsMap.ColumnDefinitions.Add(new ColumnDefinition() { Width = new GridLength(1) });
             buttonsMap.ColumnDefinitions.Add(new ColumnDefinition() { Width = new GridLength(1, GridUnitType.Star) });
-
-            // creating line beetwen two buttons
-            Border border = new Border();
-            border.Background = Brushes.Gray;
-            Grid.SetColumn(border, 1);
-            Grid.SetRow(border, 0);
-            buttonsMap.Children.Add(border);
 
             // creating button to add pin
             adding = new Button();
@@ -133,40 +120,34 @@ namespace MapDBTrack
             };
             RenderOptions.SetBitmapScalingMode(imageRemove, BitmapScalingMode.HighQuality);
             removing.Content = imageRemove;
-            Grid.SetColumn(removing, 2);
-            Grid.SetRow(removing, 2);
+            Grid.SetColumn(removing, 1);
+            Grid.SetRow(removing, 0);
             buttonsMap.Children.Add(removing);
 
             // creating grid for all objects and adding to main window
             buttonBorder.Child = buttonsMap;
-            MainGrid.Children.Add(mapBorder);
-            MainGrid.Children.Add(buttonBorder);
+            mapBorder.Children.Add(buttonBorder);
 
             LoadingPinns();
 
         } // loading map 
         private void LoadingCustomerScreen()
         {
-            HelpingClass.NetworkCheck(this); // Checking network connection
+            // Checking network connection
+            HelpingClass.NetworkCheck(this);
 
             // creating menu grid on the right side
             #region Creating grid
-            Border mainWindowBorder = new Border();
-            Grid.SetColumn(mainWindowBorder, 2);
-            Grid.SetRow(mainWindowBorder, 0);
-            MainGrid.Children.Add(mainWindowBorder);
 
-            Grid mainWindowBorderGrid = new Grid();
-            mainWindowBorderGrid.RowDefinitions.Add(new RowDefinition() { Height = new GridLength(180) });
-            mainWindowBorderGrid.RowDefinitions.Add(new RowDefinition() { Height = new GridLength(2) });
-            mainWindowBorderGrid.RowDefinitions.Add(new RowDefinition() { Height = new GridLength(60) });
-            mainWindowBorderGrid.RowDefinitions.Add(new RowDefinition() { Height = new GridLength(1, GridUnitType.Star) });
-            mainWindowBorder.Child = mainWindowBorderGrid;
+            mapBorder.RowDefinitions.Add(new RowDefinition() { Height = new GridLength(180) });
+            mapBorder.RowDefinitions.Add(new RowDefinition() { Height = new GridLength(2) });
+            mapBorder.RowDefinitions.Add(new RowDefinition() { Height = new GridLength(60) });
+            mapBorder.RowDefinitions.Add(new RowDefinition() { Height = new GridLength(1, GridUnitType.Star) });
 
             Border menuBorder = new Border();
             Grid.SetColumn(menuBorder, 0);
             Grid.SetRow(menuBorder, 0);
-            mainWindowBorderGrid.Children.Add(menuBorder);
+            mapBorder.Children.Add(menuBorder);
 
 
             Grid menuBorderGrid = new Grid();
@@ -326,7 +307,7 @@ namespace MapDBTrack
 
             Image reportImage = new Image()
             {
-                Source = new BitmapImage(new Uri("pack://application:,,,/Pictures/report.png")),            
+                Source = new BitmapImage(new Uri("pack://application:,,,/Pictures/report.png")),
             };
             reportImage.Style = FindResource("ImageCustomerView") as Style;
             RenderOptions.SetBitmapScalingMode(reportImage, BitmapScalingMode.HighQuality);
@@ -370,7 +351,7 @@ namespace MapDBTrack
             line.Background = new SolidColorBrush("#FF2C3C96".ToColor());
             Grid.SetColumn(line, 0);
             Grid.SetRow(line, 1);
-            mainWindowBorderGrid.Children.Add(line);
+            mapBorder.Children.Add(line);
             #endregion
 
             // setting theme category to scroll viewer
@@ -401,7 +382,7 @@ namespace MapDBTrack
                 Grid.SetRow(theme, 0);
                 themeGrid.Children.Add(theme);
             }
-            mainWindowBorderGrid.Children.Add(themeBorder);
+            mapBorder.Children.Add(themeBorder);
             #endregion
 
             // creating scroll view with customers
@@ -443,7 +424,7 @@ namespace MapDBTrack
             list.Content = mainPanel;
             Grid.SetColumn(list, 0);
             Grid.SetRow(list, 3);
-            mainWindowBorderGrid.Children.Add(list);
+            mapBorder.Children.Add(list);
 
             #endregion
 
@@ -461,7 +442,6 @@ namespace MapDBTrack
             menuBorderGrid.Children.Add(modeText);
             menuBorderGrid.Children.Add(test);
             menuBorderGrid.Children.Add(testText);
-
             menuBorderGrid.Children.Add(reportImage);
             menuBorderGrid.Children.Add(modeImage);
             menuBorderGrid.Children.Add(clearImage);
@@ -498,7 +478,7 @@ namespace MapDBTrack
         }
         private void CustomersClick(object sender, RoutedEventArgs e)
         {
-            HelpingClass.CleanGrid(MainGrid);
+            HelpingClass.CleanGrid(mapBorder);
             LoadingCustomerScreen();
         } // Changing view to customer window
         private void HistoryClick(object sender, RoutedEventArgs e)
@@ -518,7 +498,7 @@ namespace MapDBTrack
         } // special MessageBox with version etc.
         private void AddPin(object sender, RoutedEventArgs e)
         {
-            if(removed == false)
+            if (removed == false)
             {
                 if (pinned == true)
                 {
@@ -536,7 +516,7 @@ namespace MapDBTrack
         } // set true for added new pin to map or false
         private void RemovePin(object sender, RoutedEventArgs e)
         {
-            if(pinned == false)
+            if (pinned == false)
             {
                 if (removed == true)
                 {
@@ -559,9 +539,9 @@ namespace MapDBTrack
 
             if (pinned)
             {
-                Point mousePosition = e.GetPosition(mapGrid);
+                Point mousePosition = e.GetPosition(mapBorder);
                 Location pinLocation = map.ViewportPointToLocation(mousePosition);
-                Pushpin pin = SetPinns(pinLocation,true);
+                Pushpin pin = SetPinns(pinLocation, true);
                 map.Children.Add(pin);
 
                 pinned = false;
@@ -578,7 +558,7 @@ namespace MapDBTrack
 
                 addingCustomer.Closed += (s, args) =>
                 {
-                    
+
                     Map.IsEnabled = true;
                     Exit.IsEnabled = true;
                     Logout.IsEnabled = true;
@@ -608,9 +588,9 @@ namespace MapDBTrack
                 {
                     e.Handled = true;
                     Place p1 = places.Where(x => x.latitude == pushpin.Location.Latitude && x.longitude == pushpin.Location.Longitude).FirstOrDefault();
-                    MessageBoxResult result = MessageBox.Show($"Do you want remove this pin?\n\n{HelpingClass.GetDescTool(p1)}", "Inforamtion",MessageBoxButton.YesNo,MessageBoxImage.Warning);
+                    MessageBoxResult result = MessageBox.Show($"Do you want remove this pin?\n\n{HelpingClass.GetDescTool(p1)}", "Inforamtion", MessageBoxButton.YesNo, MessageBoxImage.Warning);
 
-                    if(result == MessageBoxResult.Yes)
+                    if (result == MessageBoxResult.Yes)
                     {
                         map.Children.Remove(pushpin);
                         HelpingClass.RemoveRecordFromDB(p1);
