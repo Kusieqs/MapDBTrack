@@ -2,6 +2,8 @@
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Input;
 
 namespace MapDBTrack
 {
@@ -99,6 +101,11 @@ namespace MapDBTrack
             if(!correctClose)
                 map.Children.Remove(Pushpin);
         } // Ovveriding method when window is closing
+        private void BorderClick(object sender, MouseButtonEventArgs e)
+        {
+            if (e.ChangedButton == MouseButton.Left)
+                this.DragMove();
+        } // feature to moving window
 
         #region Excpetions to infomration about customer
         private bool FirstNameExceptions()

@@ -531,8 +531,7 @@ namespace MapDBTrack
                     Mouse.OverrideCursor = Cursors.Hand;
                 }
             }
-        }
-
+        } // removing pin from map
         private void MapPuttingPins(object sender, MouseButtonEventArgs e)
         {
             HelpingClass.NetworkCheck(this);
@@ -631,18 +630,18 @@ namespace MapDBTrack
                 pin.ToolTip = tooltip;
                 tooltip.IsOpen = true;
             }
-        }
+        } // Show tooltip when mouse is over
         private void PinMouseLeave(object sender, MouseEventArgs e)
         {
             Pushpin pin = sender as Pushpin;
             ToolTip tooltip = pin.ToolTip as ToolTip;
             tooltip.IsOpen = false;
-        }
+        } // tooltip is disapiring if mouse is not over
         private Pushpin SetPinns(Location pinLocation, bool creating = false)
         {
             Pushpin pin = new Pushpin();
             pin.Location = pinLocation;
-            pin.Background = Brushes.DarkBlue;
+            pin.Background = new SolidColorBrush("#FF7B4BA5".ToColor());
             if (!creating)
             {
                 pin.MouseEnter += PinMouseEnter;
@@ -661,6 +660,11 @@ namespace MapDBTrack
         {
             this.Close();
         } // close window
+        private void BorderClick(object sender, MouseButtonEventArgs e)
+        {
+            if (e.ChangedButton == MouseButton.Left)
+                this.DragMove();
+        } // feature to moving window
     }
 
     public static class StringExtensions
