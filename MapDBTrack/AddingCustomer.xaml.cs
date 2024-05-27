@@ -26,6 +26,7 @@ namespace MapDBTrack
         }
         public void AcceptClick(object sender, RoutedEventArgs e)
         {
+            // checking informations that are correct
             if(FirstNameExceptions() & 
                 LastNameExceptions() & 
                 ContactExceptions() & 
@@ -35,8 +36,8 @@ namespace MapDBTrack
                 PostalExceptions() & 
                 StreetExceptions())
             {
+                // creating new object
                 string lastOne = HelpingClass.GetIdFromDB();
-
                 Place place = new Place(
                     MainWindow.idOfEmployee,
                     ContactBox.Text,
@@ -53,6 +54,7 @@ namespace MapDBTrack
                     double.Parse(LongitudeBox.Text)
                     );
 
+                // adding new object to list and map
                 MainWindow.places.Add(place);
                 HelpingClass.AddingNewCustomer(place);
                 correctClose = true;
@@ -63,7 +65,7 @@ namespace MapDBTrack
                 return;
 
             //obsluga dodania danych do bazy danych
-        }
+        } // Accepting iformations about customer
         private void LoadingData()
         {
             try
@@ -71,9 +73,11 @@ namespace MapDBTrack
                 LongitudeBox.Text = location.Longitude.ToString();
                 LatitudeBox.Text = location.Latitude.ToString();
 
+                // reading location on map
                 RootObject rootObject = HelpingClass.ReadLocation(location);
                 string numberRoad = rootObject.display_name;
 
+                // setting information about road
                 if (numberRoad == null)
                     throw new FormatException();
                 else if (int.TryParse(numberRoad.Split(',')[0], out int x))
@@ -81,6 +85,7 @@ namespace MapDBTrack
                 else
                     StreetBox.Text = $"{rootObject.address.road}";
 
+                // setting information about province, city and postal code
                 ProvinceBox.Text = rootObject.address.state;
                 CityBox.Text = rootObject.address.city;
                 PostalCodeBox.Text = rootObject.address.postcode;
@@ -127,7 +132,7 @@ namespace MapDBTrack
             }
 
             return true;
-        }
+        } // Error text when name is wrong
         private bool LastNameExceptions()
         {
             if (LastNameBox.Text.Trim().Length > 0)
@@ -143,7 +148,7 @@ namespace MapDBTrack
                 }
 
             return true;
-        }
+        } // Error text when last name is wrong
         private bool ContactExceptions()
         {
 
@@ -164,7 +169,7 @@ namespace MapDBTrack
                 return false;
             }
             return true;
-        }
+        } // Error text when contact is wrong
         private bool EmailExceptions()
         {
             string pattern = @"^[^\.\s][.\w]*@[.\w]+\.[a-zA-Z]{2,4}$";
@@ -176,7 +181,7 @@ namespace MapDBTrack
             }
             return true;
 
-        }
+        } // Error text when email is wrong
         private bool ProvinceExceptions()
         {
             if (ProvinceBox.Text.Trim().Length > 0)
@@ -191,7 +196,7 @@ namespace MapDBTrack
                     return false;
                 }
             return true;
-        }
+        } // Error text when province is wrong
         private bool CityExceptions()
         {
             if (CityBox.Text.Trim().Length == 0)
@@ -210,7 +215,7 @@ namespace MapDBTrack
                 return false;
             }
             return true;
-        }
+        } // Error text when city is wrong
         private bool PostalExceptions()
         {
             if (PostalCodeBox.Text.Trim().Length == 0)
@@ -229,7 +234,7 @@ namespace MapDBTrack
                 return false;
             }
             return true;
-        }
+        } // Error text when postal code is wrong
         private bool StreetExceptions()
         {
             if (StreetBox.Text.Trim().Length == 0)
@@ -248,41 +253,41 @@ namespace MapDBTrack
                 return false;
             }
             return true;
-        }
+        } // Error text when street is wrong
 
         private void FirstChanged(object sender, EventArgs e)
         {
             FirstNameError.Text = string.Empty;
-        }
+        } // Error name text disappearing 
         private void LastChanged(object sender, EventArgs e)
         {
             LastNameError.Text = string.Empty;
-        }
+        } // Error last name text disappearing 
         private void NumberChanged(object sender, EventArgs e)
         {
             ContactError.Text = string.Empty;
-        }
+        } // Error number text disappearing 
         private void EmailChanged(object sender, EventArgs e)
         {
             MailError.Text = string.Empty;
-        }
+        }  // Error email text disappearing 
         private void ProvinceChanged(object sender, EventArgs e)
         {
             ProvinceError.Text = string.Empty;
-        }
+        } // Error province text disappearing 
         private void CityChanged(object sender, EventArgs e)
         {
             CityError.Text = string.Empty;
-        }
+        } // Error city text disappearing 
         private void PostalChanged(object sender, EventArgs e)
         {
             PostalError.Text = string.Empty;
-        }
+        } // Error postal text disappearing 
         private void StreetChanged(object sender, EventArgs e)
         {
             StreetError.Text = string.Empty;
-        }
-
+        } // Error street text disappearing 
+         
         #endregion
 
     }
