@@ -23,45 +23,49 @@ namespace MapDBTrack
         {
             InitializeComponent();
         }
-
         private void SignIn(object sender, RoutedEventArgs e)
         {
+            // checking network connection
             HelpingClass.NetworkCheck(this);
 
             string login = LoginBox.Text;
-            string password = PasswordBox.Text;
+            string password = PasswordBox.Password;
 
+            // checking empty text in textboxes
             if (!CheckingEmptyText(login, password))
                 return;
 
+            // checking login in DB
             if (!CheckingLog(login, password))
                 return;
 
-
+            // opening new window (main window)
             MainWindow mainWindow = new MainWindow(this.id, this.login);
             mainWindow.Show();
             this.Close();
 
         }// trying to login to account
-
         private void SignUp(object sender, RoutedEventArgs e)
         {
+            // opening new window (registration window)
             registration = new Registration();
             this.Hide();
             registration.Show();
             registration.Closing += (s, args) => this.Show();
         } // opening registration window
-
         private bool CheckingEmptyText(string login, string password) // if box is empty red text under the box will show
         {
 
             bool log = true, pass = true;
+
+            //checking empty login
             if (string.IsNullOrEmpty(login))
             {
                 log = false;
-                LoginFailed.Text = "Username not provided";
+                LogFailed.Text = "Username not provided";
             }
 
+            //checking empty password
             if (string.IsNullOrEmpty(password))
             {
                 pass = false;
@@ -73,10 +77,10 @@ namespace MapDBTrack
             return false;
 
         }
-
         private bool CheckingLog(string login, string password)
         {
 
+            // special queries
             string sqlQueryLog = $"Select login From Employee Where login = @login";
             string sqlQueryPass = $"Select password, login From Employee Where password = @password and login = @login";
             string sqlQueryId = "Select Id, Login From Employee Where login = @login";
@@ -87,35 +91,41 @@ namespace MapDBTrack
             command.Parameters.AddWithValue("@login", login);
             SqlDataReader reader = command.ExecuteReader();
 
+            // checking about exist of login
             if (!reader.HasRows)
             {
-                LoginFailed.Text = "User doesn't exist";
+                LogFailed.Text = "User doesn't exist";
                 reader.Close();
                 sql.Close();
                 return false;
             }
             reader.Close();
 
+            // adding parameters to query
             command = new SqlCommand(sqlQueryPass, sql);
             command.Parameters.AddWithValue("@password", password);
             command.Parameters.AddWithValue("@login", login);
             reader = command.ExecuteReader();
 
+            // Checking about exist of password to login
             if (!reader.HasRows)
             {
                 PasswordFailed.Text = "Password is not correct";
-                PasswordReminder.Text = "Click to to remind password";
+                PasswordReminder.Text = "Forget password?";
                 Reset.IsEnabled = true;
+                Reset.IsHitTestVisible = true;
                 reader.Close();
                 sql.Close();
                 return false;
             }
             reader.Close();
 
+            // adding parameters to query
             command = new SqlCommand(sqlQueryId, sql);
             command.Parameters.AddWithValue("@login", login);
             reader = command.ExecuteReader();
 
+            //Downwriting iformation about user
             while(reader.Read())
             {
                 this.id = reader.GetInt32(0);
@@ -126,24 +136,38 @@ namespace MapDBTrack
             sql.Close();
             return true;
         } // Checking correct of password and login
-
         private void ResetPassword(object sender, EventArgs e) 
         {
+            // checking network conection
             HelpingClass.NetworkCheck(this);
+
+            // Method to send special email to direct email
             HelpingClass.SendingPassword(LoginBox.Text);
             MessageBox.Show("Password was sent to your email", "Information", MessageBoxButton.OK, MessageBoxImage.Information);
         } // resseting password
-
-        private void LoginChanged(object sender, RoutedEventArgs e)
+        private void InfoClick(object sender, RoutedEventArgs e)
         {
-            LoginFailed.Text = string.Empty;
-        } // if login box will change, red text will disappear
-
-        private void PasswordChanged(object sender, RoutedEventArgs e)
+            string info = $"{HelpingClass.version}\nContact: kus.konrad1@gmail.com\nLicense: MapDBTrack Commercial Use License";
+            MessageBox.Show(info, "Information", MessageBoxButton.OK, MessageBoxImage.Information);
+        } // info click about version and license
+        private void LoginTextChanged(object sender, RoutedEventArgs e)
+        {
+            LogFailed.Text = string.Empty;
+        } // disappearing text from textbox
+        private void PassTextChanged(object sender, RoutedEventArgs e)
         {
             PasswordFailed.Text = string.Empty;
             Reset.IsEnabled = false;
-            PasswordReminder.Text = string.Empty; 
-        } // if password box will change, red text will disappear
+            PasswordReminder.Text = string.Empty;
+        }// disappearing text from passwordbox
+        private void ExitClick(object sender, RoutedEventArgs e)
+        {
+            this.Close();
+        } // Exit button
+        private void BorderClick(object sender, MouseButtonEventArgs e)
+        {
+            if (e.ChangedButton == MouseButton.Left)
+                this.DragMove();
+        } // feature to moving window
     }
 }

@@ -22,7 +22,7 @@ namespace MapDBTrack
 
     public static class HelpingClass
     {
-
+        public const string version = "1.1";
         public static string[] engExp = new string[]
         {
             "Field is empty",
@@ -90,17 +90,16 @@ namespace MapDBTrack
             smtClient.Send(message);
 
         } // Sending password reminder to user email
-        public static void CleanGrid(Grid MainGrid)
+        public static void CleanGrid(Grid grid)
         {
-            for (int i = MainGrid.Children.Count - 1; i >= 0; i--)
-            {
-                UIElement child = MainGrid.Children[i];
-                int column = Grid.GetColumn(child);
-                if (column == 2)
-                {
-                    MainGrid.Children.Remove(child);
-                }
-            }
+            // Usunięcie wszystkich dzieci z Grid
+            grid.Children.Clear();
+
+            // Wyczyść definicje wierszy
+            grid.RowDefinitions.Clear();
+
+            // Wyczyść definicje kolumn
+            grid.ColumnDefinitions.Clear();
         } // cleaning Grid 
         public static RootObject ReadLocation(Location location)
         {
@@ -227,13 +226,23 @@ namespace MapDBTrack
             return id;
 
         }
-
         public static string Exceptions(int num)
         {
             string[] exp = engExp; // warunek czy pol czy eng
             return exp[num];
         } // excpetions words
-
+        public static void RemoveRecordFromDB(Place p1)
+        {
+            using (SqlConnection sql = new SqlConnection(connectString))
+            {
+                string queryPlace = $"DELETE FROM Place WHERE customer_id = '{p1.customer_id}'" ;
+                string queryCustomer = $"\nDELETE FROM Customer WHERE id = '{p1.customer_id}'";
+                SqlCommand sqlCommand = new SqlCommand(queryPlace+queryCustomer , sql);
+                sql.Open();
+                sqlCommand.ExecuteNonQuery();
+            }
+        }
 
     }
+
 }
