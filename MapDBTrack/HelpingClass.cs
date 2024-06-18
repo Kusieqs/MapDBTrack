@@ -242,7 +242,43 @@ namespace MapDBTrack
                 sqlCommand.ExecuteNonQuery();
             }
         }
-
+        public static string DescritpionScrollView(bool mode, int loop, int positionOfPlace)
+        {
+            if (mode)
+            {
+                switch (loop)
+                {
+                    case 0:
+                        return MainWindow.places[positionOfPlace].customer_id;
+                    case 1:
+                        return MainWindow.places[positionOfPlace].first_name;
+                    case 2:
+                        return MainWindow.places[positionOfPlace].last_name;
+                    case 3:
+                        return MainWindow.places[positionOfPlace].email;
+                    case 4:
+                        return MainWindow.places[positionOfPlace].contact_number;
+                    default:
+                        return "Error";
+                }
+            }
+            else
+            {
+                switch (loop)
+                {
+                    case 0:
+                        return MainWindow.places[positionOfPlace].customer_id;
+                    case 1:
+                        return MainWindow.places[positionOfPlace].city;
+                    case 2:
+                        return MainWindow.places[positionOfPlace].postal_code;
+                    case 3:
+                        return MainWindow.places[positionOfPlace].street;
+                    default:
+                        return "Error";
+                }
+            }
+        } // special information for scroll view
     }
 
 }

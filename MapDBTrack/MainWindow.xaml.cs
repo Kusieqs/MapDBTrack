@@ -224,8 +224,9 @@ namespace MapDBTrack
             };
 
             // Creating scrollviewer
+            // Stack panel zrobic horizontal z tematami danych kolumn
 
-            ScrollViewer scrollViewer = scrollMode();
+            ScrollViewer scrollViewer = ScrollMode();
             Grid.SetRow(scrollViewer, 3);
 
             
@@ -420,7 +421,7 @@ namespace MapDBTrack
             }
             return pin;
         } // Setting options for pin
-        private ScrollViewer scrollMode()
+        private ScrollViewer ScrollMode()
         {
             ScrollViewer scrollViewer = new ScrollViewer();
             int loops = customerMode == true ? 5 : 6;
@@ -428,15 +429,28 @@ namespace MapDBTrack
 
             for (int i = 0 ; i < places.Count; i++)
             {
-                StackPanel informations = new StackPanel();
-                for (int j = 0 ; j <  loops-1; j++)
+                StackPanel informations = new StackPanel() // design DROBIOC !
                 {
-                    // dodawanie informacji
+                    Orientation = Orientation.Horizontal
+                };
+
+                for (int j = 0 ; j < loops; j++)
+                {
+                    TextBlock info = new TextBlock();
+
+                    info.Text = HelpingClass.DescritpionScrollView(customerMode, j, i);
+
+                    informations.Children.Add(info);
                 }
 
+                Button menu = new Button();
 
+                informations.Children.Add(menu);
+
+                customer.Children.Add(informations);
             }
 
+            scrollViewer.Content = customer;
             return scrollViewer;
         } // Creating ScrollViewer for mode
 
