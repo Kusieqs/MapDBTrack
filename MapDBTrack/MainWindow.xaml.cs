@@ -163,7 +163,7 @@ namespace MapDBTrack
             Separator separator = new Separator()
             {
                 Background = new SolidColorBrush("#dae2ea".ToColor()),
-                Margin = new Thickness(0, 55, 0, 14)
+                Margin = new Thickness(370, 55, 400, 14)
             };
 
             //creating stackpanel with buttons
@@ -176,74 +176,76 @@ namespace MapDBTrack
             Grid.SetRow(stackPanel, 0);
 
 
-            Button PersonalBtn = new Button()
+            Button personalBtn = new Button()
             {
                 Content = "Personal",
                 Style = FindResource("tabButton") as Style,
                 Width = 78,
                 Margin = new Thickness(0,0,20,0),
                 FontFamily = new FontFamily("Calibri"),
-                BorderBrush = Brushes.White
+                BorderBrush = Brushes.Transparent,
             };
 
-            Button AddressBtn = new Button()
+            Button addressBtn = new Button()
             {
                 Content = "Address",
                 Style = FindResource("tabButton") as Style,
                 Width = 78,
                 FontFamily = new FontFamily("Calibri"),
-                BorderBrush = Brushes.White
+                BorderBrush = Brushes.Transparent,
+                
             };
 
             if(customerMode)
-                PersonalBtn.BorderBrush = new SolidColorBrush("#FF7B4BA5".ToColor());
+                personalBtn.BorderBrush = new SolidColorBrush("#FF7B4BA5".ToColor());
             else
-                AddressBtn.BorderBrush = new SolidColorBrush("#FF7B4BA5".ToColor());
+                addressBtn.BorderBrush = new SolidColorBrush("#FF7B4BA5".ToColor());
 
+            //creating buttons to Delete customer and creating report
 
+            Button reportBtn = new Button()
+            {
+                Width = 110,
+                Height = 45,
+                Content = "Report",
+                FontSize = 20,
+                Margin = new Thickness(940,8,10,17),
+                Background = new SolidColorBrush("#FF7B4BA5".ToColor())
+            };
 
+            Button deleteBtn = new Button()
+            {
+                Width = 110,
+                Height = 45,
+                Content = "Report",
+                FontSize = 20,
+                Margin = new Thickness(798, 8, 152, 17),
+                Background = new SolidColorBrush("#FF7B4BA5".ToColor())
+            };
+
+            // Creating scrollviewer
+
+            ScrollViewer scrollViewer = scrollMode();
+            Grid.SetRow(scrollViewer, 3);
+
+            
 
 
             #region adding elements
             customerGrid.Children.Add(separator);
-            stackPanel.Children.Add(PersonalBtn);
-            stackPanel.Children.Add(AddressBtn);
+            stackPanel.Children.Add(personalBtn);
+            stackPanel.Children.Add(addressBtn);
+            customerGrid.Children.Add(stackPanel);
+            customerGrid.Children.Add(deleteBtn);
+            customerGrid.Children.Add(reportBtn);
 
+            customerGrid.Children.Add(scrollViewer);
             customerBorder.Child = customerGrid;
-
-
+            mapBorder.Children.Add(customerBorder);
             #endregion adding elements
 
 
         } // loading customer list
-        private void MenuOfCustomerClick(object sender, EventArgs e)
-        {
-
-        }
-        private void TestClick(object sender, EventArgs e)
-        {
-
-        }
-        private void ModeClick(object sender, EventArgs e)
-        {
-
-        }
-        private void ComboBoxChanged(object sender, EventArgs e)
-        {
-
-        }
-        private void RaportClick(object sender, EventArgs e)
-        {
-
-        }
-        private void ClearClick(object sender, EventArgs e)
-        {
-
-        }
-        private void SortingChanged(object sender, EventArgs e)
-        {
-
-        }
         private void CustomersClick(object sender, RoutedEventArgs e)
         {
             HelpingClass.CleanGrid(mapBorder);
@@ -418,6 +420,27 @@ namespace MapDBTrack
             }
             return pin;
         } // Setting options for pin
+        private ScrollViewer scrollMode()
+        {
+            ScrollViewer scrollViewer = new ScrollViewer();
+            int loops = customerMode == true ? 5 : 6;
+            StackPanel customer = new StackPanel();
+
+            for (int i = 0 ; i < places.Count; i++)
+            {
+                StackPanel informations = new StackPanel();
+                for (int j = 0 ; j <  loops-1; j++)
+                {
+                    // dodawanie informacji
+                }
+
+
+            }
+
+            return scrollViewer;
+        } // Creating ScrollViewer for mode
+
+
         protected override void OnClosing(CancelEventArgs e)
         {
             base.OnClosing(e);
