@@ -279,6 +279,43 @@ namespace MapDBTrack
                 }
             }
         } // special information for scroll view
+        public static string DescriptionStackPanel(bool mode, int loop)
+        {
+            if (mode)
+            {
+                switch (loop)
+                {
+                    case 0:
+                        return "ID";
+                    case 1:
+                        return "NAME";
+                    case 2:
+                        return "SURNAME";
+                    case 3:
+                        return "EMAIL";
+                    case 4:
+                        return "NUMBER";
+                    default:
+                        return "Error";
+                }
+            }
+            else
+            {
+                switch (loop)
+                {
+                    case 0:
+                        return "ID";
+                    case 1:
+                        return "CITY";
+                    case 2:
+                        return "POSTAL CODE";
+                    case 3:
+                        return "STREET";
+                    default:
+                        return "Error";
+                }
+            }
+        } // theme description for scroll view
     }
 
 }
