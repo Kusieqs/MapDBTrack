@@ -34,6 +34,12 @@ namespace MapDBTrack
         public static bool acceptOverridePin = false;
         public static bool customerMode = true;
 
+        private Grid customerGrid;
+        private Button personalBtn;
+        private Button addressBtn;
+        private StackPanel theme;
+        private ScrollViewer scrollViewer;
+
 
         public MainWindow(int id, string login)
         {
@@ -62,7 +68,7 @@ namespace MapDBTrack
 
             //Creating grid
 
-            Grid customerGrid = new Grid()
+            customerGrid = new Grid()
             {
                 Margin = new Thickness(20)
             };
@@ -90,7 +96,7 @@ namespace MapDBTrack
             Grid.SetRow(stackPanel, 0);
 
 
-            Button personalBtn = new Button()
+            personalBtn = new Button()
             {
                 Content = "Personal",
                 Style = FindResource("tabButton") as Style,
@@ -99,8 +105,9 @@ namespace MapDBTrack
                 FontFamily = new FontFamily("Calibri"),
                 BorderBrush = Brushes.Transparent,
             };
+            personalBtn.Click += PersonalClick;
 
-            Button addressBtn = new Button()
+            addressBtn = new Button()
             {
                 Content = "Address",
                 Style = FindResource("tabButton") as Style,
@@ -109,6 +116,8 @@ namespace MapDBTrack
                 BorderBrush = Brushes.Transparent,
                 
             };
+            addressBtn.Click += AddresClick;
+
 
             if(customerMode)
                 personalBtn.BorderBrush = new SolidColorBrush("#FF7B4BA5".ToColor());
@@ -124,7 +133,7 @@ namespace MapDBTrack
                 Content = "Report",
                 FontSize = 20,
                 Margin = new Thickness(940,8,10,17),
-                Background = new SolidColorBrush("#FF7B4BA5".ToColor())
+                Background = new SolidColorBrush("#FF7B4BA5".ToColor()),
             };
 
             Button deleteBtn = new Button()
@@ -139,11 +148,11 @@ namespace MapDBTrack
 
 
             // Theme panel for scroll viewer
-            StackPanel theme = StackPanelMode();
+            theme = StackPanelMode();
             Grid.SetRow(theme, 2);
 
             // Creating scrollviewer
-            ScrollViewer scrollViewer = ScrollMode();
+            scrollViewer = ScrollMode();
             Grid.SetRow(scrollViewer, 3);
 
             
@@ -493,6 +502,7 @@ namespace MapDBTrack
             {
                 TextBlock info = new TextBlock()
                 {
+                    FontWeight = FontWeights.DemiBold,
                     FontSize = 17,
                     Width = 190,
                     HorizontalAlignment = HorizontalAlignment.Center,
@@ -507,8 +517,10 @@ namespace MapDBTrack
 
             TextBlock but = new TextBlock()
             {
+                FontSize = 17,
+                FontWeight = FontWeights.DemiBold,
                 Text = "MENU",
-                Margin = new Thickness(40, 0, 0, 0),
+                Margin = new Thickness(35, 0, 0, 0),
                 HorizontalAlignment = HorizontalAlignment.Center,
                 VerticalAlignment = VerticalAlignment.Center,
                 TextAlignment = TextAlignment.Center
@@ -517,8 +529,46 @@ namespace MapDBTrack
 
             return theme;
         } // Creating stack panel for Theme 
+        private void AddresClick(object sender,  RoutedEventArgs e)
+        {
+            customerMode = false;
 
+            personalBtn.BorderBrush = Brushes.Transparent;
+            addressBtn.BorderBrush = new SolidColorBrush("#FF7B4BA5".ToColor());
 
+            ChangingCustomerView();
+        } // Address Click (customer view)
+        private void PersonalClick(object sender, RoutedEventArgs e)
+        {
+            customerMode = true;
+
+            personalBtn.BorderBrush = new SolidColorBrush("#FF7B4BA5".ToColor());
+            addressBtn.BorderBrush = Brushes.Transparent;
+
+            ChangingCustomerView();
+        } // Personal Click (customer view)
+        private void ChangingCustomerView()
+        {
+            var elementsToRemove = customerGrid.Children
+                        .Cast<UIElement>()
+                        .Where(e => Grid.GetRow(e) == 2 || Grid.GetRow(e) == 3)
+                        .ToList();
+
+            foreach (var element in elementsToRemove)
+            {
+                customerGrid.Children.Remove(element);
+            }
+
+            // Theme panel for scroll viewer
+            theme = StackPanelMode();
+            Grid.SetRow(theme, 2);
+            // Creating scrollviewer
+            scrollViewer = ScrollMode();
+            Grid.SetRow(scrollViewer, 3);
+
+            customerGrid.Children.Add(theme);
+            customerGrid.Children.Add(scrollViewer);
+        }
         protected override void OnClosing(CancelEventArgs e)
         {
             base.OnClosing(e);
