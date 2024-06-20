@@ -14,6 +14,7 @@ using System.Windows.Data;
 using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
+using System.Windows.Media.Effects;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 
@@ -52,6 +53,34 @@ namespace MapDBTrack
             LoginName.Text = "Hi, " + loginOfEmployee;
         }
 
+
+        #region Menu buttons
+        private void MapClick(object sender, RoutedEventArgs e)
+        {
+            HelpingClass.CleanGrid(mapBorder);
+            LoadingMapScreen();
+        } // map button
+        private void CustomersClick(object sender, RoutedEventArgs e)
+        {
+            HelpingClass.CleanGrid(mapBorder);
+            LoadingCustomerScreen();
+        } // Customer button
+        private void HistoryClick(object sender, RoutedEventArgs e)
+        {
+
+        } // history button
+        private void LogoutClick(object sender, RoutedEventArgs e)
+        {
+            Login login = new Login();
+            login.Show();
+            this.Close();
+        } // logout button
+        private void ExitClick(object sender, RoutedEventArgs e)
+        {
+            this.Close();
+        }  // exit button
+        #endregion Menu buttons
+        
         private void LoadingCustomerScreen()
         {
             // Checking network connection
@@ -64,6 +93,7 @@ namespace MapDBTrack
                 CornerRadius = new CornerRadius(0, 15, 15, 0),
                 Background = Brushes.White,
             };
+            customerBorder.MouseDown += BorderClick;
             Grid.SetColumn(customerBorder, 1);
 
             //Creating grid
@@ -104,6 +134,7 @@ namespace MapDBTrack
                 Margin = new Thickness(0,0,20,0),
                 FontFamily = new FontFamily("Calibri"),
                 BorderBrush = Brushes.Transparent,
+                Cursor = Cursors.Hand
             };
             personalBtn.Click += PersonalClick;
 
@@ -114,7 +145,7 @@ namespace MapDBTrack
                 Width = 78,
                 FontFamily = new FontFamily("Calibri"),
                 BorderBrush = Brushes.Transparent,
-                
+                Cursor = Cursors.Hand
             };
             addressBtn.Click += AddresClick;
 
@@ -132,20 +163,21 @@ namespace MapDBTrack
                 Height = 45,
                 Content = "Report",
                 FontSize = 20,
-                Margin = new Thickness(940,8,10,17),
+                Margin = new Thickness(940, 8, 10, 17),
                 Background = new SolidColorBrush("#FF7B4BA5".ToColor()),
             };
+            reportBtn.Click += ReportClick;
 
             Button deleteBtn = new Button()
             {
                 Width = 110,
                 Height = 45,
-                Content = "Report",
+                Content = "Delete",
                 FontSize = 20,
                 Margin = new Thickness(798, 8, 152, 17),
-                Background = new SolidColorBrush("#FF7B4BA5".ToColor())
+                Background = new SolidColorBrush("#FF7B4BA5".ToColor()),
             };
-
+            deleteBtn.Click += DeleteClick;
 
             // Theme panel for scroll viewer
             theme = StackPanelMode();
@@ -174,34 +206,6 @@ namespace MapDBTrack
 
 
         } // loading customer list
-
-        #region Menu buttons
-        private void MapClick(object sender, RoutedEventArgs e)
-        {
-            HelpingClass.CleanGrid(mapBorder);
-            LoadingMapScreen();
-        } // map button
-        private void CustomersClick(object sender, RoutedEventArgs e)
-        {
-            HelpingClass.CleanGrid(mapBorder);
-            LoadingCustomerScreen();
-        } // Customer button
-        private void HistoryClick(object sender, RoutedEventArgs e)
-        {
-
-        } // history button
-        private void LogoutClick(object sender, RoutedEventArgs e)
-        {
-            Login login = new Login();
-            login.Show();
-            this.Close();
-        } // logout button
-        private void ExitClick(object sender, RoutedEventArgs e)
-        {
-            this.Close();
-        }  // exit button
-        #endregion Menu buttons
-        
         private void LoadingMapScreen()
         {
             // Checking network connection
@@ -445,17 +449,23 @@ namespace MapDBTrack
         } // Setting options for pin
         private ScrollViewer ScrollMode()
         {
-            ScrollViewer scrollViewer = new ScrollViewer();
-            scrollViewer.Background = Brushes.LightGray;
-            int loops = customerMode == true ? 5 : 6;
+            ScrollViewer scrollViewer = new ScrollViewer()
+            {
+
+                Padding = new Thickness(10),
+                VerticalScrollBarVisibility = ScrollBarVisibility.Auto
+            };
+
+            int loops = customerMode == true ? 5 : 4;
             StackPanel customer = new StackPanel();
 
             for (int i = 0 ; i < places.Count; i++)
             {
-                StackPanel informations = new StackPanel() // design DROBIOC !
+                StackPanel informations = new StackPanel()
                 {
                     Orientation = Orientation.Horizontal,
-                    Margin = new Thickness(0,20,0,0)
+                    Height = 60,
+                    Background = Brushes.LightGray
                 };
 
                 for (int j = 0 ; j < loops; j++)
@@ -468,6 +478,9 @@ namespace MapDBTrack
                         VerticalAlignment = VerticalAlignment.Center,
                         TextAlignment = TextAlignment.Center
                     };
+
+                    if (!customerMode && (j == 1 || j == 3))
+                        info.Width = 285;
 
                     info.Text = HelpingClass.DescritpionScrollView(customerMode, j, i);
 
@@ -492,7 +505,7 @@ namespace MapDBTrack
         } // Creating ScrollViewer for mode
         private StackPanel StackPanelMode()
         {
-            int loops = customerMode == true ? 5 : 6;
+            int loops = customerMode == true ? 5 : 4;
             StackPanel theme = new StackPanel()
             {
                 Orientation = Orientation.Horizontal,
@@ -510,6 +523,9 @@ namespace MapDBTrack
                     TextAlignment = TextAlignment.Center
                 };
 
+                if (!customerMode && (j == 1 || j == 3))
+                    info.Width = 285;
+
                 info.Text = HelpingClass.DescriptionStackPanel(customerMode, j);
 
                 theme.Children.Add(info);
@@ -520,7 +536,7 @@ namespace MapDBTrack
                 FontSize = 17,
                 FontWeight = FontWeights.DemiBold,
                 Text = "MENU",
-                Margin = new Thickness(35, 0, 0, 0),
+                Margin = new Thickness(30, 0, 0, 0),
                 HorizontalAlignment = HorizontalAlignment.Center,
                 VerticalAlignment = VerticalAlignment.Center,
                 TextAlignment = TextAlignment.Center
@@ -568,7 +584,7 @@ namespace MapDBTrack
 
             customerGrid.Children.Add(theme);
             customerGrid.Children.Add(scrollViewer);
-        }
+        } // Switching mode between address and personal 
         protected override void OnClosing(CancelEventArgs e)
         {
             base.OnClosing(e);
@@ -580,6 +596,16 @@ namespace MapDBTrack
             if (e.ChangedButton == MouseButton.Left)
                 this.DragMove();
         } // feature to moving window
+
+        private void DeleteClick(object sender, RoutedEventArgs e)
+        {
+
+        }
+        private void ReportClick(object sender, RoutedEventArgs e)
+        {
+
+        }
+
     }
 
     public static class StringExtensions
