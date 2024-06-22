@@ -114,6 +114,7 @@ namespace MapDBTrack
             {
                 Background = new SolidColorBrush("#dae2ea".ToColor()),
                 Margin = new Thickness(370, 55, 400, 14)
+
             };
 
             //creating stackpanel with buttons
@@ -125,7 +126,7 @@ namespace MapDBTrack
             };
             Grid.SetRow(stackPanel, 0);
 
-
+            // Personal button
             personalBtn = new Button()
             {
                 Content = "Personal",
@@ -138,6 +139,7 @@ namespace MapDBTrack
             };
             personalBtn.Click += PersonalClick;
 
+            // address button
             addressBtn = new Button()
             {
                 Content = "Address",
@@ -165,6 +167,7 @@ namespace MapDBTrack
                 FontSize = 20,
                 Margin = new Thickness(940, 8, 10, 17),
                 Background = new SolidColorBrush("#FF7B4BA5".ToColor()),
+                FontFamily = new FontFamily("Calibri"),
             };
             reportBtn.Click += ReportClick;
 
@@ -176,6 +179,7 @@ namespace MapDBTrack
                 FontSize = 20,
                 Margin = new Thickness(798, 8, 152, 17),
                 Background = new SolidColorBrush("#FF7B4BA5".ToColor()),
+                FontFamily = new FontFamily("Calibri"),
             };
             deleteBtn.Click += DeleteClick;
 
@@ -187,7 +191,19 @@ namespace MapDBTrack
             scrollViewer = ScrollMode();
             Grid.SetRow(scrollViewer, 3);
 
-            
+            // creating search box
+            TextBox searching = new TextBox()
+            {
+                Height = 30,
+                Margin = new Thickness(16, 20, 800, 7),
+                FontSize = 20,
+                FontFamily = new FontFamily("Calibri"),
+                Foreground = new SolidColorBrush("#FF7B4BA5".ToColor()),
+                FontWeight = FontWeights.DemiBold,
+                BorderBrush = new SolidColorBrush("#dae2ea".ToColor())
+            };
+            MaterialDesignThemes.Wpf.HintAssist.SetHint(searching, "Search");
+            MaterialDesignThemes.Wpf.HintAssist.SetFloatingOffset(searching, new Point(0, -20));
 
 
             #region adding elements
@@ -197,6 +213,7 @@ namespace MapDBTrack
             customerGrid.Children.Add(stackPanel);
             customerGrid.Children.Add(deleteBtn);
             customerGrid.Children.Add(reportBtn);
+            customerGrid.Children.Add(searching);
 
             customerGrid.Children.Add(theme);
             customerGrid.Children.Add(scrollViewer);
@@ -461,11 +478,17 @@ namespace MapDBTrack
 
             for (int i = 0 ; i < places.Count; i++)
             {
+                Border borderStackPanel = new Border()
+                {
+                    CornerRadius = new CornerRadius(10),
+                    Background = Brushes.LightGray,
+                    Height = 50,
+                    Margin = new Thickness(0, 5, 3, 5)
+                };
+
                 StackPanel informations = new StackPanel()
                 {
                     Orientation = Orientation.Horizontal,
-                    Height = 60,
-                    Background = Brushes.LightGray
                 };
 
                 for (int j = 0 ; j < loops; j++)
@@ -492,12 +515,15 @@ namespace MapDBTrack
                     FontSize = 20,
                     HorizontalAlignment = HorizontalAlignment.Right,
                     VerticalAlignment = VerticalAlignment.Center,
-                    Margin = new Thickness(40, 0, 0, 0)
+                    Margin = new Thickness(40, 0, 0, 0),
+                    Background = new SolidColorBrush("#FF7B4BA5".ToColor())
                 };
 
-                informations.Children.Add(menu);
 
-                customer.Children.Add(informations);
+                informations.Children.Add(menu);
+                borderStackPanel.Child = informations;
+
+                customer.Children.Add(borderStackPanel);
             }
 
             scrollViewer.Content = customer;
@@ -515,12 +541,14 @@ namespace MapDBTrack
             {
                 TextBlock info = new TextBlock()
                 {
-                    FontWeight = FontWeights.DemiBold,
+                    FontWeight = FontWeights.Bold,
                     FontSize = 17,
                     Width = 190,
                     HorizontalAlignment = HorizontalAlignment.Center,
                     VerticalAlignment = VerticalAlignment.Center,
-                    TextAlignment = TextAlignment.Center
+                    TextAlignment = TextAlignment.Center,
+                    Foreground = new SolidColorBrush("#FF7B4BA5".ToColor()),
+                    FontFamily = new FontFamily("Calibri"),
                 };
 
                 if (!customerMode && (j == 1 || j == 3))
@@ -534,12 +562,14 @@ namespace MapDBTrack
             TextBlock but = new TextBlock()
             {
                 FontSize = 17,
-                FontWeight = FontWeights.DemiBold,
+                FontWeight = FontWeights.Bold,
                 Text = "MENU",
                 Margin = new Thickness(30, 0, 0, 0),
                 HorizontalAlignment = HorizontalAlignment.Center,
                 VerticalAlignment = VerticalAlignment.Center,
-                TextAlignment = TextAlignment.Center
+                TextAlignment = TextAlignment.Center,
+                Foreground = new SolidColorBrush("#FF7B4BA5".ToColor()),
+                FontFamily = new FontFamily("Calibri"),
             };
             theme.Children.Add(but);
 
