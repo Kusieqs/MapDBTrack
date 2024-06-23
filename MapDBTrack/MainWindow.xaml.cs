@@ -17,6 +17,7 @@ using System.Windows.Media;
 using System.Windows.Media.Effects;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace MapDBTrack
 {
@@ -35,12 +36,15 @@ namespace MapDBTrack
         public static bool acceptOverridePin = false;
         public static bool customerMode = true;
 
+        #region customer grid and border
         private Grid customerGrid;
         private Button personalBtn;
         private Button addressBtn;
         private StackPanel theme;
+        private StackPanel customer;
         private ScrollViewer scrollViewer;
-
+        private Border customerBorder;
+        #endregion customer grid and border
 
         public MainWindow(int id, string login)
         {
@@ -88,7 +92,7 @@ namespace MapDBTrack
 
             //Creating border
 
-            Border customerBorder = new Border()
+            customerBorder = new Border()
             {
                 CornerRadius = new CornerRadius(0, 15, 15, 0),
                 Background = Brushes.White,
@@ -217,6 +221,7 @@ namespace MapDBTrack
 
             customerGrid.Children.Add(theme);
             customerGrid.Children.Add(scrollViewer);
+
             customerBorder.Child = customerGrid;
             mapBorder.Children.Add(customerBorder);
             #endregion adding elements
@@ -474,7 +479,7 @@ namespace MapDBTrack
             };
 
             int loops = customerMode == true ? 5 : 4;
-            StackPanel customer = new StackPanel();
+            customer = new StackPanel();
 
             for (int i = 0 ; i < places.Count; i++)
             {
@@ -506,7 +511,6 @@ namespace MapDBTrack
                         info.Width = 285;
 
                     info.Text = HelpingClass.DescritpionScrollView(customerMode, j, i);
-
                     informations.Children.Add(info);
                 }
 
@@ -522,12 +526,11 @@ namespace MapDBTrack
 
                 informations.Children.Add(menu);
                 borderStackPanel.Child = informations;
-
                 customer.Children.Add(borderStackPanel);
             }
-
             scrollViewer.Content = customer;
             return scrollViewer;
+
         } // Creating ScrollViewer for mode
         private StackPanel StackPanelMode()
         {
@@ -626,10 +629,31 @@ namespace MapDBTrack
             if (e.ChangedButton == MouseButton.Left)
                 this.DragMove();
         } // feature to moving window
-
         private void DeleteClick(object sender, RoutedEventArgs e)
         {
+            if (customer.Children.Count == 0)
+                return;
 
+            MessageBoxResult result = MessageBox.Show($"Are you sure to delete {customer.Children.Count}","Information",MessageBoxButton.YesNo,MessageBoxImage.Question);
+            if(result == MessageBoxResult.Yes )
+            {
+                for (int i = 0; i < customer.Children.Count; i++)
+                {
+                    Border border = customer.Children[i] as Border;
+                    StackPanel panel = border.Child as StackPanel;
+                    TextBlock id = panel.Children[0] as TextBlock;
+
+                    if (places.Any(x => x.customer_id == id.Text))
+                    {
+                        Place place = places.Where(x => x.customer_id == id.Text).FirstOrDefault();
+                        places.Remove(place);
+                        HelpingClass.RemoveRecordFromDB(place);
+                    }
+
+                }
+                LoadingCustomerScreen();
+            }    
+            
         }
         private void ReportClick(object sender, RoutedEventArgs e)
         {

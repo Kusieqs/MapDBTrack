@@ -254,7 +254,6 @@ namespace MapDBTrack
             }
             return true;
         } // Error text when street is wrong
-
         private void FirstChanged(object sender, EventArgs e)
         {
             FirstNameError.Text = string.Empty;
