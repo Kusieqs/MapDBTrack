@@ -1,11 +1,12 @@
-﻿using System.Windows;
+﻿using Newtonsoft.Json;
+using System.IO;
+using System.Text.Json.Serialization;
+using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Input;
 
 namespace MapDBTrack
 {
-    /// <summary>
-    /// Logika interakcji dla klasy Report.xaml
-    /// </summary>
     public partial class Report : Window
     {
         public Report()
@@ -22,7 +23,24 @@ namespace MapDBTrack
         }
         private void JsonClick(object sender, RoutedEventArgs e)
         {
+            List<Place> places = new List<Place>();
 
+
+            for(int i = 0; i < MainWindow.customer.Children.Count; i++)
+            {
+                Border border = MainWindow.customer.Children[i] as Border;
+                StackPanel stackPanel = border.Child as StackPanel;
+                TextBlock textBlock = stackPanel.Children[0] as TextBlock;
+                Place p1 = MainWindow.places.Where(x => x.customer_id == textBlock.Text).FirstOrDefault();
+                places.Add(p1);
+            }
+
+
+            string desktop = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
+            string json = JsonConvert.SerializeObject(places);
+            File.WriteAllText(Path.Combine(desktop,"Report_Json"), json);
+            MessageBox.Show("The file has been saved", "Information", MessageBoxButton.OK, MessageBoxImage.Information);
+            this.Close();
         }
 
 

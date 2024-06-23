@@ -7,7 +7,7 @@
         mc:Ignorable="d" WindowStartupLocation="CenterScreen" WindowStyle="None" AllowsTransparency="True"
         Background="Transparent"
         Title="Report" Height="100" Width="400" ResizeMode="NoResize" FontFamily="{DynamicResource MaterialDesignFont}">
-    <Grid>
+    <Grid MouseDown="BorderClick">
         <Border CornerRadius="15" Background="White">
             <Grid MouseDown="BorderClick">
                 <Grid.ColumnDefinitions>

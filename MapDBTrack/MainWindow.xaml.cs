@@ -41,7 +41,7 @@ namespace MapDBTrack
         private Button personalBtn;
         private Button addressBtn;
         private StackPanel theme;
-        private StackPanel customer;
+        public static StackPanel customer;
         private ScrollViewer scrollViewer;
         private Border customerBorder;
         #endregion customer grid and border
