@@ -85,6 +85,88 @@ namespace MapDBTrack
         }  // exit button
         #endregion Menu buttons
         
+        private void LoadingMapScreen()
+        {
+            // Checking network connection
+            HelpingClass.NetworkCheck(this);
+
+            // setting grid row definitions
+            mapBorder.RowDefinitions.Add(new RowDefinition() { Height = new GridLength(4, GridUnitType.Star) });
+            mapBorder.RowDefinitions.Add(new RowDefinition() { Height = new GridLength(1, GridUnitType.Star) });
+
+            // Creating map
+            map = new Map()
+            {
+                CredentialsProvider = new ApplicationIdCredentialsProvider(HelpingClass.connectMap), // Api key
+                Mode = new AerialMode(true), // setting satelite map
+                Center = new Location(52.2387, 19.0478), // setting center of map
+                Culture = "en-US", // setting language
+                ZoomLevel = 6.7, // setting starting zoom
+            };
+
+            // Special method to putting pins on map
+            map.MouseLeftButtonDown += MapPuttingPins;
+            Grid.SetRowSpan(map, 2);
+            Grid.SetRow(map, 0);
+            mapBorder.Children.Add(map);
+
+            // creating border for button
+            Border buttonBorder = new Border()
+            {
+                Width = 150,
+                Height = 60,
+                Margin = new Thickness(0, 0, 0, 0),
+                Background = new SolidColorBrush("#FF7B4BA5".ToColor()),
+
+            };
+            buttonBorder.CornerRadius = new CornerRadius(20);
+            Grid.SetColumn(buttonBorder, 0);
+            Grid.SetRow(buttonBorder, 1);
+
+            // creating grid for buttons
+            Grid buttonsMap = new Grid();
+            buttonsMap.ColumnDefinitions.Add(new ColumnDefinition() { Width = new GridLength(1, GridUnitType.Star) });
+            buttonsMap.ColumnDefinitions.Add(new ColumnDefinition() { Width = new GridLength(1, GridUnitType.Star) });
+
+            // creating button to add pin
+            adding = new Button();
+            adding.Style = FindResource("ButtonsAddPins") as Style;
+            adding.Click += AddPin;
+            System.Windows.Controls.Image imageAdd = new System.Windows.Controls.Image
+            {
+                Source = new BitmapImage(new Uri("pack://application:,,,/Pictures/add.png")),
+                Width = 42,
+                Height = 42,
+            };
+            RenderOptions.SetBitmapScalingMode(imageAdd, BitmapScalingMode.HighQuality);
+            adding.Content = imageAdd;
+            Grid.SetColumn(adding, 0);
+            Grid.SetRow(adding, 0);
+            buttonsMap.Children.Add(adding);
+
+            // creating button do remove pin
+            removing = new Button();
+            removing.Style = FindResource("ButtonsRemovePins") as Style;
+            removing.Click += RemovePin;
+            System.Windows.Controls.Image imageRemove = new System.Windows.Controls.Image
+            {
+                Source = new BitmapImage(new Uri("pack://application:,,,/Pictures/bin.png")),
+                Width = 42,
+                Height = 42,
+            };
+            RenderOptions.SetBitmapScalingMode(imageRemove, BitmapScalingMode.HighQuality);
+            removing.Content = imageRemove;
+            Grid.SetColumn(removing, 1);
+            Grid.SetRow(removing, 0);
+            buttonsMap.Children.Add(removing);
+
+            // creating grid for all objects and adding to main window
+            buttonBorder.Child = buttonsMap;
+            mapBorder.Children.Add(buttonBorder);
+
+            LoadingPinns();
+
+        } // loading map 
         private void LoadingCustomerScreen()
         {
             // Checking network connection
@@ -228,88 +310,6 @@ namespace MapDBTrack
 
 
         } // loading customer list
-        private void LoadingMapScreen()
-        {
-            // Checking network connection
-            HelpingClass.NetworkCheck(this);
-
-            // setting grid row definitions
-            mapBorder.RowDefinitions.Add(new RowDefinition() { Height = new GridLength(4, GridUnitType.Star) });
-            mapBorder.RowDefinitions.Add(new RowDefinition() { Height = new GridLength(1, GridUnitType.Star) });
-
-            // Creating map
-            map = new Map()
-            {
-                CredentialsProvider = new ApplicationIdCredentialsProvider(HelpingClass.connectMap), // Api key
-                Mode = new AerialMode(true), // setting satelite map
-                Center = new Location(52.2387, 19.0478), // setting center of map
-                Culture = "en-US", // setting language
-                ZoomLevel = 6.7, // setting starting zoom
-            };
-
-            // Special method to putting pins on map
-            map.MouseLeftButtonDown += MapPuttingPins;
-            Grid.SetRowSpan(map, 2);
-            Grid.SetRow(map, 0);
-            mapBorder.Children.Add(map);
-
-            // creating border for button
-            Border buttonBorder = new Border()
-            {
-                Width = 150,
-                Height = 60,
-                Margin = new Thickness(0, 0, 0, 0),
-                Background = new SolidColorBrush("#FF7B4BA5".ToColor()),
-
-            };
-            buttonBorder.CornerRadius = new CornerRadius(20);
-            Grid.SetColumn(buttonBorder, 0);
-            Grid.SetRow(buttonBorder, 1);
-
-            // creating grid for buttons
-            Grid buttonsMap = new Grid();
-            buttonsMap.ColumnDefinitions.Add(new ColumnDefinition() { Width = new GridLength(1, GridUnitType.Star) });
-            buttonsMap.ColumnDefinitions.Add(new ColumnDefinition() { Width = new GridLength(1, GridUnitType.Star) });
-
-            // creating button to add pin
-            adding = new Button();
-            adding.Style = FindResource("ButtonsAddPins") as Style;
-            adding.Click += AddPin;
-            System.Windows.Controls.Image imageAdd = new System.Windows.Controls.Image
-            {
-                Source = new BitmapImage(new Uri("pack://application:,,,/Pictures/add.png")),
-                Width = 42,
-                Height = 42,
-            };
-            RenderOptions.SetBitmapScalingMode(imageAdd, BitmapScalingMode.HighQuality);
-            adding.Content = imageAdd;
-            Grid.SetColumn(adding, 0);
-            Grid.SetRow(adding, 0);
-            buttonsMap.Children.Add(adding);
-
-            // creating button do remove pin
-            removing = new Button();
-            removing.Style = FindResource("ButtonsRemovePins") as Style;
-            removing.Click += RemovePin;
-            System.Windows.Controls.Image imageRemove = new System.Windows.Controls.Image
-            {
-                Source = new BitmapImage(new Uri("pack://application:,,,/Pictures/bin.png")),
-                Width = 42,
-                Height = 42,
-            };
-            RenderOptions.SetBitmapScalingMode(imageRemove, BitmapScalingMode.HighQuality);
-            removing.Content = imageRemove;
-            Grid.SetColumn(removing, 1);
-            Grid.SetRow(removing, 0);
-            buttonsMap.Children.Add(removing);
-
-            // creating grid for all objects and adding to main window
-            buttonBorder.Child = buttonsMap;
-            mapBorder.Children.Add(buttonBorder);
-
-            LoadingPinns();
-
-        } // loading map 
         private void Information(object sender, RoutedEventArgs e)
         {
             string info = $"{HelpingClass.version}\nContact: kus.konrad1@gmail.com\nLicense: MapDBTrack Commercial Use License";
@@ -657,7 +657,17 @@ namespace MapDBTrack
         }
         private void ReportClick(object sender, RoutedEventArgs e)
         {
+            Button report = sender as Button;
+            Report reportWindow = new Report();
+            menuButtons.IsEnabled = false;
+            report.IsEnabled = false;
 
+            reportWindow.Closed += (s, args) =>
+            {
+                report.IsEnabled = true;
+                menuButtons.IsEnabled = true;
+            };
+            reportWindow.Show();
         }
 
     }

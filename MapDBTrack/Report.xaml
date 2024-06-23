@@ -1,0 +1,28 @@
+﻿<Window x:Class="MapDBTrack.Report"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:MapDBTrack"
+        mc:Ignorable="d" WindowStartupLocation="CenterScreen" WindowStyle="None" AllowsTransparency="True"
+        Background="Transparent"
+        Title="Report" Height="100" Width="400" ResizeMode="NoResize" FontFamily="{DynamicResource MaterialDesignFont}">
+    <Grid>
+        <Border CornerRadius="15" Background="White">
+            <Grid MouseDown="BorderClick">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <Image Source="/Pictures/close.png" RenderOptions.BitmapScalingMode="HighQuality" IsHitTestVisible="False"  Grid.Column="2" Margin="105,5,10,84" />
+                <Button BorderBrush="Transparent" Background="Transparent" Click="ExitClick" Cursor="Hand" Grid.Column="2" Width="11" Height="11" Margin="108,5,14,84"/>
+                
+                
+                <Button Grid.Column="0" Height="45" Width="110" Content="PDF" FontSize="20" Background="#FF7B4BA5" FontFamily="Calibri" Click="PdfClick"/>
+                <Button Grid.Column="1" Height="45" Width="110" Content="Excel" FontSize="20" Background="#FF7B4BA5" FontFamily="Calibri" Click="ExcelClick"/>
+                <Button Grid.Column="2" Height="45" Width="110" Content="Json" FontSize="20" Background="#FF7B4BA5" FontFamily="Calibri" Click="JsonClick"/>
+            </Grid>
+        </Border>
+    </Grid>
+</Window>

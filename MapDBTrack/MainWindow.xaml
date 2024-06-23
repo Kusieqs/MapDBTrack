@@ -32,7 +32,7 @@
                         </Grid.RowDefinitions>
                         <Image Source="/Pictures/Map.png" Grid.Row="0" IsHitTestVisible="False" RenderOptions.BitmapScalingMode="HighQuality" Margin="15,5,98,4"/>
                         <Border Grid.Row="1">
-                            <Grid>
+                            <Grid x:Name="menuButtons">
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="3*"/>
                                     <ColumnDefinition Width="7*"/>
