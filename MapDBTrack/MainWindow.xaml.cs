@@ -542,27 +542,29 @@ namespace MapDBTrack
 
             for (int j = 0; j < loops; j++)
             {
-                TextBlock info = new TextBlock()
+                Button info = new Button()
                 {
                     FontWeight = FontWeights.Bold,
                     FontSize = 17,
                     Width = 190,
                     HorizontalAlignment = HorizontalAlignment.Center,
                     VerticalAlignment = VerticalAlignment.Center,
-                    TextAlignment = TextAlignment.Center,
                     Foreground = new SolidColorBrush("#FF7B4BA5".ToColor()),
+                    Background = Brushes.Transparent,
                     FontFamily = new FontFamily("Calibri"),
+                    BorderBrush = Brushes.Transparent,
                 };
+                info.Click += SortBy;
 
                 if (!customerMode && (j == 1 || j == 3))
                     info.Width = 285;
 
-                info.Text = HelpingClass.DescriptionStackPanel(customerMode, j);
+                info.Content = HelpingClass.DescriptionStackPanel(customerMode, j);
 
                 theme.Children.Add(info);
             }
 
-            TextBlock but = new TextBlock()
+            TextBlock menu = new TextBlock()
             {
                 FontSize = 17,
                 FontWeight = FontWeights.Bold,
@@ -574,7 +576,7 @@ namespace MapDBTrack
                 Foreground = new SolidColorBrush("#FF7B4BA5".ToColor()),
                 FontFamily = new FontFamily("Calibri"),
             };
-            theme.Children.Add(but);
+            theme.Children.Add(menu);
 
             return theme;
         } // Creating stack panel for Theme 
@@ -669,7 +671,40 @@ namespace MapDBTrack
             };
             reportWindow.Show();
         }
+        private void SortBy(object sender, RoutedEventArgs e)
+        {
+            Button button = sender as Button;
+            string theme = button.Content.ToString();
+            switch(theme)
+            {
+                case "ID":
+                    places = places.OrderBy(x => x.customer_id).ToList();
+                    break;
+                case "NAME":
+                    places = places.OrderBy(x => x.first_name).ToList();
+                    break;
+                case "SURNAME":
+                    places = places.OrderBy(x => x.last_name).ToList();
+                    break;
+                case "EMAIL":
+                    places = places.OrderBy(x => x.email).ToList();
+                    break;
+                case "NUMBER":
+                    places = places.OrderBy(x => x.contact_number).ToList();
+                    break;
+                case "CITY":
+                    places = places.OrderBy(x => x.city).ToList();
+                    break;
+                case "POSTAL CODE":
+                    places = places.OrderBy(x => x.postal_code).ToList();
+                    break;
+                case "STREET":
+                    places = places.OrderBy(x => x.street).ToList();
+                    break;
+            }
 
+            ChangingCustomerView();
+        }
     }
 
     public static class StringExtensions
