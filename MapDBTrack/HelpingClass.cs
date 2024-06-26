@@ -130,6 +130,34 @@ namespace MapDBTrack
             sqlConnection.Close();
 
         } // Adding new customer to DB
+        public static void EditCustomer(Place customer)
+        {
+            string updateCustomer = $"UPDATE Customer SET " +
+                        $"employee_id = {customer.employee_id}, " +
+                        $"contact_number = '{customer.contact_number}', " +
+                        $"first_name = '{customer.first_name}', " +
+                        $"last_name = '{customer.last_name}', " +
+                        $"description = '{customer.description}', " +
+                        $"email = '{customer.email}' " +
+                        $"WHERE id = '{customer.customer_id}'";
+
+            string updatePlace = $"UPDATE Place SET " +
+                     $"province = '{customer.province}', " +
+                     $"city = '{customer.city}', " +
+                     $"postal_code = '{customer.postal_code}', " +
+                     $"street = '{customer.street}', " +
+                     $"latitude = {customer.latitude.ToString().Replace(',', '.')}, " +
+                     $"longitude = {customer.longitude.ToString().Replace(',', '.')}" +
+                     $"WHERE customer_id = '{customer.customer_id}'";
+
+            SqlConnection sqlConnection = new SqlConnection(connectString);
+            sqlConnection.Open();
+            SqlCommand command = new SqlCommand(updateCustomer, sqlConnection);
+            command.ExecuteNonQuery();
+            SqlCommand command1 = new SqlCommand(updatePlace, sqlConnection);
+            command1.ExecuteNonQuery();
+            sqlConnection.Close();
+        }
         public static List<Place> LoadingPlace(int id)
         {
             List<Place> places = new List<Place>();

@@ -44,6 +44,9 @@ namespace MapDBTrack
         public static StackPanel customer;
         private ScrollViewer scrollViewer;
         private Border customerBorder;
+
+        private ContextMenu contextMenu;
+        private int menuId;
         #endregion customer grid and border
 
         public MainWindow(int id, string login)
@@ -481,6 +484,7 @@ namespace MapDBTrack
             int loops = customerMode == true ? 5 : 4;
             customer = new StackPanel();
 
+
             for (int i = 0 ; i < places.Count; i++)
             {
                 Border borderStackPanel = new Border()
@@ -514,19 +518,36 @@ namespace MapDBTrack
                     informations.Children.Add(info);
                 }
 
+                contextMenu = new ContextMenu();
+
+                for(int j = 0; j < 2; j ++)
+                {
+                    MenuItem menuItem = new MenuItem()
+                    {
+                        Header = j == 0 ? "Edit customer" : "Delete customer",
+                    };
+                    menuItem.Click += ContextMenu;
+                    contextMenu.Items.Add(menuItem);
+                }
+
                 Button menu = new Button()
                 {
                     FontSize = 20,
                     HorizontalAlignment = HorizontalAlignment.Right,
                     VerticalAlignment = VerticalAlignment.Center,
                     Margin = new Thickness(40, 0, 0, 0),
-                    Background = new SolidColorBrush("#FF7B4BA5".ToColor())
+                    Background = new SolidColorBrush("#FF7B4BA5".ToColor()),
+                    ContextMenu = contextMenu,
+                    Name = "id" + i.ToString(),
                 };
+
+                menu.Click += OpenContextMenu;
 
 
                 informations.Children.Add(menu);
                 borderStackPanel.Child = informations;
                 customer.Children.Add(borderStackPanel);
+
             }
             scrollViewer.Content = customer;
             return scrollViewer;
@@ -656,7 +677,7 @@ namespace MapDBTrack
                 LoadingCustomerScreen();
             }    
             
-        }
+        } // Button to delete customers
         private void ReportClick(object sender, RoutedEventArgs e)
         {
             Button report = sender as Button;
@@ -670,7 +691,7 @@ namespace MapDBTrack
                 menuButtons.IsEnabled = true;
             };
             reportWindow.Show();
-        }
+        } // button to report 
         private void SortBy(object sender, RoutedEventArgs e)
         {
             Button button = sender as Button;
@@ -704,7 +725,36 @@ namespace MapDBTrack
             }
 
             ChangingCustomerView();
-        }
+        } // sorting button 
+        private void ContextMenu(object sender, RoutedEventArgs e)
+        {
+            string option = (sender as MenuItem).Header.ToString();
+            Place place = places[menuId];
+            switch (option)
+            {
+                case "Edit customer":
+                    AddingCustomer editCustomer = new AddingCustomer(place, true);
+                    editCustomer.Show();
+                    editCustomer.Closed += new EventHandler(EditClose);
+                    break;
+
+                case "Delete customer":
+                    places.RemoveAt(menuId);
+                    HelpingClass.RemoveRecordFromDB(place); 
+                    break;
+            }
+            ChangingCustomerView();
+
+        }  // options in contextmenu
+        private void EditClose(object sender, EventArgs e)
+        {
+            ChangingCustomerView();
+        } // closing edit
+        private void OpenContextMenu(object sender, RoutedEventArgs e)
+        {
+            menuId = int.Parse((sender as Button).Name.Split('d')[1]);
+            contextMenu.IsOpen = true;
+        } // opening context menu
     }
 
     public static class StringExtensions
