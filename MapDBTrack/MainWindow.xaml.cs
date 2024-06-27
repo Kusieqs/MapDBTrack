@@ -277,7 +277,7 @@ namespace MapDBTrack
             Grid.SetRow(theme, 2);
 
             // Creating scrollviewer
-            scrollViewer = ScrollMode();
+            scrollViewer = ScrollMode(places);
             Grid.SetRow(scrollViewer, 3);
 
             // creating search box
@@ -291,6 +291,7 @@ namespace MapDBTrack
                 FontWeight = FontWeights.DemiBold,
                 BorderBrush = new SolidColorBrush("#dae2ea".ToColor())
             };
+            searching.TextChanged += SearchingScroll;
             MaterialDesignThemes.Wpf.HintAssist.SetHint(searching, "Search");
             MaterialDesignThemes.Wpf.HintAssist.SetFloatingOffset(searching, new Point(0, -20));
 
@@ -313,6 +314,30 @@ namespace MapDBTrack
 
 
         } // loading customer list
+        private void SearchingScroll(object sender, EventArgs e)
+        {
+            TextBox search = (TextBox)sender;
+            if(string.IsNullOrEmpty(search.Text))
+            {
+                ChangingCustomerView(places);
+            }
+            else
+            {
+                var filter = places.Where(x=> 
+                x.customer_id.Contains(search.Text) ||
+                x.first_name.Contains(search.Text) ||
+                x.last_name.Contains(search.Text) ||
+                x.email.Contains(search.Text) ||
+                x.contact_number.Contains(search.Text) ||
+                x.city.Contains(search.Text) ||
+                x.province.Contains(search.Text) ||
+                x.street.Contains(search.Text) ||
+                x.postal_code.Contains(search.Text)||
+                x.employee_id.ToString().Contains(search.Text)).ToList();
+
+                ChangingCustomerView(filter);
+            }
+        }
         private void Information(object sender, RoutedEventArgs e)
         {
             string info = $"{HelpingClass.version}\nContact: kus.konrad1@gmail.com\nLicense: MapDBTrack Commercial Use License";
@@ -472,7 +497,7 @@ namespace MapDBTrack
             }
             return pin;
         } // Setting options for pin
-        private ScrollViewer ScrollMode()
+        private ScrollViewer ScrollMode(List<Place> customers)
         {
             ScrollViewer scrollViewer = new ScrollViewer()
             {
@@ -485,7 +510,7 @@ namespace MapDBTrack
             customer = new StackPanel();
 
 
-            for (int i = 0 ; i < places.Count; i++)
+            for (int i = 0 ; i < customers.Count; i++)
             {
                 Border borderStackPanel = new Border()
                 {
@@ -514,7 +539,7 @@ namespace MapDBTrack
                     if (!customerMode && (j == 1 || j == 3))
                         info.Width = 285;
 
-                    info.Text = HelpingClass.DescritpionScrollView(customerMode, j, i);
+                    info.Text = HelpingClass.DescritpionScrollView(customers,customerMode, j, i);
                     informations.Children.Add(info);
                 }
 
@@ -608,7 +633,7 @@ namespace MapDBTrack
             personalBtn.BorderBrush = Brushes.Transparent;
             addressBtn.BorderBrush = new SolidColorBrush("#FF7B4BA5".ToColor());
 
-            ChangingCustomerView();
+            ChangingCustomerView(places);
         } // Address Click (customer view)
         private void PersonalClick(object sender, RoutedEventArgs e)
         {
@@ -617,9 +642,9 @@ namespace MapDBTrack
             personalBtn.BorderBrush = new SolidColorBrush("#FF7B4BA5".ToColor());
             addressBtn.BorderBrush = Brushes.Transparent;
 
-            ChangingCustomerView();
+            ChangingCustomerView(places);
         } // Personal Click (customer view)
-        private void ChangingCustomerView()
+        private void ChangingCustomerView(List<Place> customers)
         {
             var elementsToRemove = customerGrid.Children
                         .Cast<UIElement>()
@@ -635,7 +660,7 @@ namespace MapDBTrack
             theme = StackPanelMode();
             Grid.SetRow(theme, 2);
             // Creating scrollviewer
-            scrollViewer = ScrollMode();
+            scrollViewer = ScrollMode(customers);
             Grid.SetRow(scrollViewer, 3);
 
             customerGrid.Children.Add(theme);
@@ -692,6 +717,10 @@ namespace MapDBTrack
             };
             reportWindow.Show();
         } // button to report 
+
+
+
+
         private void SortBy(object sender, RoutedEventArgs e)
         {
             Button button = sender as Button;
@@ -724,7 +753,7 @@ namespace MapDBTrack
                     break;
             }
 
-            ChangingCustomerView();
+            ChangingCustomerView(places);
         } // sorting button 
         private void ContextMenu(object sender, RoutedEventArgs e)
         {
@@ -743,12 +772,12 @@ namespace MapDBTrack
                     HelpingClass.RemoveRecordFromDB(place); 
                     break;
             }
-            ChangingCustomerView();
+            ChangingCustomerView(places);
 
         }  // options in contextmenu
         private void EditClose(object sender, EventArgs e)
         {
-            ChangingCustomerView();
+            ChangingCustomerView(places);
         } // closing edit
         private void OpenContextMenu(object sender, RoutedEventArgs e)
         {

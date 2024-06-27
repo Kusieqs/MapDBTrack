@@ -270,22 +270,22 @@ namespace MapDBTrack
                 sqlCommand.ExecuteNonQuery();
             }
         }
-        public static string DescritpionScrollView(bool mode, int loop, int positionOfPlace)
+        public static string DescritpionScrollView(List<Place> customers,bool mode, int loop, int positionOfPlace)
         {
             if (mode)
             {
                 switch (loop)
                 {
                     case 0:
-                        return MainWindow.places[positionOfPlace].customer_id;
+                        return customers[positionOfPlace].customer_id;
                     case 1:
-                        return MainWindow.places[positionOfPlace].first_name;
+                        return customers[positionOfPlace].first_name;
                     case 2:
-                        return MainWindow.places[positionOfPlace].last_name;
+                        return customers[positionOfPlace].last_name;
                     case 3:
-                        return MainWindow.places[positionOfPlace].email;
+                        return customers[positionOfPlace].email;
                     case 4:
-                        return MainWindow.places[positionOfPlace].contact_number;
+                        return customers[positionOfPlace].contact_number;
                     default:
                         return "Error";
                 }
@@ -295,13 +295,13 @@ namespace MapDBTrack
                 switch (loop)
                 {
                     case 0:
-                        return MainWindow.places[positionOfPlace].customer_id;
+                        return customers[positionOfPlace].customer_id;
                     case 1:
-                        return MainWindow.places[positionOfPlace].city;
+                        return customers[positionOfPlace].city;
                     case 2:
-                        return MainWindow.places[positionOfPlace].postal_code;
+                        return customers[positionOfPlace].postal_code;
                     case 3:
-                        return MainWindow.places[positionOfPlace].street;
+                        return customers[positionOfPlace].street;
                     default:
                         return "Error";
                 }
