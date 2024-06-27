@@ -130,6 +130,34 @@ namespace MapDBTrack
             sqlConnection.Close();
 
         } // Adding new customer to DB
+        public static void EditCustomer(Place customer)
+        {
+            string updateCustomer = $"UPDATE Customer SET " +
+                        $"employee_id = {customer.employee_id}, " +
+                        $"contact_number = '{customer.contact_number}', " +
+                        $"first_name = '{customer.first_name}', " +
+                        $"last_name = '{customer.last_name}', " +
+                        $"description = '{customer.description}', " +
+                        $"email = '{customer.email}' " +
+                        $"WHERE id = '{customer.customer_id}'";
+
+            string updatePlace = $"UPDATE Place SET " +
+                     $"province = '{customer.province}', " +
+                     $"city = '{customer.city}', " +
+                     $"postal_code = '{customer.postal_code}', " +
+                     $"street = '{customer.street}', " +
+                     $"latitude = {customer.latitude.ToString().Replace(',', '.')}, " +
+                     $"longitude = {customer.longitude.ToString().Replace(',', '.')}" +
+                     $"WHERE customer_id = '{customer.customer_id}'";
+
+            SqlConnection sqlConnection = new SqlConnection(connectString);
+            sqlConnection.Open();
+            SqlCommand command = new SqlCommand(updateCustomer, sqlConnection);
+            command.ExecuteNonQuery();
+            SqlCommand command1 = new SqlCommand(updatePlace, sqlConnection);
+            command1.ExecuteNonQuery();
+            sqlConnection.Close();
+        }
         public static List<Place> LoadingPlace(int id)
         {
             List<Place> places = new List<Place>();
@@ -242,7 +270,80 @@ namespace MapDBTrack
                 sqlCommand.ExecuteNonQuery();
             }
         }
-
+        public static string DescritpionScrollView(List<Place> customers,bool mode, int loop, int positionOfPlace)
+        {
+            if (mode)
+            {
+                switch (loop)
+                {
+                    case 0:
+                        return customers[positionOfPlace].customer_id;
+                    case 1:
+                        return customers[positionOfPlace].first_name;
+                    case 2:
+                        return customers[positionOfPlace].last_name;
+                    case 3:
+                        return customers[positionOfPlace].email;
+                    case 4:
+                        return customers[positionOfPlace].contact_number;
+                    default:
+                        return "Error";
+                }
+            }
+            else
+            {
+                switch (loop)
+                {
+                    case 0:
+                        return customers[positionOfPlace].customer_id;
+                    case 1:
+                        return customers[positionOfPlace].city;
+                    case 2:
+                        return customers[positionOfPlace].postal_code;
+                    case 3:
+                        return customers[positionOfPlace].street;
+                    default:
+                        return "Error";
+                }
+            }
+        } // special information for scroll view
+        public static string DescriptionStackPanel(bool mode, int loop)
+        {
+            if (mode)
+            {
+                switch (loop)
+                {
+                    case 0:
+                        return "ID";
+                    case 1:
+                        return "NAME";
+                    case 2:
+                        return "SURNAME";
+                    case 3:
+                        return "EMAIL";
+                    case 4:
+                        return "NUMBER";
+                    default:
+                        return "Error";
+                }
+            }
+            else
+            {
+                switch (loop)
+                {
+                    case 0:
+                        return "ID";
+                    case 1:
+                        return "CITY";
+                    case 2:
+                        return "POSTAL CODE";
+                    case 3:
+                        return "STREET";
+                    default:
+                        return "Error";
+                }
+            }
+        } // theme description for scroll view
     }
 
 }

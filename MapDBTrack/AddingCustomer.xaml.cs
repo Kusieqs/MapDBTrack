@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
+using System.Windows.Media;
 
 namespace MapDBTrack
 {
@@ -14,6 +15,10 @@ namespace MapDBTrack
         private Pushpin Pushpin;
         private Map map;
         private Window mainWindow;
+        private bool edit = false;
+
+        private static string id;
+        private static Place customer;
         public AddingCustomer(Location location, Window window, Pushpin pin, Map map)
         {
             InitializeComponent();
@@ -23,6 +28,26 @@ namespace MapDBTrack
             this.map = map;
             Closing += CloseWindow;
             mainWindow = window;
+        }
+        public AddingCustomer(Place place,bool edit)
+        {
+            InitializeComponent();
+            ThemeOfPanel.Text = "Edit customer";
+            this.edit = true;
+            FirstNameBox.Text = place.first_name;
+            LastNameBox.Text = place.last_name;
+            ContactBox.Text = place.contact_number;
+            EmailBox.Text = place.email;
+            ProvinceBox.Text = place.province;
+            CityBox.Text = place.city;
+            PostalCodeBox.Text = place.postal_code;
+            StreetBox.Text = place.street;
+            LatitudeBox.Text = place.latitude.ToString();
+            LongitudeBox.Text = place.longitude.ToString();
+            DescriptionBox.Text = place.description;
+            id = place.customer_id;
+            customer = place;
+
         }
         public void AcceptClick(object sender, RoutedEventArgs e)
         {
@@ -36,36 +61,63 @@ namespace MapDBTrack
                 PostalExceptions() & 
                 StreetExceptions())
             {
-                // creating new object
-                string lastOne = HelpingClass.GetIdFromDB();
-                Place place = new Place(
-                    MainWindow.idOfEmployee,
-                    ContactBox.Text,
-                    FirstNameBox.Text,
-                    LastNameBox.Text,
-                    DescriptionBox.Text,
-                    EmailBox.Text,
-                    lastOne,
-                    ProvinceBox.Text,
-                    CityBox.Text,
-                    PostalCodeBox.Text,
-                    StreetBox.Text,
-                    double.Parse(LatitudeBox.Text),
-                    double.Parse(LongitudeBox.Text)
-                    );
+                if (edit)
+                {
+                    // editing existing place
+                    int x = MainWindow.places.IndexOf(customer);
+                    customer.first_name = FirstNameBox.Text;
+                    customer.last_name = LastNameBox.Text;
+                    customer.email = EmailBox.Text;
+                    customer.contact_number = ContactBox.Text;
+                    customer.province = ProvinceBox.Text;
+                    customer.postal_code = PostalCodeBox.Text;
+                    customer.street = StreetBox.Text;
+                    customer.city = CityBox.Text;
+                    customer.description = DescriptionBox.Text;
 
-                // adding new object to list and map
-                MainWindow.places.Add(place);
-                HelpingClass.AddingNewCustomer(place);
-                correctClose = true;
-                MainWindow.acceptOverridePin = true;
+                    MainWindow.places[x] = customer;
+
+                    HelpingClass.EditCustomer(customer);
+                }
+                else
+                {
+                    // creating new object
+                    string lastOne = HelpingClass.GetIdFromDB();
+                    Place place = new Place(
+                        MainWindow.idOfEmployee,
+                        ContactBox.Text,
+                        FirstNameBox.Text,
+                        LastNameBox.Text,
+                        DescriptionBox.Text,
+                        EmailBox.Text,
+                        lastOne,
+                        ProvinceBox.Text,
+                        CityBox.Text,
+                        PostalCodeBox.Text,
+                        StreetBox.Text,
+                        double.Parse(LatitudeBox.Text),
+                        double.Parse(LongitudeBox.Text)
+                        );
+
+                    // adding new object to list and map
+                    MainWindow.places.Add(place);
+                    HelpingClass.AddingNewCustomer(place);
+                    correctClose = true;
+                    MainWindow.acceptOverridePin = true;
+                }
                 this.Close();
             }
             else
                 return;
 
-            //obsluga dodania danych do bazy danych
         } // Accepting iformations about customer
+        public void DeleteClick(object sender, RoutedEventArgs e)
+        {
+            if(!edit)
+                map.Children.Remove(Pushpin);
+
+            Close();
+        } // deleting pinn from map
         private void LoadingData()
         {
             try
@@ -96,11 +148,6 @@ namespace MapDBTrack
             }
 
         } // Loading inforamtion about place where pinn was inputed
-        public void DeleteClick(object sender, RoutedEventArgs e)
-        {
-            map.Children.Remove(Pushpin);
-            Close();
-        } // deleting pinn from map
         public void CloseWindow(object sender, System.ComponentModel.CancelEventArgs e)
         {
             if(!correctClose)
@@ -254,7 +301,6 @@ namespace MapDBTrack
             }
             return true;
         } // Error text when street is wrong
-
         private void FirstChanged(object sender, EventArgs e)
         {
             FirstNameError.Text = string.Empty;

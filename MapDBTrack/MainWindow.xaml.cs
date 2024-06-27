@@ -1,4 +1,5 @@
 ﻿using Microsoft.Maps.MapControl.WPF;
+using Microsoft.VisualBasic;
 using Microsoft.Win32;
 using System;
 using System.Collections.Generic;
@@ -13,8 +14,10 @@ using System.Windows.Data;
 using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
+using System.Windows.Media.Effects;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace MapDBTrack
 {
@@ -31,7 +34,20 @@ namespace MapDBTrack
         private bool pinned = false;
         private bool removed = false;
         public static bool acceptOverridePin = false;
+        public static bool customerMode = true;
 
+        #region customer grid and border
+        private Grid customerGrid;
+        private Button personalBtn;
+        private Button addressBtn;
+        private StackPanel theme;
+        public static StackPanel customer;
+        private ScrollViewer scrollViewer;
+        private Border customerBorder;
+
+        private ContextMenu contextMenu;
+        private int menuId;
+        #endregion customer grid and border
 
         public MainWindow(int id, string login)
         {
@@ -44,11 +60,34 @@ namespace MapDBTrack
             LoginName.Text = "Hi, " + loginOfEmployee;
         }
 
+
+        #region Menu buttons
         private void MapClick(object sender, RoutedEventArgs e)
         {
             HelpingClass.CleanGrid(mapBorder);
             LoadingMapScreen();
-        } // button to load map
+        } // map button
+        private void CustomersClick(object sender, RoutedEventArgs e)
+        {
+            HelpingClass.CleanGrid(mapBorder);
+            LoadingCustomerScreen();
+        } // Customer button
+        private void HistoryClick(object sender, RoutedEventArgs e)
+        {
+
+        } // history button
+        private void LogoutClick(object sender, RoutedEventArgs e)
+        {
+            Login login = new Login();
+            login.Show();
+            this.Close();
+        } // logout button
+        private void ExitClick(object sender, RoutedEventArgs e)
+        {
+            this.Close();
+        }  // exit button
+        #endregion Menu buttons
+        
         private void LoadingMapScreen()
         {
             // Checking network connection
@@ -136,361 +175,169 @@ namespace MapDBTrack
             // Checking network connection
             HelpingClass.NetworkCheck(this);
 
-            // creating menu grid on the right side
-            #region Creating grid
+            //Creating border
 
-            mapBorder.RowDefinitions.Add(new RowDefinition() { Height = new GridLength(180) });
-            mapBorder.RowDefinitions.Add(new RowDefinition() { Height = new GridLength(2) });
-            mapBorder.RowDefinitions.Add(new RowDefinition() { Height = new GridLength(60) });
-            mapBorder.RowDefinitions.Add(new RowDefinition() { Height = new GridLength(1, GridUnitType.Star) });
-
-            Border menuBorder = new Border();
-            Grid.SetColumn(menuBorder, 0);
-            Grid.SetRow(menuBorder, 0);
-            mapBorder.Children.Add(menuBorder);
-
-
-            Grid menuBorderGrid = new Grid();
-            menuBorderGrid.RowDefinitions.Add(new RowDefinition() { Height = new GridLength(1, GridUnitType.Star) });
-            menuBorderGrid.RowDefinitions.Add(new RowDefinition() { Height = new GridLength(1, GridUnitType.Star) });
-            menuBorderGrid.ColumnDefinitions.Add(new ColumnDefinition() { Width = new GridLength(202) });
-            menuBorderGrid.ColumnDefinitions.Add(new ColumnDefinition() { Width = new GridLength(207) });
-            menuBorderGrid.ColumnDefinitions.Add(new ColumnDefinition() { Width = new GridLength(190) });
-            menuBorderGrid.ColumnDefinitions.Add(new ColumnDefinition() { Width = new GridLength(1, GridUnitType.Star) });
-            menuBorderGrid.ColumnDefinitions.Add(new ColumnDefinition() { Width = new GridLength(1, GridUnitType.Star) });
-            menuBorder.Child = menuBorderGrid;
-
-            #endregion Creating grid
-
-            // creating menu with diffrent buttons and features
-            #region Creating menu (sorting searching)
-
-            // textblock searching
-            TextBlock searching = new TextBlock()
+            customerBorder = new Border()
             {
-                Text = "Searching:",
+                CornerRadius = new CornerRadius(0, 15, 15, 0),
+                Background = Brushes.White,
+            };
+            customerBorder.MouseDown += BorderClick;
+            Grid.SetColumn(customerBorder, 1);
+
+            //Creating grid
+
+            customerGrid = new Grid()
+            {
+                Margin = new Thickness(20)
+            };
+
+            customerGrid.RowDefinitions.Add(new RowDefinition() { Height = new GridLength(70, GridUnitType.Pixel) });
+            customerGrid.RowDefinitions.Add(new RowDefinition() { Height = new GridLength(5, GridUnitType.Pixel) });
+            customerGrid.RowDefinitions.Add(new RowDefinition() { Height = new GridLength(50, GridUnitType.Pixel) });
+            customerGrid.RowDefinitions.Add(new RowDefinition() { Height = new GridLength(1, GridUnitType.Star) });
+
+
+            // creating line
+            Separator separator = new Separator()
+            {
+                Background = new SolidColorBrush("#dae2ea".ToColor()),
+                Margin = new Thickness(370, 55, 400, 14)
+
+            };
+
+            //creating stackpanel with buttons
+
+            StackPanel stackPanel = new StackPanel()
+            {
+                Orientation = Orientation.Horizontal,
+                Margin = new Thickness(425, 10, 457, 13)
+            };
+            Grid.SetRow(stackPanel, 0);
+
+            // Personal button
+            personalBtn = new Button()
+            {
+                Content = "Personal",
+                Style = FindResource("tabButton") as Style,
+                Width = 78,
+                Margin = new Thickness(0,0,20,0),
                 FontFamily = new FontFamily("Calibri"),
-                FontWeight = FontWeights.Bold,
-                FontSize = 30,
-                Foreground = new SolidColorBrush("#FF2F5588".ToColor()),
-                HorizontalAlignment = HorizontalAlignment.Center,
-                VerticalAlignment = VerticalAlignment.Center,
-                Height = 40,
-                Width = 147
+                BorderBrush = Brushes.Transparent,
+                Cursor = Cursors.Hand
             };
-            Grid.SetColumn(searching, 0);
-            Grid.SetRow(searching, 0);
+            personalBtn.Click += PersonalClick;
 
-            // textblock sorting
-            TextBlock sorting = new TextBlock()
+            // address button
+            addressBtn = new Button()
             {
-                Text = "Sorting:",
+                Content = "Address",
+                Style = FindResource("tabButton") as Style,
+                Width = 78,
                 FontFamily = new FontFamily("Calibri"),
-                FontWeight = FontWeights.Bold,
-                FontSize = 30,
-                Foreground = new SolidColorBrush("#FF2F5588".ToColor()),
-                HorizontalAlignment = HorizontalAlignment.Center,
-                VerticalAlignment = VerticalAlignment.Center,
-                Height = 40,
-                Width = 147
+                BorderBrush = Brushes.Transparent,
+                Cursor = Cursors.Hand
             };
-            Grid.SetColumn(sorting, 0);
-            Grid.SetRow(sorting, 1);
+            addressBtn.Click += AddresClick;
 
-            // special place when user can put text to search by
-            TextBox sortingBox = new TextBox()
+
+            if(customerMode)
+                personalBtn.BorderBrush = new SolidColorBrush("#FF7B4BA5".ToColor());
+            else
+                addressBtn.BorderBrush = new SolidColorBrush("#FF7B4BA5".ToColor());
+
+            //creating buttons to Delete customer and creating report
+
+            Button reportBtn = new Button()
             {
-                Name = "Sorting",
+                Width = 110,
+                Height = 45,
+                Content = "Report",
+                FontSize = 20,
+                Margin = new Thickness(940, 8, 10, 17),
+                Background = new SolidColorBrush("#FF7B4BA5".ToColor()),
                 FontFamily = new FontFamily("Calibri"),
-                Style = FindResource("RoundedTextBox") as Style,
-                VerticalAlignment = VerticalAlignment.Center,
-                HorizontalAlignment = HorizontalAlignment.Center,
-                Height = 40,
-                Width = 318
             };
-            sortingBox.TextChanged += SortingChanged;
-            Grid.SetColumnSpan(sortingBox, 2);
-            Grid.SetColumn(sortingBox, 1);
-            Grid.SetRow(sortingBox, 0);
+            reportBtn.Click += ReportClick;
 
-            // combo box to choose witch category user can sort
-            ComboBox comboName = new ComboBox()
+            Button deleteBtn = new Button()
             {
-                Name = "ComboName",
-                Style = FindResource("RoundedComboBox") as Style,
-                Margin = new Thickness(41, 25, 40, 25)
+                Width = 110,
+                Height = 45,
+                Content = "Delete",
+                FontSize = 20,
+                Margin = new Thickness(798, 8, 152, 17),
+                Background = new SolidColorBrush("#FF7B4BA5".ToColor()),
+                FontFamily = new FontFamily("Calibri"),
             };
-            comboName.Items.Add("nwm");
-            comboName.Items.Add("nws");
-            comboName.Items.Add("nw5");
-            comboName.SelectionChanged += ComboBoxChanged;
-            Grid.SetColumnSpan(comboName, 2);
-            Grid.SetColumn(comboName, 1);
-            Grid.SetRow(comboName, 1);
+            deleteBtn.Click += DeleteClick;
 
+            // Theme panel for scroll viewer
+            theme = StackPanelMode();
+            Grid.SetRow(theme, 2);
 
-            // button to open new window to choose mode to report
-            Button report = new Button()
+            // Creating scrollviewer
+            scrollViewer = ScrollMode(places);
+            Grid.SetRow(scrollViewer, 3);
+
+            // creating search box
+            TextBox searching = new TextBox()
             {
-                Width = 180,
+                Height = 30,
+                Margin = new Thickness(16, 20, 800, 7),
+                FontSize = 20,
+                FontFamily = new FontFamily("Calibri"),
+                Foreground = new SolidColorBrush("#FF7B4BA5".ToColor()),
+                FontWeight = FontWeights.DemiBold,
+                BorderBrush = new SolidColorBrush("#dae2ea".ToColor())
             };
-            report.Style = FindResource("ButtonRounded") as Style;
-            report.Click += RaportClick;
-            Grid.SetColumn(report, 3);
-            Grid.SetRow(report, 0);
-
-            // button to clear the list ????????????????
-            Button clear = new Button()
-            {
-                Width = 180,
-            };
-            clear.Style = FindResource("ButtonRounded") as Style;
-            clear.Click += ClearClick;
-            Grid.SetColumn(clear, 3);
-            Grid.SetRow(clear, 1);
-
-            // button to see all places
-            Button mode = new Button()
-            {
-                Width = 180,
-            };
-            mode.Style = FindResource("ButtonRounded") as Style;
-            mode.Click += ModeClick;
-            Grid.SetColumn(mode, 4);
-            Grid.SetRow(mode, 0);
-
-            // test button
-            Button test = new Button()
-            {
-                Width = 180,
-            };
-            test.Style = FindResource("ButtonRounded") as Style;
-            test.Click += TestClick;
-            Grid.SetColumn(test, 4);
-            Grid.SetRow(test, 1);
-
-            // content to report button
-            TextBlock reportText = new TextBlock()
-            {
-                Text = "Report",
-            };
-            reportText.Style = FindResource("TextBlocksCustomerButtons") as Style;
-            Grid.SetColumn(reportText, 3);
-            Grid.SetRow(reportText, 0);
-
-            // content to clear button
-            TextBlock clearText = new TextBlock()
-            {
-                Text = "Clear",
-            };
-            clearText.Style = FindResource("TextBlocksCustomerButtons") as Style;
-            Grid.SetColumn(clearText, 3);
-            Grid.SetRow(clearText, 1);
-
-            // content to mode button
-            TextBlock modeText = new TextBlock()
-            {
-                Text = "Mode",
-            };
-            modeText.Style = FindResource("TextBlocksCustomerButtons") as Style;
-            Grid.SetColumn(modeText, 4);
-            Grid.SetRow(modeText, 0);
-
-            // content to test button
-            TextBlock testText = new TextBlock()
-            {
-                Text = "Test",
-            };
-            testText.Style = FindResource("TextBlocksCustomerButtons") as Style;
-            Grid.SetColumn(testText, 4);
-            Grid.SetRow(testText, 1);
-
-            Image reportImage = new Image()
-            {
-                Source = new BitmapImage(new Uri("pack://application:,,,/Pictures/report.png")),
-            };
-            reportImage.Style = FindResource("ImageCustomerView") as Style;
-            RenderOptions.SetBitmapScalingMode(reportImage, BitmapScalingMode.HighQuality);
-            Grid.SetColumn(reportImage, 3);
-            Grid.SetRow(reportImage, 0);
-
-            Image clearImage = new Image()
-            {
-                Source = new BitmapImage(new Uri("pack://application:,,,/Pictures/clear.png")),
-            };
-            clearImage.Style = FindResource("ImageCustomerView") as Style;
-            RenderOptions.SetBitmapScalingMode(clearImage, BitmapScalingMode.HighQuality);
-            Grid.SetColumn(clearImage, 3);
-            Grid.SetRow(clearImage, 1);
-
-            Image modeImage = new Image()
-            {
-                Source = new BitmapImage(new Uri("pack://application:,,,/Pictures/mode.png")),
-            };
-            modeImage.Style = FindResource("ImageCustomerView") as Style;
-            modeImage.Width = 38;
-            RenderOptions.SetBitmapScalingMode(modeImage, BitmapScalingMode.HighQuality);
-            Grid.SetColumn(modeImage, 4);
-            Grid.SetRow(modeImage, 0);
-
-            /*
-            Image testImage = new Image()
-            {
-                Source = new BitmapImage(new Uri("pack://application:,,,/Pictures/test.png")),
-            };
-            testImage.Style = FindResource("ImageCustomerView") as Style;
-            RenderOptions.SetBitmapScalingMode(testImage, BitmapScalingMode.HighQuality);
-            Grid.SetColumn(testImage, 4);
-            Grid.SetRow(testImage, 1);
-            */
-            #endregion
-
-            //creating line 
-            #region Creating line
-            Border line = new Border();
-            line.Background = new SolidColorBrush("#FF2C3C96".ToColor());
-            Grid.SetColumn(line, 0);
-            Grid.SetRow(line, 1);
-            mapBorder.Children.Add(line);
-            #endregion
-
-            // setting theme category to scroll viewer
-            #region Theme of category
-            Border themeBorder = new Border();
-            Grid.SetRow(themeBorder, 2);
-            Grid.SetColumn(themeBorder, 0);
-
-            Grid themeGrid = new Grid();
-            themeGrid.ColumnDefinitions.Add(new ColumnDefinition() { Width = new GridLength(1, GridUnitType.Star) });
-            themeGrid.ColumnDefinitions.Add(new ColumnDefinition() { Width = new GridLength(1, GridUnitType.Star) });
-            themeGrid.ColumnDefinitions.Add(new ColumnDefinition() { Width = new GridLength(1, GridUnitType.Star) });
-            themeGrid.ColumnDefinitions.Add(new ColumnDefinition() { Width = new GridLength(1, GridUnitType.Star) });
-            themeGrid.ColumnDefinitions.Add(new ColumnDefinition() { Width = new GridLength(1, GridUnitType.Star) });
-            themeGrid.ColumnDefinitions.Add(new ColumnDefinition() { Width = new GridLength(1, GridUnitType.Star) });
-            themeBorder.Child = themeGrid;
+            searching.TextChanged += SearchingScroll;
+            MaterialDesignThemes.Wpf.HintAssist.SetHint(searching, "Search");
+            MaterialDesignThemes.Wpf.HintAssist.SetFloatingOffset(searching, new Point(0, -20));
 
 
-            for (int i = 0; i < 6; i++)
-            {
-                TextBlock theme = new TextBlock()
-                {
-                    Text = i == 0 ? "Added by" : i == 1 ? "Name" : i == 2 ? "Last name" : i == 3 ? "City" : i == 4 ? "Street" : "Number",
-                    HorizontalAlignment = HorizontalAlignment.Center,
-                    VerticalAlignment = VerticalAlignment.Center,
-                };
-                Grid.SetColumn(theme, i);
-                Grid.SetRow(theme, 0);
-                themeGrid.Children.Add(theme);
-            }
-            mapBorder.Children.Add(themeBorder);
-            #endregion
+            #region adding elements
+            customerGrid.Children.Add(separator);
+            stackPanel.Children.Add(personalBtn);
+            stackPanel.Children.Add(addressBtn);
+            customerGrid.Children.Add(stackPanel);
+            customerGrid.Children.Add(deleteBtn);
+            customerGrid.Children.Add(reportBtn);
+            customerGrid.Children.Add(searching);
 
-            // creating scroll view with customers
-            #region Creating Sroll view
-            StackPanel panel = null;
-            StackPanel mainPanel = new StackPanel();
-            ScrollViewer list = new ScrollViewer();
+            customerGrid.Children.Add(theme);
+            customerGrid.Children.Add(scrollViewer);
 
-            for (int i = 0; i < places.Count; i++)
-            {
-                panel = new StackPanel();
-                panel.Orientation = Orientation.Horizontal;
-                TextBlock info = null;
+            customerBorder.Child = customerGrid;
+            mapBorder.Children.Add(customerBorder);
+            #endregion adding elements
 
-                for (int j = 0; j < 6; j++)
-                {
-                    // creating content to panel
-                    info = new TextBlock()
-                    {
-                        Text = j == 0 ? places[i].employee_id.ToString() : j == 1 ? places[i].first_name : j == 2 ? places[i].last_name : j == 3 ? places[i].city : j == 4 ? places[i].street : places[i].contact_number,
-                        HorizontalAlignment = HorizontalAlignment.Center,
-                        VerticalAlignment = VerticalAlignment.Center,
-                        Height = 50,
-                        Width = 150,
-                    };
-                    panel.Children.Add(info);
-                }
-
-                // button to open menu of customer
-                Button menu = new Button()
-                {
-                    Content = "click",
-                };
-                menu.Click += MenuOfCustomerClick;
-
-                panel.Children.Add(menu);
-                mainPanel.Children.Add(panel);
-            }
-            list.Content = mainPanel;
-            Grid.SetColumn(list, 0);
-            Grid.SetRow(list, 3);
-            mapBorder.Children.Add(list);
-
-            #endregion
-
-            // adding all elemnts to gird
-            #region Adding elemnts to grid
-            menuBorderGrid.Children.Add(searching);
-            menuBorderGrid.Children.Add(sorting);
-            menuBorderGrid.Children.Add(sortingBox);
-            menuBorderGrid.Children.Add(comboName);
-            menuBorderGrid.Children.Add(report);
-            menuBorderGrid.Children.Add(clear);
-            menuBorderGrid.Children.Add(reportText);
-            menuBorderGrid.Children.Add(clearText);
-            menuBorderGrid.Children.Add(mode);
-            menuBorderGrid.Children.Add(modeText);
-            menuBorderGrid.Children.Add(test);
-            menuBorderGrid.Children.Add(testText);
-            menuBorderGrid.Children.Add(reportImage);
-            menuBorderGrid.Children.Add(modeImage);
-            menuBorderGrid.Children.Add(clearImage);
-            #endregion
 
         } // loading customer list
-        private void MenuOfCustomerClick(object sender, EventArgs e)
+        private void SearchingScroll(object sender, EventArgs e)
         {
+            TextBox search = (TextBox)sender;
+            if(string.IsNullOrEmpty(search.Text))
+            {
+                ChangingCustomerView(places);
+            }
+            else
+            {
+                var filter = places.Where(x=> 
+                x.customer_id.Contains(search.Text) ||
+                x.first_name.Contains(search.Text) ||
+                x.last_name.Contains(search.Text) ||
+                x.email.Contains(search.Text) ||
+                x.contact_number.Contains(search.Text) ||
+                x.city.Contains(search.Text) ||
+                x.province.Contains(search.Text) ||
+                x.street.Contains(search.Text) ||
+                x.postal_code.Contains(search.Text)||
+                x.employee_id.ToString().Contains(search.Text)).ToList();
 
+                ChangingCustomerView(filter);
+            }
         }
-        private void TestClick(object sender, EventArgs e)
-        {
-
-        }
-        private void ModeClick(object sender, EventArgs e)
-        {
-
-        }
-        private void ComboBoxChanged(object sender, EventArgs e)
-        {
-
-        }
-        private void RaportClick(object sender, EventArgs e)
-        {
-
-        }
-        private void ClearClick(object sender, EventArgs e)
-        {
-
-        }
-        private void SortingChanged(object sender, EventArgs e)
-        {
-
-        }
-        private void CustomersClick(object sender, RoutedEventArgs e)
-        {
-            HelpingClass.CleanGrid(mapBorder);
-            LoadingCustomerScreen();
-        } // Changing view to customer window
-        private void HistoryClick(object sender, RoutedEventArgs e)
-        {
-
-        } // history button
-        private void LogoutClick(object sender, RoutedEventArgs e)
-        {
-            Login login = new Login();
-            login.Show();
-            this.Close();
-        } // button logout 
         private void Information(object sender, RoutedEventArgs e)
         {
             string info = $"{HelpingClass.version}\nContact: kus.konrad1@gmail.com\nLicense: MapDBTrack Commercial Use License";
@@ -650,21 +497,293 @@ namespace MapDBTrack
             }
             return pin;
         } // Setting options for pin
+        private ScrollViewer ScrollMode(List<Place> customers)
+        {
+            ScrollViewer scrollViewer = new ScrollViewer()
+            {
+
+                Padding = new Thickness(10),
+                VerticalScrollBarVisibility = ScrollBarVisibility.Auto
+            };
+
+            int loops = customerMode == true ? 5 : 4;
+            customer = new StackPanel();
+
+
+            for (int i = 0 ; i < customers.Count; i++)
+            {
+                Border borderStackPanel = new Border()
+                {
+                    CornerRadius = new CornerRadius(10),
+                    Background = Brushes.LightGray,
+                    Height = 50,
+                    Margin = new Thickness(0, 5, 3, 5)
+                };
+
+                StackPanel informations = new StackPanel()
+                {
+                    Orientation = Orientation.Horizontal,
+                };
+
+                for (int j = 0 ; j < loops; j++)
+                {
+                    TextBlock info = new TextBlock()
+                    {
+                        FontSize = 17,
+                        Width = 190,
+                        HorizontalAlignment = HorizontalAlignment.Center,
+                        VerticalAlignment = VerticalAlignment.Center,
+                        TextAlignment = TextAlignment.Center
+                    };
+
+                    if (!customerMode && (j == 1 || j == 3))
+                        info.Width = 285;
+
+                    info.Text = HelpingClass.DescritpionScrollView(customers,customerMode, j, i);
+                    informations.Children.Add(info);
+                }
+
+                contextMenu = new ContextMenu();
+
+                for(int j = 0; j < 2; j ++)
+                {
+                    MenuItem menuItem = new MenuItem()
+                    {
+                        Header = j == 0 ? "Edit customer" : "Delete customer",
+                    };
+                    menuItem.Click += ContextMenu;
+                    contextMenu.Items.Add(menuItem);
+                }
+
+                Button menu = new Button()
+                {
+                    FontSize = 20,
+                    HorizontalAlignment = HorizontalAlignment.Right,
+                    VerticalAlignment = VerticalAlignment.Center,
+                    Margin = new Thickness(40, 0, 0, 0),
+                    Background = new SolidColorBrush("#FF7B4BA5".ToColor()),
+                    ContextMenu = contextMenu,
+                    Name = "id" + i.ToString(),
+                };
+
+                menu.Click += OpenContextMenu;
+
+
+                informations.Children.Add(menu);
+                borderStackPanel.Child = informations;
+                customer.Children.Add(borderStackPanel);
+
+            }
+            scrollViewer.Content = customer;
+            return scrollViewer;
+
+        } // Creating ScrollViewer for mode
+        private StackPanel StackPanelMode()
+        {
+            int loops = customerMode == true ? 5 : 4;
+            StackPanel theme = new StackPanel()
+            {
+                Orientation = Orientation.Horizontal,
+            };
+
+            for (int j = 0; j < loops; j++)
+            {
+                Button info = new Button()
+                {
+                    FontWeight = FontWeights.Bold,
+                    FontSize = 17,
+                    Width = 190,
+                    HorizontalAlignment = HorizontalAlignment.Center,
+                    VerticalAlignment = VerticalAlignment.Center,
+                    Foreground = new SolidColorBrush("#FF7B4BA5".ToColor()),
+                    Background = Brushes.Transparent,
+                    FontFamily = new FontFamily("Calibri"),
+                    BorderBrush = Brushes.Transparent,
+                };
+                info.Click += SortBy;
+
+                if (!customerMode && (j == 1 || j == 3))
+                    info.Width = 285;
+
+                info.Content = HelpingClass.DescriptionStackPanel(customerMode, j);
+
+                theme.Children.Add(info);
+            }
+
+            TextBlock menu = new TextBlock()
+            {
+                FontSize = 17,
+                FontWeight = FontWeights.Bold,
+                Text = "MENU",
+                Margin = new Thickness(30, 0, 0, 0),
+                HorizontalAlignment = HorizontalAlignment.Center,
+                VerticalAlignment = VerticalAlignment.Center,
+                TextAlignment = TextAlignment.Center,
+                Foreground = new SolidColorBrush("#FF7B4BA5".ToColor()),
+                FontFamily = new FontFamily("Calibri"),
+            };
+            theme.Children.Add(menu);
+
+            return theme;
+        } // Creating stack panel for Theme 
+        private void AddresClick(object sender,  RoutedEventArgs e)
+        {
+            customerMode = false;
+
+            personalBtn.BorderBrush = Brushes.Transparent;
+            addressBtn.BorderBrush = new SolidColorBrush("#FF7B4BA5".ToColor());
+
+            ChangingCustomerView(places);
+        } // Address Click (customer view)
+        private void PersonalClick(object sender, RoutedEventArgs e)
+        {
+            customerMode = true;
+
+            personalBtn.BorderBrush = new SolidColorBrush("#FF7B4BA5".ToColor());
+            addressBtn.BorderBrush = Brushes.Transparent;
+
+            ChangingCustomerView(places);
+        } // Personal Click (customer view)
+        private void ChangingCustomerView(List<Place> customers)
+        {
+            var elementsToRemove = customerGrid.Children
+                        .Cast<UIElement>()
+                        .Where(e => Grid.GetRow(e) == 2 || Grid.GetRow(e) == 3)
+                        .ToList();
+
+            foreach (var element in elementsToRemove)
+            {
+                customerGrid.Children.Remove(element);
+            }
+
+            // Theme panel for scroll viewer
+            theme = StackPanelMode();
+            Grid.SetRow(theme, 2);
+            // Creating scrollviewer
+            scrollViewer = ScrollMode(customers);
+            Grid.SetRow(scrollViewer, 3);
+
+            customerGrid.Children.Add(theme);
+            customerGrid.Children.Add(scrollViewer);
+        } // Switching mode between address and personal 
         protected override void OnClosing(CancelEventArgs e)
         {
             base.OnClosing(e);
             if (addingCustomer != null && addingCustomer.IsVisible)
                 e.Cancel = true;
         } // blocking window 
-        private void ExitClick(object sender, RoutedEventArgs e)
-        {
-            this.Close();
-        } // close window
         private void BorderClick(object sender, MouseButtonEventArgs e)
         {
             if (e.ChangedButton == MouseButton.Left)
                 this.DragMove();
         } // feature to moving window
+        private void DeleteClick(object sender, RoutedEventArgs e)
+        {
+            if (customer.Children.Count == 0)
+                return;
+
+            MessageBoxResult result = MessageBox.Show($"Are you sure to delete {customer.Children.Count}","Information",MessageBoxButton.YesNo,MessageBoxImage.Question);
+            if(result == MessageBoxResult.Yes )
+            {
+                for (int i = 0; i < customer.Children.Count; i++)
+                {
+                    Border border = customer.Children[i] as Border;
+                    StackPanel panel = border.Child as StackPanel;
+                    TextBlock id = panel.Children[0] as TextBlock;
+
+                    if (places.Any(x => x.customer_id == id.Text))
+                    {
+                        Place place = places.Where(x => x.customer_id == id.Text).FirstOrDefault();
+                        places.Remove(place);
+                        HelpingClass.RemoveRecordFromDB(place);
+                    }
+
+                }
+                LoadingCustomerScreen();
+            }    
+            
+        } // Button to delete customers
+        private void ReportClick(object sender, RoutedEventArgs e)
+        {
+            Button report = sender as Button;
+            Report reportWindow = new Report();
+            menuButtons.IsEnabled = false;
+            report.IsEnabled = false;
+
+            reportWindow.Closed += (s, args) =>
+            {
+                report.IsEnabled = true;
+                menuButtons.IsEnabled = true;
+            };
+            reportWindow.Show();
+        } // button to report 
+
+
+
+
+        private void SortBy(object sender, RoutedEventArgs e)
+        {
+            Button button = sender as Button;
+            string theme = button.Content.ToString();
+            switch(theme)
+            {
+                case "ID":
+                    places = places.OrderBy(x => x.customer_id).ToList();
+                    break;
+                case "NAME":
+                    places = places.OrderBy(x => x.first_name).ToList();
+                    break;
+                case "SURNAME":
+                    places = places.OrderBy(x => x.last_name).ToList();
+                    break;
+                case "EMAIL":
+                    places = places.OrderBy(x => x.email).ToList();
+                    break;
+                case "NUMBER":
+                    places = places.OrderBy(x => x.contact_number).ToList();
+                    break;
+                case "CITY":
+                    places = places.OrderBy(x => x.city).ToList();
+                    break;
+                case "POSTAL CODE":
+                    places = places.OrderBy(x => x.postal_code).ToList();
+                    break;
+                case "STREET":
+                    places = places.OrderBy(x => x.street).ToList();
+                    break;
+            }
+
+            ChangingCustomerView(places);
+        } // sorting button 
+        private void ContextMenu(object sender, RoutedEventArgs e)
+        {
+            string option = (sender as MenuItem).Header.ToString();
+            Place place = places[menuId];
+            switch (option)
+            {
+                case "Edit customer":
+                    AddingCustomer editCustomer = new AddingCustomer(place, true);
+                    editCustomer.Show();
+                    editCustomer.Closed += new EventHandler(EditClose);
+                    break;
+
+                case "Delete customer":
+                    places.RemoveAt(menuId);
+                    HelpingClass.RemoveRecordFromDB(place); 
+                    break;
+            }
+            ChangingCustomerView(places);
+
+        }  // options in contextmenu
+        private void EditClose(object sender, EventArgs e)
+        {
+            ChangingCustomerView(places);
+        } // closing edit
+        private void OpenContextMenu(object sender, RoutedEventArgs e)
+        {
+            menuId = int.Parse((sender as Button).Name.Split('d')[1]);
+            contextMenu.IsOpen = true;
+        } // opening context menu
     }
 
     public static class StringExtensions

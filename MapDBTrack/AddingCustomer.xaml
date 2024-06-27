@@ -25,7 +25,7 @@
                 <Border Grid.Row="0" Background="#FF7B4BA5" CornerRadius="15,15,50,50" Margin="0,0,0,93" Grid.RowSpan="2">
 
                 </Border>
-                <TextBlock Text="Adding customer" FontSize="45" Foreground="White" FontWeight="Bold" VerticalAlignment="Center" HorizontalAlignment="Center" FontFamily="Calibri" Height="55" Width="318"/>
+                <TextBlock x:Name="ThemeOfPanel" Text="Adding customer" FontSize="45" Foreground="White" FontWeight="Bold" VerticalAlignment="Center" HorizontalAlignment="Center" FontFamily="Calibri" Height="55" Width="318"/>
 
                 <Border Grid.Row="1" Grid.RowSpan="3" Margin="0,0,0,92">
                     <Grid>
@@ -97,7 +97,7 @@
                             <Button Content="Accept" Style="{StaticResource ButtonSign}" Click="AcceptClick" Width="300"/>
                         </Border>
                         <Border Grid.Row="0" Grid.Column="1" CornerRadius="20" Margin="10">
-                            <Button Content="Delete" Style="{StaticResource ButtonSign}" Click="DeleteClick" Width="300"/>
+                            <Button Content="Exit" Style="{StaticResource ButtonSign}" Click="DeleteClick" Width="300"/>
                         </Border>
 
                     </Grid>
