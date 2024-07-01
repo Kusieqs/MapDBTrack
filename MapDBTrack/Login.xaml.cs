@@ -1,24 +1,16 @@
-﻿using System.Text;
-using System.Windows;
-using System.Data;
+﻿using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 using System.Data.SqlClient;
-using System.ComponentModel;
 
 namespace MapDBTrack
 {
     public partial class Login : Window
     {
-        private int id; 
-        private string login;
-        public Registration registration;
+        private int id; // od of employee
+        private string login; // login of employee
+        public Registration registration; // registration window
+
         public Login()
         {
             InitializeComponent();
@@ -28,8 +20,8 @@ namespace MapDBTrack
             // checking network connection
             HelpingClass.NetworkCheck(this);
 
-            string login = LoginBox.Text;
-            string password = PasswordBox.Password;
+            string login = LoginBox.Text.Trim();
+            string password = PasswordBox.Password.Trim();
 
             // checking empty text in textboxes
             if (!CheckingEmptyText(login, password))
@@ -55,7 +47,6 @@ namespace MapDBTrack
         } // opening registration window
         private bool CheckingEmptyText(string login, string password) // if box is empty red text under the box will show
         {
-
             bool log = true, pass = true;
 
             //checking empty login
@@ -79,61 +70,61 @@ namespace MapDBTrack
         }
         private bool CheckingLog(string login, string password)
         {
-
             // special queries
             string sqlQueryLog = $"Select login From Employee Where login = @login";
             string sqlQueryPass = $"Select password, login From Employee Where password = @password and login = @login";
             string sqlQueryId = "Select Id, Login From Employee Where login = @login";
 
-            SqlConnection sql = new SqlConnection(HelpingClass.connectString);
-            sql.Open();
-            SqlCommand command = new SqlCommand(sqlQueryLog, sql);
-            command.Parameters.AddWithValue("@login", login);
-            SqlDataReader reader = command.ExecuteReader();
-
-            // checking about exist of login
-            if (!reader.HasRows)
+            using(SqlConnection sql = new SqlConnection(HelpingClass.connectString))
             {
-                LogFailed.Text = "User doesn't exist";
-                reader.Close();
-                sql.Close();
-                return false;
+
+                sql.Open();
+                SqlCommand command = new SqlCommand(sqlQueryLog, sql);
+
+                // adding parameters to query
+                command.Parameters.AddWithValue("@login", login);
+
+                // checking about exist of login
+                using(SqlDataReader reader = command.ExecuteReader())
+                {
+                    if (!reader.HasRows)
+                    {
+                        LogFailed.Text = "User doesn't exist";
+                        return false;
+                    }
+                }
+
+                // adding parameters to query
+                command = new SqlCommand(sqlQueryPass, sql);
+                command.Parameters.AddWithValue("@password", password);
+                command.Parameters.AddWithValue("@login", login);
+
+                // Checking about exist of password to login
+                using (SqlDataReader reader = command.ExecuteReader())
+                {
+                    if (!reader.HasRows)
+                    {
+                        PasswordFailed.Text = "Password is not correct";
+                        PasswordReminder.Text = "Forget password?";
+                        Reset.IsEnabled = true;
+                        Reset.IsHitTestVisible = true;
+                        return false;
+                    }
+                }
+                // adding parameters to query
+                command = new SqlCommand(sqlQueryId, sql);
+                command.Parameters.AddWithValue("@login", login);
+
+                //Downwriting iformation about user
+                using (SqlDataReader reader = command.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        this.id = reader.GetInt32(0);
+                        this.login = reader.GetString(1);
+                    }
+                }
             }
-            reader.Close();
-
-            // adding parameters to query
-            command = new SqlCommand(sqlQueryPass, sql);
-            command.Parameters.AddWithValue("@password", password);
-            command.Parameters.AddWithValue("@login", login);
-            reader = command.ExecuteReader();
-
-            // Checking about exist of password to login
-            if (!reader.HasRows)
-            {
-                PasswordFailed.Text = "Password is not correct";
-                PasswordReminder.Text = "Forget password?";
-                Reset.IsEnabled = true;
-                Reset.IsHitTestVisible = true;
-                reader.Close();
-                sql.Close();
-                return false;
-            }
-            reader.Close();
-
-            // adding parameters to query
-            command = new SqlCommand(sqlQueryId, sql);
-            command.Parameters.AddWithValue("@login", login);
-            reader = command.ExecuteReader();
-
-            //Downwriting iformation about user
-            while(reader.Read())
-            {
-                this.id = reader.GetInt32(0);
-                this.login = reader.GetString(1);
-            }
-
-            reader.Close();
-            sql.Close();
             return true;
         } // Checking correct of password and login
         private void ResetPassword(object sender, EventArgs e) 
@@ -142,17 +133,20 @@ namespace MapDBTrack
             HelpingClass.NetworkCheck(this);
 
             // Method to send special email to direct email
-            HelpingClass.SendingPassword(LoginBox.Text);
+            HelpingClass.SendingPassword(LoginBox.Text.Trim());
             MessageBox.Show("Password was sent to your email", "Information", MessageBoxButton.OK, MessageBoxImage.Information);
         } // resseting password
         private void InfoClick(object sender, RoutedEventArgs e)
         {
-            string info = $"{HelpingClass.version}\nContact: kus.konrad1@gmail.com\nLicense: MapDBTrack Commercial Use License";
+            string info = $"Version: {HelpingClass.version}\nContact: kus.konrad1@gmail.com\nLicense: MapDBTrack Commercial Use License";
             MessageBox.Show(info, "Information", MessageBoxButton.OK, MessageBoxImage.Information);
         } // info click about version and license
         private void LoginTextChanged(object sender, RoutedEventArgs e)
         {
             LogFailed.Text = string.Empty;
+            PasswordFailed.Text = string.Empty;
+            Reset.IsEnabled = false;
+            PasswordReminder.Text = string.Empty;
         } // disappearing text from textbox
         private void PassTextChanged(object sender, RoutedEventArgs e)
         {

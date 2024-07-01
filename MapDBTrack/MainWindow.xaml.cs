@@ -52,8 +52,8 @@ namespace MapDBTrack
         public MainWindow(int id, string login)
         {
             InitializeComponent();
-            idOfEmployee = id;
             loginOfEmployee = login;
+            idOfEmployee = id;
             LoadingMapScreen();
 
             // Text on the top of menu buttons
@@ -86,8 +86,14 @@ namespace MapDBTrack
         {
             this.Close();
         }  // exit button
+        private void Information(object sender, RoutedEventArgs e)
+        {
+            string info = $"{HelpingClass.version}\nContact: kus.konrad1@gmail.com\nLicense: MapDBTrack Commercial Use License";
+            MessageBox.Show(info, "Information", MessageBoxButton.OK, MessageBoxImage.Information);
+        } // special button on the top of window with version etc.
         #endregion Menu buttons
-        
+
+        #region Loading Screens
         private void LoadingMapScreen()
         {
             // Checking network connection
@@ -314,6 +320,10 @@ namespace MapDBTrack
 
 
         } // loading customer list
+        #endregion Loading Screens
+
+
+
         private void SearchingScroll(object sender, EventArgs e)
         {
             TextBox search = (TextBox)sender;
@@ -338,11 +348,6 @@ namespace MapDBTrack
                 ChangingCustomerView(filter);
             }
         }
-        private void Information(object sender, RoutedEventArgs e)
-        {
-            string info = $"{HelpingClass.version}\nContact: kus.konrad1@gmail.com\nLicense: MapDBTrack Commercial Use License";
-            MessageBox.Show(info, "Information", MessageBoxButton.OK, MessageBoxImage.Information);
-        } // special MessageBox with version etc.
         private void AddPin(object sender, RoutedEventArgs e)
         {
             if (removed == false)
@@ -717,10 +722,6 @@ namespace MapDBTrack
             };
             reportWindow.Show();
         } // button to report 
-
-
-
-
         private void SortBy(object sender, RoutedEventArgs e)
         {
             Button button = sender as Button;
