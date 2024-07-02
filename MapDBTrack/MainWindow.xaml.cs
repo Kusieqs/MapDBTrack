@@ -105,6 +105,23 @@ namespace MapDBTrack
                 ZoomLevel = 6.7, // setting starting zoom
             };
 
+            // Special figure
+            PathGeometry clipGeometry = new PathGeometry();
+            PathFigure pathFigure = new PathFigure
+            {
+                StartPoint = new Point(0, 0)
+            };
+
+            // Adding segmentation for figure
+            pathFigure.Segments.Add(new LineSegment(new Point(1085, 0), true)); 
+            pathFigure.Segments.Add(new ArcSegment(new Point(1100, 15), new Size(15, 15), 0, false, SweepDirection.Clockwise, true)); 
+            pathFigure.Segments.Add(new LineSegment(new Point(1100, 785), true)); 
+            pathFigure.Segments.Add(new ArcSegment(new Point(1085, 800), new Size(15, 15), 0, false, SweepDirection.Clockwise, true)); 
+            pathFigure.Segments.Add(new LineSegment(new Point(0, 800), true)); 
+            pathFigure.Segments.Add(new LineSegment(new Point(0, 0), true)); 
+            clipGeometry.Figures.Add(pathFigure);
+            map.Clip = clipGeometry;
+
             // Special method to putting pins on map
             map.MouseLeftButtonDown += MapPuttingPins;
             Grid.SetRowSpan(map, 2);
@@ -359,12 +376,14 @@ namespace MapDBTrack
             {
                 if (pinned == true)
                 {
+                    menuButtons.IsEnabled = true;
                     removing.IsEnabled = true;
                     pinned = false;
                     Mouse.OverrideCursor = Cursors.Arrow;
                 }
                 else
                 {
+                    menuButtons.IsEnabled = false;
                     removing.IsEnabled = false;
                     pinned = true;
                     Mouse.OverrideCursor = Cursors.Hand;
@@ -377,12 +396,14 @@ namespace MapDBTrack
             {
                 if (removed == true)
                 {
+                    menuButtons.IsEnabled = true;
                     adding.IsEnabled = true;
                     removed = false;
                     Mouse.OverrideCursor = Cursors.Arrow;
                 }
                 else
                 {
+                    menuButtons.IsEnabled = false;
                     adding.IsEnabled = false;
                     removed = true;
                     Mouse.OverrideCursor = Cursors.Hand;
