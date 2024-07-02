@@ -64,7 +64,7 @@ namespace MapDBTrack
                 if (edit)
                 {
                     // editing existing place
-                    int x = MainWindow.places.IndexOf(customer);
+                    int x = MainWindow.listOfData.IndexOf(customer);
                     customer.first_name = FirstNameBox.Text;
                     customer.last_name = LastNameBox.Text;
                     customer.email = EmailBox.Text;
@@ -75,7 +75,7 @@ namespace MapDBTrack
                     customer.city = CityBox.Text;
                     customer.description = DescriptionBox.Text;
 
-                    MainWindow.places[x] = customer;
+                    MainWindow.listOfData[x] = customer;
 
                     HelpingClass.EditCustomer(customer);
                 }
@@ -100,7 +100,7 @@ namespace MapDBTrack
                         );
 
                     // adding new object to list and map
-                    MainWindow.places.Add(place);
+                    MainWindow.listOfData.Add(place);
                     HelpingClass.AddingNewCustomer(place);
                     correctClose = true;
                     MainWindow.acceptOverridePin = true;

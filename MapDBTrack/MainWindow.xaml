@@ -30,7 +30,7 @@
                             <RowDefinition Height="151*"/>
                             <RowDefinition Height="505*"/>
                         </Grid.RowDefinitions>
-                        <Image Source="/Pictures/Map.png" Grid.Row="0" IsHitTestVisible="False" RenderOptions.BitmapScalingMode="HighQuality" Margin="15,5,98,4"/>
+                        <Image Source="/Pictures/Map.png" Grid.Row="0" IsHitTestVisible="False" RenderOptions.BitmapScalingMode="HighQuality" Margin="56,14,57,500" Grid.RowSpan="2"/>
                         <Border Grid.Row="1">
                             <Grid x:Name="menuButtons">
                                 <Grid.ColumnDefinitions>
@@ -39,32 +39,29 @@
                                 </Grid.ColumnDefinitions>
                                 <Grid.RowDefinitions>
                                     <RowDefinition Height="40"/>
+                                    <RowDefinition Height="30"/>
                                     <RowDefinition Height="*"/>
                                     <RowDefinition Height="*"/>
                                     <RowDefinition Height="*"/>
                                     <RowDefinition Height="*"/>
-                                    <RowDefinition Height="*"/>
+                                    <RowDefinition Height="30"/>
                                 </Grid.RowDefinitions>
-                                <TextBlock x:Name="LoginName" Foreground="White" FontWeight="DemiBold" TextAlignment="Center" VerticalAlignment="Top" FontSize="22"  FontFamily="Calibri" Grid.ColumnSpan="2" Margin="15,10,15,0" />
+                                <TextBlock x:Name="LoginName" Foreground="White" FontWeight="DemiBold" TextAlignment="Center" VerticalAlignment="Top" FontSize="22"  FontFamily="Calibri" Grid.ColumnSpan="2" Margin="15,19,15,0" Grid.RowSpan="2" />
 
 
-                                <Button x:Name="Map" Grid.Row="1" Grid.ColumnSpan="2" Grid.Column="0" Style="{StaticResource ButtonRounded}" Click="MapClick"/>
-                                <Image Source="/Pictures/Pin.png" Grid.Row="1" Width="65" IsHitTestVisible="False" RenderOptions.BitmapScalingMode="HighQuality"/>
-                                <TextBlock Text="Map" Grid.Row="1" Grid.Column="1" Style="{StaticResource TextBlocks}" IsHitTestVisible="False"/>
+                                <Button x:Name="Map" Grid.Row="2" Grid.ColumnSpan="2" Grid.Column="0" Style="{StaticResource ButtonRounded}" Click="MapClick"/>
+                                <Image Source="/Pictures/Pin.png" Grid.Row="2" Width="65" IsHitTestVisible="False" RenderOptions.BitmapScalingMode="HighQuality"/>
+                                <TextBlock Text="Map" Grid.Row="2" Grid.Column="1" Style="{StaticResource TextBlocks}" IsHitTestVisible="False"/>
 
-                                <Button x:Name="Customer"  Grid.Row="2" Grid.ColumnSpan="2" Grid.Column="0" Style="{StaticResource ButtonRounded}" Click="CustomersClick"/>
-                                <Image Source="/Pictures/Customer.png" Grid.Row="2" Width="60" IsHitTestVisible="False" RenderOptions.BitmapScalingMode="HighQuality"/>
-                                <TextBlock Text="Customers" Grid.Row="2" Grid.Column="1" Style="{StaticResource TextBlocks}" IsHitTestVisible="False"/>
-
-                                <Button x:Name="History" Grid.Row="3" Grid.ColumnSpan="2" Grid.Column="0" Style="{StaticResource ButtonRounded}" Click="HistoryClick"/>
-                                <Image Source="/Pictures/History.png" Grid.Row="3" Width="65" IsHitTestVisible="False" RenderOptions.BitmapScalingMode="HighQuality"/>
-                                <TextBlock Text="History" Grid.Row="3" Grid.Column="1" Style="{StaticResource TextBlocks}" IsHitTestVisible="False"/>
+                                <Button x:Name="Customer"  Grid.Row="3" Grid.ColumnSpan="2" Grid.Column="0" Style="{StaticResource ButtonRounded}" Click="CustomersClick"/>
+                                <Image Source="/Pictures/Customer.png" Grid.Row="3" Width="60" IsHitTestVisible="False" RenderOptions.BitmapScalingMode="HighQuality"/>
+                                <TextBlock Text="Customers" Grid.Row="3" Grid.Column="1" Style="{StaticResource TextBlocks}" IsHitTestVisible="False"/>
 
                                 <Button x:Name="Logout" Grid.Row="4" Grid.ColumnSpan="2" Grid.Column="0" Style="{StaticResource ButtonRounded}" Click="LogoutClick"/>
                                 <Image Source="/Pictures/Logout.png" Grid.Row="4" IsHitTestVisible="False" RenderOptions.BitmapScalingMode="HighQuality" Margin="21,0,13,0"/>
                                 <TextBlock Text="Log out" Grid.Row="4" Grid.Column="1" Style="{StaticResource TextBlocks}" IsHitTestVisible="False"/>
 
-                                <Button x:Name="Exit" Grid.Row="5" Grid.ColumnSpan="2" Grid.Column="0" Style="{StaticResource ButtonRoundedExit}" Click="ExitClick"/>
+                                <Button x:Name="Exit" Grid.Row="5" Grid.ColumnSpan="2" Grid.Column="0" Style="{StaticResource ButtonRounded}" Click="ExitClick"/>
                                 <Image Source="/Pictures/Exit.png" Grid.Row="5"  IsHitTestVisible="False" RenderOptions.BitmapScalingMode="HighQuality" Margin="8,10,10,11"/>
                                 <TextBlock Text="Exit" Grid.Row="5" Grid.Column="1" Style="{StaticResource TextBlocks}" IsHitTestVisible="False"/>
 

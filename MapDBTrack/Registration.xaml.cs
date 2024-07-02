@@ -82,8 +82,8 @@ namespace MapDBTrack
         } // feature to moving window
         private void InfoClick(object sender, RoutedEventArgs e)
         {
-            string info = $"{HelpingClass.version}\nContact: kus.konrad1@gmail.com\nLicense: MapDBTrack Commercial Use License";
-            MessageBox.Show(info, "Information", MessageBoxButton.OK, MessageBoxImage.Information);
+            // MessageBox with informations
+            HelpingClass.InformationsAboutProgram();
         } // information button
         private void ExitClick(object sender, RoutedEventArgs e)
         {

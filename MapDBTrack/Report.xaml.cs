@@ -146,7 +146,7 @@ namespace MapDBTrack
                 Border border = MainWindow.customer.Children[i] as Border;
                 StackPanel stackPanel = border.Child as StackPanel;
                 TextBlock textBlock = stackPanel.Children[0] as TextBlock;
-                Place p1 = MainWindow.places.Where(x => x.customer_id == textBlock.Text).FirstOrDefault();
+                Place p1 = MainWindow.listOfData.Where(x => x.customer_id == textBlock.Text).FirstOrDefault();
                 places.Add(p1);
             }
             return places;

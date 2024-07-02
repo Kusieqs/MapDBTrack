@@ -352,6 +352,12 @@ namespace MapDBTrack
                 }
             }
         } // Theme description for scroll view
+
+        public static void InformationsAboutProgram()
+        {
+            string info = $"Version: {version}\nContact: kus.konrad1@gmail.com\nLicense: MapDBTrack Commercial Use License";
+            MessageBox.Show(info, "Information", MessageBoxButton.OK, MessageBoxImage.Information);
+        }
     }
 
 }

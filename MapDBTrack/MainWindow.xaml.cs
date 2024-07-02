@@ -1,42 +1,32 @@
 ﻿using Microsoft.Maps.MapControl.WPF;
-using Microsoft.VisualBasic;
-using Microsoft.Win32;
-using System;
-using System.Collections.Generic;
 using System.ComponentModel;
-using System.Linq;
-using System.Net.NetworkInformation;
-using System.Text;
-using System.Threading.Tasks;
+using System.Numerics;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
-using System.Windows.Media.Effects;
 using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
-using static System.Net.Mime.MediaTypeNames;
 
 namespace MapDBTrack
 {
     public partial class MainWindow : Window
     {
+        #region Employee informations
+        public static int idOfEmployee; // id of employee (number)
+        public static string loginOfEmployee; // name of employee
+        public static List<Place> listOfData = new List<Place>(); // list of customers/listOfData
+        #endregion Employee informations 
 
-        public static int idOfEmployee;
-        public static string loginOfEmployee;
-        public static List<Place> places = new List<Place>();
-        private Button adding;
-        private Button removing;
-        private AddingCustomer addingCustomer;
-        private Map map;
-        private bool pinned = false;
-        private bool removed = false;
-        public static bool acceptOverridePin = false;
-        public static bool customerMode = true;
+        private Button adding; // Button to adding new customer
+        private Button removing; // button to removing customer
+        private AddingCustomer addingCustomer; // Window to add customer
+        private Map map; // Map
+        private bool pinned = false; // It depends on clicked feature on map (add or remove pin)
+        private bool removed = false; // It depends on clicked feature on map (add or remove pin)
+        public static bool acceptOverridePin = false; // If it is true than pin will be put on map
 
         #region customer grid and border
+        public static bool customerMode = true;
         private Grid customerGrid;
         private Button personalBtn;
         private Button addressBtn;
@@ -51,9 +41,9 @@ namespace MapDBTrack
 
         public MainWindow(int id, string login)
         {
-            InitializeComponent();
             loginOfEmployee = login;
             idOfEmployee = id;
+            InitializeComponent();
             LoadingMapScreen();
 
             // Text on the top of menu buttons
@@ -64,36 +54,38 @@ namespace MapDBTrack
         #region Menu buttons
         private void MapClick(object sender, RoutedEventArgs e)
         {
+            // cleaning grid
             HelpingClass.CleanGrid(mapBorder);
+
+            // loading map screen
             LoadingMapScreen();
-        } // map button
+        } // Map button
         private void CustomersClick(object sender, RoutedEventArgs e)
         {
+            // cleaning grid
             HelpingClass.CleanGrid(mapBorder);
+
+            // Loading list of customers with diffrents features
             LoadingCustomerScreen();
         } // Customer button
-        private void HistoryClick(object sender, RoutedEventArgs e)
-        {
-
-        } // history button
         private void LogoutClick(object sender, RoutedEventArgs e)
         {
+            // Opening new window to login
             Login login = new Login();
             login.Show();
             this.Close();
-        } // logout button
+        } // Logout button
         private void ExitClick(object sender, RoutedEventArgs e)
         {
             this.Close();
-        }  // exit button
+        }  // Exit button
         private void Information(object sender, RoutedEventArgs e)
         {
-            string info = $"{HelpingClass.version}\nContact: kus.konrad1@gmail.com\nLicense: MapDBTrack Commercial Use License";
-            MessageBox.Show(info, "Information", MessageBoxButton.OK, MessageBoxImage.Information);
+            // MessageBox with informations
+            HelpingClass.InformationsAboutProgram();
         } // special button on the top of window with version etc.
-        #endregion Menu buttons
 
-        #region Loading Screens
+        // Loading Map or Customer screen
         private void LoadingMapScreen()
         {
             // Checking network connection
@@ -173,16 +165,16 @@ namespace MapDBTrack
             buttonBorder.Child = buttonsMap;
             mapBorder.Children.Add(buttonBorder);
 
+            // Loading pins 
             LoadingPinns();
 
-        } // loading map 
+        } // Loading map 
         private void LoadingCustomerScreen()
         {
             // Checking network connection
             HelpingClass.NetworkCheck(this);
 
-            //Creating border
-
+            // Creating border
             customerBorder = new Border()
             {
                 CornerRadius = new CornerRadius(0, 15, 15, 0),
@@ -191,20 +183,17 @@ namespace MapDBTrack
             customerBorder.MouseDown += BorderClick;
             Grid.SetColumn(customerBorder, 1);
 
-            //Creating grid
-
+            // Creating grid
             customerGrid = new Grid()
             {
                 Margin = new Thickness(20)
             };
-
             customerGrid.RowDefinitions.Add(new RowDefinition() { Height = new GridLength(70, GridUnitType.Pixel) });
             customerGrid.RowDefinitions.Add(new RowDefinition() { Height = new GridLength(5, GridUnitType.Pixel) });
             customerGrid.RowDefinitions.Add(new RowDefinition() { Height = new GridLength(50, GridUnitType.Pixel) });
             customerGrid.RowDefinitions.Add(new RowDefinition() { Height = new GridLength(1, GridUnitType.Star) });
 
-
-            // creating line
+            // Creating line
             Separator separator = new Separator()
             {
                 Background = new SolidColorBrush("#dae2ea".ToColor()),
@@ -212,8 +201,7 @@ namespace MapDBTrack
 
             };
 
-            //creating stackpanel with buttons
-
+            // Creating stackpanel with buttons
             StackPanel stackPanel = new StackPanel()
             {
                 Orientation = Orientation.Horizontal,
@@ -227,14 +215,14 @@ namespace MapDBTrack
                 Content = "Personal",
                 Style = FindResource("tabButton") as Style,
                 Width = 78,
-                Margin = new Thickness(0,0,20,0),
+                Margin = new Thickness(0, 0, 20, 0),
                 FontFamily = new FontFamily("Calibri"),
                 BorderBrush = Brushes.Transparent,
                 Cursor = Cursors.Hand
             };
             personalBtn.Click += PersonalClick;
 
-            // address button
+            // Address button
             addressBtn = new Button()
             {
                 Content = "Address",
@@ -244,16 +232,15 @@ namespace MapDBTrack
                 BorderBrush = Brushes.Transparent,
                 Cursor = Cursors.Hand
             };
-            addressBtn.Click += AddresClick;
+            addressBtn.Click += AddressClick;
 
-
-            if(customerMode)
+            // Changing borderbrush color
+            if (customerMode)
                 personalBtn.BorderBrush = new SolidColorBrush("#FF7B4BA5".ToColor());
             else
                 addressBtn.BorderBrush = new SolidColorBrush("#FF7B4BA5".ToColor());
 
-            //creating buttons to Delete customer and creating report
-
+            // Creating report button
             Button reportBtn = new Button()
             {
                 Width = 110,
@@ -266,6 +253,7 @@ namespace MapDBTrack
             };
             reportBtn.Click += ReportClick;
 
+            // Creating delete button
             Button deleteBtn = new Button()
             {
                 Width = 110,
@@ -283,10 +271,10 @@ namespace MapDBTrack
             Grid.SetRow(theme, 2);
 
             // Creating scrollviewer
-            scrollViewer = ScrollMode(places);
+            scrollViewer = ScrollMode(listOfData);
             Grid.SetRow(scrollViewer, 3);
 
-            // creating search box
+            // Creating search box
             TextBox searching = new TextBox()
             {
                 Height = 30,
@@ -319,35 +307,52 @@ namespace MapDBTrack
             #endregion adding elements
 
 
-        } // loading customer list
-        #endregion Loading Screens
+        } // Loading customer list
+        #endregion Menu buttons
 
-
-
-        private void SearchingScroll(object sender, EventArgs e)
+        // Features to Map button
+        private void MapPuttingPins(object sender, MouseButtonEventArgs e)
         {
-            TextBox search = (TextBox)sender;
-            if(string.IsNullOrEmpty(search.Text))
-            {
-                ChangingCustomerView(places);
-            }
-            else
-            {
-                var filter = places.Where(x=> 
-                x.customer_id.Contains(search.Text) ||
-                x.first_name.Contains(search.Text) ||
-                x.last_name.Contains(search.Text) ||
-                x.email.Contains(search.Text) ||
-                x.contact_number.Contains(search.Text) ||
-                x.city.Contains(search.Text) ||
-                x.province.Contains(search.Text) ||
-                x.street.Contains(search.Text) ||
-                x.postal_code.Contains(search.Text)||
-                x.employee_id.ToString().Contains(search.Text)).ToList();
+            // Checking network connection
+            HelpingClass.NetworkCheck(this);
 
-                ChangingCustomerView(filter);
+            // if pinned is true than you can put pin on map 
+            if (pinned)
+            {
+                // Adding Pushpin on map
+                Point mousePosition = e.GetPosition(mapBorder);
+                Location pinLocation = map.ViewportPointToLocation(mousePosition);
+                Pushpin pin = SetPinns(pinLocation, true);
+                map.Children.Add(pin);
+                pinned = false;
+                Mouse.OverrideCursor = Cursors.Arrow;
+
+                // Creating new window and showing
+                addingCustomer = new AddingCustomer(pinLocation, this, pin, map);
+                addingCustomer.Show();
+                menuButtons.IsEnabled = false;
+
+                // When window will be closed than 
+                addingCustomer.Closed += (s, args) =>
+                {
+                    menuButtons.IsEnabled = true;
+                    if (acceptOverridePin)
+                    {
+                        map.Children.Remove(pin);
+
+                        // Setting features to pin
+                        pin.MouseEnter += PinMouseEnter;
+                        pin.MouseLeave += PinMouseLeave;
+                        pin.MouseLeftButtonDown += RemovePinFromMap;
+
+                        map.Children.Add(pin);
+                    }
+                    acceptOverridePin = false;
+                };
+                removing.IsEnabled = true;
             }
-        }
+
+        } // Puting pins on map when pinned is true
         private void AddPin(object sender, RoutedEventArgs e)
         {
             if (removed == false)
@@ -365,7 +370,7 @@ namespace MapDBTrack
                     Mouse.OverrideCursor = Cursors.Hand;
                 }
             }
-        } // set true for added new pin to map or false
+        } // Seting true for add new pin to map 
         private void RemovePin(object sender, RoutedEventArgs e)
         {
             if (pinned == false)
@@ -383,104 +388,43 @@ namespace MapDBTrack
                     Mouse.OverrideCursor = Cursors.Hand;
                 }
             }
-        } // removing pin from map
-        private void MapPuttingPins(object sender, MouseButtonEventArgs e)
-        {
-            HelpingClass.NetworkCheck(this);
-
-            if (pinned)
-            {
-                Point mousePosition = e.GetPosition(mapBorder);
-                Location pinLocation = map.ViewportPointToLocation(mousePosition);
-                Pushpin pin = SetPinns(pinLocation, true);
-                map.Children.Add(pin);
-
-                pinned = false;
-                Mouse.OverrideCursor = Cursors.Arrow;
-
-                addingCustomer = new AddingCustomer(pinLocation, this, pin, map);
-                addingCustomer.Show();
-
-
-                Map.IsEnabled = false;
-                Exit.IsEnabled = false;
-                Logout.IsEnabled = false;
-                adding.IsEnabled = false;
-
-                addingCustomer.Closed += (s, args) =>
-                {
-
-                    Map.IsEnabled = true;
-                    Exit.IsEnabled = true;
-                    Logout.IsEnabled = true;
-                    adding.IsEnabled = true;
-                    if (acceptOverridePin)
-                    {
-                        map.Children.Remove(pin);
-                        pin.MouseEnter += PinMouseEnter;
-                        pin.MouseLeave += PinMouseLeave;
-                        pin.MouseLeftButtonDown += RemovePinFromMap;
-                        map.Children.Add(pin);
-                    }
-                    acceptOverridePin = false;
-                };
-                removing.IsEnabled = true;
-            }
-
-        } // puting pins on map when pinned is true
-        private void RemovePinFromMap(object sender, MouseButtonEventArgs e)
-        {
-            HelpingClass.NetworkCheck(this);
-
-            if (removed)
-            {
-                Pushpin pushpin = sender as Pushpin;
-                if (pushpin != null)
-                {
-                    e.Handled = true;
-                    Place p1 = places.Where(x => x.latitude == pushpin.Location.Latitude && x.longitude == pushpin.Location.Longitude).FirstOrDefault();
-                    MessageBoxResult result = MessageBox.Show($"Do you want remove this pin?\n\n{HelpingClass.GetDescTool(p1)}", "Inforamtion", MessageBoxButton.YesNo, MessageBoxImage.Warning);
-
-                    if (result == MessageBoxResult.Yes)
-                    {
-                        map.Children.Remove(pushpin);
-                        HelpingClass.RemoveRecordFromDB(p1);
-                        places.Remove(p1);
-                    }
-                    adding.IsEnabled = true;
-                    removed = false;
-                    Mouse.OverrideCursor = Cursors.Arrow;
-                }
-            }
-        } // removing pin from map and DB
+        } // Seting true for remove pin from map
         private void LoadingPinns()
         {
-            places = HelpingClass.LoadingPlace(idOfEmployee);
+            // Setting places by id of employee
+            listOfData = HelpingClass.LoadingPlace(idOfEmployee);
 
-            foreach (Place p in places)
+            // Adding pins to map by latitude and logitude
+            foreach (Place p in listOfData)
             {
                 Location pinLocation = new Location(p.latitude, p.longitude);
                 Pushpin pin = SetPinns(pinLocation);
                 map.Children.Add(pin);
             }
 
-        } // loading all pins when map is close
+        } // Loading all pins when map is close
+
+
         private void PinMouseEnter(object sender, MouseEventArgs e)
         {
+            // Setting focus on a pin when mouse is over
             Pushpin pin = sender as Pushpin;
             double lat = pin.Location.Latitude;
             double lng = pin.Location.Longitude;
-            Place p1 = places.FirstOrDefault(x => x.latitude == lat && x.longitude == lng);
+            Place customerToolTip = listOfData.FirstOrDefault(x => x.latitude == lat && x.longitude == lng);
 
-            if (p1 != null)
+            if (customerToolTip != null)
             {
-                ToolTip tooltip = new ToolTip();
-                tooltip.IsEnabled = true;
-                tooltip.Content = HelpingClass.GetDescTool(p1);
-                tooltip.PlacementTarget = pin;
-                tooltip.Placement = System.Windows.Controls.Primitives.PlacementMode.Mouse;
+                // Creating tooltip for pin
+                ToolTip tooltip = new ToolTip()
+                {
+                    IsEnabled = true,
+                    Content = HelpingClass.GetDescTool(customerToolTip),
+                    PlacementTarget = pin,
+                    Placement = System.Windows.Controls.Primitives.PlacementMode.Mouse,
+                    IsOpen = true
+                };
                 pin.ToolTip = tooltip;
-                tooltip.IsOpen = true;
             }
         } // Show tooltip when mouse is over
         private void PinMouseLeave(object sender, MouseEventArgs e)
@@ -488,20 +432,79 @@ namespace MapDBTrack
             Pushpin pin = sender as Pushpin;
             ToolTip tooltip = pin.ToolTip as ToolTip;
             tooltip.IsOpen = false;
-        } // tooltip is disapiring if mouse is not over
+        } // Tooltip will disapire if mouse will not be on pin
+        private void RemovePinFromMap(object sender, MouseButtonEventArgs e)
+        {
+            // Checking network connection
+            HelpingClass.NetworkCheck(this);
+
+            // If removed is true than pin can be deleted from map
+            if (removed)
+            {
+                Pushpin pushpin = sender as Pushpin;
+                if (pushpin != null)
+                {
+                    // setting object when pin was clicked
+                    e.Handled = true;
+                    Place customerPin = listOfData.Where(x => x.latitude == pushpin.Location.Latitude && x.longitude == pushpin.Location.Longitude).FirstOrDefault();
+                    MessageBoxResult result = MessageBox.Show($"Do you want remove this pin?\n\n{HelpingClass.GetDescTool(customerPin)}", "Inforamtion", MessageBoxButton.YesNo, MessageBoxImage.Warning);
+
+                    // If result of messagebox is "Yes" then customer will be deleted from DB and map
+                    if (result == MessageBoxResult.Yes)
+                    {
+                        map.Children.Remove(pushpin);
+                        HelpingClass.RemoveRecordFromDB(customerPin);
+                        listOfData.Remove(customerPin);
+                    }
+                    adding.IsEnabled = true;
+                    removed = false;
+                    Mouse.OverrideCursor = Cursors.Arrow;
+                }
+            }
+        } // Removing pin from map and DB
         private Pushpin SetPinns(Location pinLocation, bool creating = false)
         {
+            // Setting location for pin
             Pushpin pin = new Pushpin();
             pin.Location = pinLocation;
             pin.Background = new SolidColorBrush("#FF7B4BA5".ToColor());
             if (!creating)
             {
+                // Adding features to pin
                 pin.MouseEnter += PinMouseEnter;
                 pin.MouseLeave += PinMouseLeave;
                 pin.MouseLeftButtonDown += RemovePinFromMap;
             }
             return pin;
         } // Setting options for pin
+
+
+
+        // Features to Customer button
+        private void SearchingScroll(object sender, EventArgs e)
+        {
+            TextBox search = (TextBox)sender;
+            if(string.IsNullOrEmpty(search.Text))
+            {
+                ChangingCustomerView(listOfData);
+            }
+            else
+            {
+                var filter = listOfData.Where(x=> 
+                x.customer_id.Contains(search.Text) ||
+                x.first_name.Contains(search.Text) ||
+                x.last_name.Contains(search.Text) ||
+                x.email.Contains(search.Text) ||
+                x.contact_number.Contains(search.Text) ||
+                x.city.Contains(search.Text) ||
+                x.province.Contains(search.Text) ||
+                x.street.Contains(search.Text) ||
+                x.postal_code.Contains(search.Text)||
+                x.employee_id.ToString().Contains(search.Text)).ToList();
+
+                ChangingCustomerView(filter);
+            }
+        }
         private ScrollViewer ScrollMode(List<Place> customers)
         {
             ScrollViewer scrollViewer = new ScrollViewer()
@@ -631,14 +634,14 @@ namespace MapDBTrack
 
             return theme;
         } // Creating stack panel for Theme 
-        private void AddresClick(object sender,  RoutedEventArgs e)
+        private void AddressClick(object sender,  RoutedEventArgs e)
         {
             customerMode = false;
 
             personalBtn.BorderBrush = Brushes.Transparent;
             addressBtn.BorderBrush = new SolidColorBrush("#FF7B4BA5".ToColor());
 
-            ChangingCustomerView(places);
+            ChangingCustomerView(listOfData);
         } // Address Click (customer view)
         private void PersonalClick(object sender, RoutedEventArgs e)
         {
@@ -647,7 +650,7 @@ namespace MapDBTrack
             personalBtn.BorderBrush = new SolidColorBrush("#FF7B4BA5".ToColor());
             addressBtn.BorderBrush = Brushes.Transparent;
 
-            ChangingCustomerView(places);
+            ChangingCustomerView(listOfData);
         } // Personal Click (customer view)
         private void ChangingCustomerView(List<Place> customers)
         {
@@ -696,10 +699,10 @@ namespace MapDBTrack
                     StackPanel panel = border.Child as StackPanel;
                     TextBlock id = panel.Children[0] as TextBlock;
 
-                    if (places.Any(x => x.customer_id == id.Text))
+                    if (listOfData.Any(x => x.customer_id == id.Text))
                     {
-                        Place place = places.Where(x => x.customer_id == id.Text).FirstOrDefault();
-                        places.Remove(place);
+                        Place place = listOfData.Where(x => x.customer_id == id.Text).FirstOrDefault();
+                        listOfData.Remove(place);
                         HelpingClass.RemoveRecordFromDB(place);
                     }
 
@@ -729,37 +732,37 @@ namespace MapDBTrack
             switch(theme)
             {
                 case "ID":
-                    places = places.OrderBy(x => x.customer_id).ToList();
+                    listOfData = listOfData.OrderBy(x => x.customer_id).ToList();
                     break;
                 case "NAME":
-                    places = places.OrderBy(x => x.first_name).ToList();
+                    listOfData = listOfData.OrderBy(x => x.first_name).ToList();
                     break;
                 case "SURNAME":
-                    places = places.OrderBy(x => x.last_name).ToList();
+                    listOfData = listOfData.OrderBy(x => x.last_name).ToList();
                     break;
                 case "EMAIL":
-                    places = places.OrderBy(x => x.email).ToList();
+                    listOfData = listOfData.OrderBy(x => x.email).ToList();
                     break;
                 case "NUMBER":
-                    places = places.OrderBy(x => x.contact_number).ToList();
+                    listOfData = listOfData.OrderBy(x => x.contact_number).ToList();
                     break;
                 case "CITY":
-                    places = places.OrderBy(x => x.city).ToList();
+                    listOfData = listOfData.OrderBy(x => x.city).ToList();
                     break;
                 case "POSTAL CODE":
-                    places = places.OrderBy(x => x.postal_code).ToList();
+                    listOfData = listOfData.OrderBy(x => x.postal_code).ToList();
                     break;
                 case "STREET":
-                    places = places.OrderBy(x => x.street).ToList();
+                    listOfData = listOfData.OrderBy(x => x.street).ToList();
                     break;
             }
 
-            ChangingCustomerView(places);
+            ChangingCustomerView(listOfData);
         } // sorting button 
         private void ContextMenu(object sender, RoutedEventArgs e)
         {
             string option = (sender as MenuItem).Header.ToString();
-            Place place = places[menuId];
+            Place place = listOfData[menuId];
             switch (option)
             {
                 case "Edit customer":
@@ -769,16 +772,16 @@ namespace MapDBTrack
                     break;
 
                 case "Delete customer":
-                    places.RemoveAt(menuId);
+                    listOfData.RemoveAt(menuId);
                     HelpingClass.RemoveRecordFromDB(place); 
                     break;
             }
-            ChangingCustomerView(places);
+            ChangingCustomerView(listOfData);
 
         }  // options in contextmenu
         private void EditClose(object sender, EventArgs e)
         {
-            ChangingCustomerView(places);
+            ChangingCustomerView(listOfData);
         } // closing edit
         private void OpenContextMenu(object sender, RoutedEventArgs e)
         {

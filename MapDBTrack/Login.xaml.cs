@@ -138,8 +138,8 @@ namespace MapDBTrack
         } // resseting password
         private void InfoClick(object sender, RoutedEventArgs e)
         {
-            string info = $"Version: {HelpingClass.version}\nContact: kus.konrad1@gmail.com\nLicense: MapDBTrack Commercial Use License";
-            MessageBox.Show(info, "Information", MessageBoxButton.OK, MessageBoxImage.Information);
+            // MessageBox with informations
+            HelpingClass.InformationsAboutProgram();
         } // info click about version and license
         private void LoginTextChanged(object sender, RoutedEventArgs e)
         {
