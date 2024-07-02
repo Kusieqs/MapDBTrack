@@ -164,17 +164,17 @@ namespace MapDBTrack
         {
             if (FirstNameBox.Text.Trim().Length == 0)
             {
-                FirstNameError.Text = HelpingClass.Exceptions(0);
+                FirstNameError.Text = HelpingClass.engExp[0];
                 return false;
             }
             else if (!Regex.IsMatch(FirstNameBox.Text.Trim(), @"^[\p{L}\p{M}]+$"))
             {
-                FirstNameError.Text = HelpingClass.Exceptions(1);
+                FirstNameError.Text = HelpingClass.engExp[1];
                 return false;
             }
             else if (FirstNameBox.Text.Trim().Length > 50)
             {
-                FirstNameError.Text = HelpingClass.Exceptions(2);
+                FirstNameError.Text = HelpingClass.engExp[2];
                 return false;
             }
 
@@ -185,12 +185,12 @@ namespace MapDBTrack
             if (LastNameBox.Text.Trim().Length > 0)
                 if (!Regex.IsMatch(LastNameBox.Text.Trim(), @"^[\p{L}\p{M}\s-]+$"))
                 {
-                    LastNameError.Text = HelpingClass.Exceptions(1);
+                    LastNameError.Text = HelpingClass.engExp[1];
                     return false;
                 }
                 else if (LastNameBox.Text.Trim().Length > 50)
                 {
-                    LastNameError.Text = HelpingClass.Exceptions(2);
+                    LastNameError.Text = HelpingClass.engExp[2];
                     return false;
                 }
 
@@ -202,17 +202,17 @@ namespace MapDBTrack
 
             if (ContactBox.Text.Trim().Length == 0)
             {
-                ContactError.Text = HelpingClass.Exceptions(0);
+                ContactError.Text = HelpingClass.engExp[0];
                 return false;
             }
             else if (!Regex.IsMatch(ContactBox.Text.Trim(), @"^\+?\d{1,}$"))
             {
-                ContactError.Text = HelpingClass.Exceptions(1);
+                ContactError.Text = HelpingClass.engExp[1];
                 return false;
             }
             else if (ContactBox.Text.Trim().Length > 20)
             {
-                ContactError.Text = HelpingClass.Exceptions(2);
+                ContactError.Text = HelpingClass.engExp[2];
                 return false;
             }
             return true;
@@ -223,7 +223,7 @@ namespace MapDBTrack
 
             if (EmailBox.Text.Trim().Length != 0 && !Regex.IsMatch(EmailBox.Text.Trim(), pattern))
             {
-                MailError.Text = HelpingClass.Exceptions(1);
+                MailError.Text = HelpingClass.engExp[1];
                 return false;
             }
             return true;
@@ -234,12 +234,12 @@ namespace MapDBTrack
             if (ProvinceBox.Text.Trim().Length > 0)
                 if (!Regex.IsMatch(ProvinceBox.Text.Trim(), @"^[\p{L}\p{M}\s-]+$"))
                 {
-                    ProvinceError.Text = HelpingClass.Exceptions(1); 
+                    ProvinceError.Text = HelpingClass.engExp[1]; 
                     return false;
                 }
                 else if (ProvinceBox.Text.Trim().Length > 50)
                 {
-                    ProvinceError.Text = HelpingClass.Exceptions(2);
+                    ProvinceError.Text = HelpingClass.engExp[2];
                     return false;
                 }
             return true;
@@ -248,17 +248,17 @@ namespace MapDBTrack
         {
             if (CityBox.Text.Trim().Length == 0)
             {
-                CityError.Text = HelpingClass.Exceptions(0);
+                CityError.Text = HelpingClass.engExp[0];
                 return false;
             }
             else if (!Regex.IsMatch(CityBox.Text.Trim(), @"^[\p{L}\p{M}\s-]+$"))
             {
-                CityError.Text = HelpingClass.Exceptions(1);
+                CityError.Text = HelpingClass.engExp[1];
                 return false;
             }
             else if (CityBox.Text.Trim().Length > 50)
             {
-                CityError.Text = HelpingClass.Exceptions(2);
+                CityError.Text = HelpingClass.engExp[2];
                 return false;
             }
             return true;
@@ -267,17 +267,17 @@ namespace MapDBTrack
         {
             if (PostalCodeBox.Text.Trim().Length == 0)
             {
-                PostalError.Text = HelpingClass.Exceptions(0);
+                PostalError.Text = HelpingClass.engExp[0];
                 return false;
             }
             else if (!Regex.IsMatch(PostalCodeBox.Text.Trim(), @"^\d+-\d+$"))
             {
-                PostalError.Text = HelpingClass.Exceptions(1);
+                PostalError.Text = HelpingClass.engExp[1];
                 return false;
             }
             else if (PostalCodeBox.Text.Trim().Length > 10)
             {
-                PostalError.Text = HelpingClass.Exceptions(2);
+                PostalError.Text = HelpingClass.engExp[2];
                 return false;
             }
             return true;
@@ -286,17 +286,17 @@ namespace MapDBTrack
         {
             if (StreetBox.Text.Trim().Length == 0)
             {
-                StreetError.Text = HelpingClass.Exceptions(0);
-                return false;
-            }
-            else if (StreetBox.Text.Trim().Length > 100)
-            {
-                StreetError.Text = HelpingClass.Exceptions(2);
+                StreetError.Text = HelpingClass.engExp[0];
                 return false;
             }
             else if (!Regex.IsMatch(StreetBox.Text.Trim(), @"^[\p{L}\p{M}0-9\s-]+$"))
             {
-                StreetError.Text = HelpingClass.Exceptions(1);
+                StreetError.Text = HelpingClass.engExp[1];
+                return false;
+            }
+            else if (StreetBox.Text.Trim().Length > 100)
+            {
+                StreetError.Text = HelpingClass.engExp[2];
                 return false;
             }
             return true;
