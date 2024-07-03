@@ -184,18 +184,15 @@ namespace MapDBTrack
         {
             LoginFailed.Text = string.Empty;
         } // error login is disappearing
-
         private void EmailChanged(object sender, RoutedEventArgs e)
         {
             EmailFailed.Text = string.Empty;
         } // error Email is disappearing     
-
         private void PasswordChanged(object sender, RoutedEventArgs e)
         {
             PasswordFailed.Text = string.Empty;
             RepeatPasswordFailed.Text = string.Empty;
         } // error Password is disappearing     
-
         private void RepeatPasswordChanged(object sender, RoutedEventArgs e)
         {
             RepeatPasswordFailed.Text = string.Empty;

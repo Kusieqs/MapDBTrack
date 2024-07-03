@@ -36,7 +36,7 @@ namespace MapDBTrack
         private Border customerBorder; // Border for customers
         private TextBox search; // Textbox to searching in list
         private ContextMenu contextMenu; // Special contextmenu for each customer
-        private int menuId; // Id of contextmenu
+        private string menuId; // Id of contextmenu
 
         public MainWindow(int id, string login)
         {
@@ -382,6 +382,10 @@ namespace MapDBTrack
         } // Seting true for add new pin to map 
         private void RemovePin(object sender, RoutedEventArgs e)
         {
+
+            if (listOfData.Count == 0)
+                return;
+
             if (pinned == false)
             {
                 if (removed == true)
@@ -600,16 +604,24 @@ namespace MapDBTrack
                     contextMenu.Items.Add(menuItem);
                 }
 
+                // Creating image for menu button
+                Image buttonMenu = new Image()
+                {
+                    Margin = new Thickness(3),
+                    Source = new BitmapImage(new Uri("pack://application:,,,/MapDBTrack;component/Pictures/menu.png"))
+                };
+                RenderOptions.SetBitmapScalingMode(buttonMenu, BitmapScalingMode.HighQuality);
+
                 // Button for contextmenu
                 Button menu = new Button()
                 {
-                    FontSize = 20,
                     HorizontalAlignment = HorizontalAlignment.Right,
                     VerticalAlignment = VerticalAlignment.Center,
-                    Margin = new Thickness(40, 0, 0, 0),
-                    Background = new SolidColorBrush("#FF7B4BA5".ToColor()),
+                    Margin = new Thickness(37, 0, 0, 0),
                     ContextMenu = contextMenu,
-                    Name = "id" + i.ToString(),
+                    Name = listOfCustomers[i].customer_id,
+                    Style = FindResource("ButtonMenu") as Style,
+                    Content = buttonMenu,
                 };
                 menu.Click += OpenContextMenu;
                 informations.Children.Add(menu);
@@ -651,7 +663,7 @@ namespace MapDBTrack
         {
             // Setting string (which options was choosen)
             string option = (sender as MenuItem).Header.ToString();
-            Place place = listOfData[menuId];
+            Place place = listOfData.Where(x => x.customer_id == menuId).FirstOrDefault();
 
             switch (option)
             {
@@ -664,7 +676,7 @@ namespace MapDBTrack
 
                 // Deleting customer
                 case "Delete customer":
-                    listOfData.RemoveAt(menuId);
+                    listOfData.Remove(place);
                     HelpingClass.RemoveRecordFromDB(place);
                     break;
             }
@@ -694,7 +706,7 @@ namespace MapDBTrack
         } // Searching by special Box
         private void OpenContextMenu(object sender, RoutedEventArgs e)
         {
-            menuId = int.Parse((sender as Button).Name.Split('d')[1]);
+            menuId = (sender as Button).Name;
             contextMenu.IsOpen = true;
         } // opening context menu
 

@@ -237,7 +237,7 @@ namespace MapDBTrack
             while (true)
             {
                 Random random = new Random();
-                string alfa = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"; // Chars to ID
+                string alfa = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz"; // Chars to ID
                 string id = ""; // id of customer
 
                 // creating ID
