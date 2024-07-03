@@ -33,14 +33,13 @@
         <Setter Property="BorderBrush" Value="White"/>
         <Setter Property="FontFamily" Value="Calibri"/>
         <Setter Property="FontWeight" Value="Medium"/>
-        <Setter Property="Cursor" Value="Hand"/>
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="Button">
                     <Border x:Name="border" Background="{TemplateBinding Background}"
                         BorderBrush="{TemplateBinding BorderBrush}"
                         BorderThickness="{TemplateBinding BorderThickness}"
-                        CornerRadius="25">
+                        CornerRadius="20">
                         <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
                     </Border>
                     <ControlTemplate.Triggers>
@@ -114,11 +113,6 @@
         <Setter Property="VerticalAlignment" Value="Center"/>
         <Setter Property="VerticalAlignment" Value="Center"/>
     </Style>
-
-
-
-
-
 
     <Style x:Key="ButtonRounded" TargetType="Button">
         <Setter Property="Background" Value="#FF7B4BA5"/>

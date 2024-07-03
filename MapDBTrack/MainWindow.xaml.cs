@@ -11,33 +11,32 @@ namespace MapDBTrack
 {
     public partial class MainWindow : Window
     {
-        #region Employee informations
-        public static int idOfEmployee; // id of employee (number)
-        public static string loginOfEmployee; // name of employee
-        public static List<Place> listOfData = new List<Place>(); // list of customers/listOfData
-        #endregion Employee informations 
+        // Employee informations
+        public static int idOfEmployee { get; set; } // Id of employee (number)
+        public static string loginOfEmployee { get; set; } // Name of employee
+        public static List<Place> listOfData { get; set; } = new List<Place>();// List of customers/listOfData
 
+        // Map screen
         private Button adding; // Button to adding new customer
-        private Button removing; // button to removing customer
+        private Button removing; // Button to removing customer
         private AddingCustomer addingCustomer; // Window to add customer
         private Map map; // Map
         private bool pinned = false; // It depends on clicked feature on map (add or remove pin)
         private bool removed = false; // It depends on clicked feature on map (add or remove pin)
-        public static bool acceptOverridePin = false; // If it is true than pin will be put on map
+        public static bool acceptOverridePin { get; set; } = false;// If it is true than pin will be put on map
 
-        #region customer grid and border
-        public static bool customerMode = true;
-        private Grid customerGrid;
-        private Button personalBtn;
-        private Button addressBtn;
-        private StackPanel theme;
-        public static StackPanel customer;
-        private ScrollViewer scrollViewer;
-        private Border customerBorder;
-
-        private ContextMenu contextMenu;
-        private int menuId;
-        #endregion customer grid and border
+        // Customer screen
+        private bool customerMode = true; // It depends on which mode is active ( Personal or address)
+        private Grid customerGrid; // Customer Gird
+        private Button personalBtn; // Button to changed mode of list
+        private Button addressBtn; // Button to changed mode of list
+        private StackPanel theme; // Theme of column
+        public static StackPanel customer { get; set; } // Customer panel 
+        private ScrollViewer scrollViewer; // Scrollview for all customers
+        private Border customerBorder; // Border for customers
+        private TextBox search; // Textbox to searching in list
+        private ContextMenu contextMenu; // Special contextmenu for each customer
+        private int menuId; // Id of contextmenu
 
         public MainWindow(int id, string login)
         {
@@ -215,8 +214,8 @@ namespace MapDBTrack
             {
                 Background = new SolidColorBrush("#dae2ea".ToColor()),
                 Margin = new Thickness(370, 55, 400, 14)
-
             };
+            customerGrid.Children.Add(separator);
 
             // Creating stackpanel with buttons
             StackPanel stackPanel = new StackPanel()
@@ -235,9 +234,9 @@ namespace MapDBTrack
                 Margin = new Thickness(0, 0, 20, 0),
                 FontFamily = new FontFamily("Calibri"),
                 BorderBrush = Brushes.Transparent,
-                Cursor = Cursors.Hand
             };
             personalBtn.Click += PersonalClick;
+            stackPanel.Children.Add(personalBtn);
 
             // Address button
             addressBtn = new Button()
@@ -247,9 +246,12 @@ namespace MapDBTrack
                 Width = 78,
                 FontFamily = new FontFamily("Calibri"),
                 BorderBrush = Brushes.Transparent,
-                Cursor = Cursors.Hand
             };
             addressBtn.Click += AddressClick;
+            stackPanel.Children.Add(addressBtn);
+
+            // Adding stackpanel to main grid
+            customerGrid.Children.Add(stackPanel);
 
             // Changing borderbrush color
             if (customerMode)
@@ -265,10 +267,10 @@ namespace MapDBTrack
                 Content = "Report",
                 FontSize = 20,
                 Margin = new Thickness(940, 8, 10, 17),
-                Background = new SolidColorBrush("#FF7B4BA5".ToColor()),
-                FontFamily = new FontFamily("Calibri"),
+                Style = FindResource("ButtonSign") as Style
             };
             reportBtn.Click += ReportClick;
+            customerGrid.Children.Add(reportBtn);
 
             // Creating delete button
             Button deleteBtn = new Button()
@@ -278,54 +280,42 @@ namespace MapDBTrack
                 Content = "Delete",
                 FontSize = 20,
                 Margin = new Thickness(798, 8, 152, 17),
-                Background = new SolidColorBrush("#FF7B4BA5".ToColor()),
-                FontFamily = new FontFamily("Calibri"),
+                Style = FindResource("ButtonSign") as Style
             };
             deleteBtn.Click += DeleteClick;
+            customerGrid.Children.Add(deleteBtn);
 
             // Theme panel for scroll viewer
             theme = StackPanelMode();
             Grid.SetRow(theme, 2);
+            customerGrid.Children.Add(theme);
 
             // Creating scrollviewer
             scrollViewer = ScrollMode(listOfData);
             Grid.SetRow(scrollViewer, 3);
+            customerGrid.Children.Add(scrollViewer);
 
             // Creating search box
-            TextBox searching = new TextBox()
+            search = new TextBox()
             {
-                Height = 30,
-                Margin = new Thickness(16, 20, 800, 7),
+                Height = 35,
+                Margin = new Thickness(16, 14, 800, 7),
                 FontSize = 20,
                 FontFamily = new FontFamily("Calibri"),
                 Foreground = new SolidColorBrush("#FF7B4BA5".ToColor()),
                 FontWeight = FontWeights.DemiBold,
                 BorderBrush = new SolidColorBrush("#dae2ea".ToColor())
             };
-            searching.TextChanged += SearchingScroll;
-            MaterialDesignThemes.Wpf.HintAssist.SetHint(searching, "Search");
-            MaterialDesignThemes.Wpf.HintAssist.SetFloatingOffset(searching, new Point(0, -20));
+            search.TextChanged += SearchingScroll;
+            MaterialDesignThemes.Wpf.HintAssist.SetHint(search, "Search");
+            customerGrid.Children.Add(search);
 
-
-            #region adding elements
-            customerGrid.Children.Add(separator);
-            stackPanel.Children.Add(personalBtn);
-            stackPanel.Children.Add(addressBtn);
-            customerGrid.Children.Add(stackPanel);
-            customerGrid.Children.Add(deleteBtn);
-            customerGrid.Children.Add(reportBtn);
-            customerGrid.Children.Add(searching);
-
-            customerGrid.Children.Add(theme);
-            customerGrid.Children.Add(scrollViewer);
-
+            // Adding to main window
             customerBorder.Child = customerGrid;
             mapBorder.Children.Add(customerBorder);
-            #endregion adding elements
-
-
         } // Loading customer list
         #endregion Menu buttons
+
 
         // Features to Map button
         private void MapPuttingPins(object sender, MouseButtonEventArgs e)
@@ -424,8 +414,21 @@ namespace MapDBTrack
             }
 
         } // Loading all pins when map is close
-
-
+        private Pushpin SetPinns(Location pinLocation, bool creating = false)
+        {
+            // Setting location for pin
+            Pushpin pin = new Pushpin();
+            pin.Location = pinLocation;
+            pin.Background = new SolidColorBrush("#FF7B4BA5".ToColor());
+            if (!creating)
+            {
+                // Adding features to pin
+                pin.MouseEnter += PinMouseEnter;
+                pin.MouseLeave += PinMouseLeave;
+                pin.MouseLeftButtonDown += RemovePinFromMap;
+            }
+            return pin;
+        } // Setting options for pin
         private void PinMouseEnter(object sender, MouseEventArgs e)
         {
             // Setting focus on a pin when mouse is over
@@ -483,141 +486,22 @@ namespace MapDBTrack
                 }
             }
         } // Removing pin from map and DB
-        private Pushpin SetPinns(Location pinLocation, bool creating = false)
-        {
-            // Setting location for pin
-            Pushpin pin = new Pushpin();
-            pin.Location = pinLocation;
-            pin.Background = new SolidColorBrush("#FF7B4BA5".ToColor());
-            if (!creating)
-            {
-                // Adding features to pin
-                pin.MouseEnter += PinMouseEnter;
-                pin.MouseLeave += PinMouseLeave;
-                pin.MouseLeftButtonDown += RemovePinFromMap;
-            }
-            return pin;
-        } // Setting options for pin
-
 
 
         // Features to Customer button
-        private void SearchingScroll(object sender, EventArgs e)
-        {
-            TextBox search = (TextBox)sender;
-            if(string.IsNullOrEmpty(search.Text))
-            {
-                ChangingCustomerView(listOfData);
-            }
-            else
-            {
-                var filter = listOfData.Where(x=> 
-                x.customer_id.Contains(search.Text) ||
-                x.first_name.Contains(search.Text) ||
-                x.last_name.Contains(search.Text) ||
-                x.email.Contains(search.Text) ||
-                x.contact_number.Contains(search.Text) ||
-                x.city.Contains(search.Text) ||
-                x.province.Contains(search.Text) ||
-                x.street.Contains(search.Text) ||
-                x.postal_code.Contains(search.Text)||
-                x.employee_id.ToString().Contains(search.Text)).ToList();
-
-                ChangingCustomerView(filter);
-            }
-        }
-        private ScrollViewer ScrollMode(List<Place> customers)
-        {
-            ScrollViewer scrollViewer = new ScrollViewer()
-            {
-
-                Padding = new Thickness(10),
-                VerticalScrollBarVisibility = ScrollBarVisibility.Auto
-            };
-
-            int loops = customerMode == true ? 5 : 4;
-            customer = new StackPanel();
-
-
-            for (int i = 0 ; i < customers.Count; i++)
-            {
-                Border borderStackPanel = new Border()
-                {
-                    CornerRadius = new CornerRadius(10),
-                    Background = Brushes.LightGray,
-                    Height = 50,
-                    Margin = new Thickness(0, 5, 3, 5)
-                };
-
-                StackPanel informations = new StackPanel()
-                {
-                    Orientation = Orientation.Horizontal,
-                };
-
-                for (int j = 0 ; j < loops; j++)
-                {
-                    TextBlock info = new TextBlock()
-                    {
-                        FontSize = 17,
-                        Width = 190,
-                        HorizontalAlignment = HorizontalAlignment.Center,
-                        VerticalAlignment = VerticalAlignment.Center,
-                        TextAlignment = TextAlignment.Center
-                    };
-
-                    if (!customerMode && (j == 1 || j == 3))
-                        info.Width = 285;
-
-                    info.Text = HelpingClass.DescritpionScrollView(customers,customerMode, j, i);
-                    informations.Children.Add(info);
-                }
-
-                contextMenu = new ContextMenu();
-
-                for(int j = 0; j < 2; j ++)
-                {
-                    MenuItem menuItem = new MenuItem()
-                    {
-                        Header = j == 0 ? "Edit customer" : "Delete customer",
-                    };
-                    menuItem.Click += ContextMenu;
-                    contextMenu.Items.Add(menuItem);
-                }
-
-                Button menu = new Button()
-                {
-                    FontSize = 20,
-                    HorizontalAlignment = HorizontalAlignment.Right,
-                    VerticalAlignment = VerticalAlignment.Center,
-                    Margin = new Thickness(40, 0, 0, 0),
-                    Background = new SolidColorBrush("#FF7B4BA5".ToColor()),
-                    ContextMenu = contextMenu,
-                    Name = "id" + i.ToString(),
-                };
-
-                menu.Click += OpenContextMenu;
-
-
-                informations.Children.Add(menu);
-                borderStackPanel.Child = informations;
-                customer.Children.Add(borderStackPanel);
-
-            }
-            scrollViewer.Content = customer;
-            return scrollViewer;
-
-        } // Creating ScrollViewer for mode
         private StackPanel StackPanelMode()
         {
+            // Setting how many loop it will be depends on which mode is active
             int loops = customerMode == true ? 5 : 4;
-            StackPanel theme = new StackPanel()
-            {
-                Orientation = Orientation.Horizontal,
-            };
 
+            // Creating StackPanel for theme
+            StackPanel theme = new StackPanel();
+            theme.Orientation = Orientation.Horizontal;
+
+            // Setting in which column special button to sort alphabetical
             for (int j = 0; j < loops; j++)
             {
-                Button info = new Button()
+                Button sortingBy = new Button()
                 {
                     FontWeight = FontWeights.Bold,
                     FontSize = 17,
@@ -628,17 +512,18 @@ namespace MapDBTrack
                     Background = Brushes.Transparent,
                     FontFamily = new FontFamily("Calibri"),
                     BorderBrush = Brushes.Transparent,
+                    Cursor = Cursors.Hand,
                 };
-                info.Click += SortBy;
+                sortingBy.Click += SortByClick;
 
                 if (!customerMode && (j == 1 || j == 3))
-                    info.Width = 285;
+                    sortingBy.Width = 285;
 
-                info.Content = HelpingClass.DescriptionStackPanel(customerMode, j);
-
-                theme.Children.Add(info);
+                sortingBy.Content = HelpingClass.DescriptionStackPanel(customerMode, j);
+                theme.Children.Add(sortingBy);
             }
 
+            // Creating menu theme block
             TextBlock menu = new TextBlock()
             {
                 FontSize = 17,
@@ -655,31 +540,96 @@ namespace MapDBTrack
 
             return theme;
         } // Creating stack panel for Theme 
-        private void AddressClick(object sender,  RoutedEventArgs e)
+        private ScrollViewer ScrollMode(List<Place> listOfCustomers)
         {
-            customerMode = false;
+            // creating scroll viewer
+            ScrollViewer scrollViewer = new ScrollViewer()
+            {
+                Padding = new Thickness(10),
+                VerticalScrollBarVisibility = ScrollBarVisibility.Auto
+            };
 
-            personalBtn.BorderBrush = Brushes.Transparent;
-            addressBtn.BorderBrush = new SolidColorBrush("#FF7B4BA5".ToColor());
+            // Setting how many loops (it depends on customerMode)
+            int loops = customerMode == true ? 5 : 4;
 
-            ChangingCustomerView(listOfData);
-        } // Address Click (customer view)
-        private void PersonalClick(object sender, RoutedEventArgs e)
-        {
-            customerMode = true;
+            // Creating StackPanel
+            customer = new StackPanel();
 
-            personalBtn.BorderBrush = new SolidColorBrush("#FF7B4BA5".ToColor());
-            addressBtn.BorderBrush = Brushes.Transparent;
+            for (int i = 0 ; i < listOfCustomers.Count; i++)
+            {
+                // creating border for each StackPanel
+                Border borderStackPanel = new Border()
+                {
+                    CornerRadius = new CornerRadius(10),
+                    Background = Brushes.LightGray,
+                    Height = 50,
+                    Margin = new Thickness(0, 5, 3, 5)
+                };
 
-            ChangingCustomerView(listOfData);
-        } // Personal Click (customer view)
+                StackPanel informations = new StackPanel();
+                informations.Orientation = Orientation.Horizontal;
+
+                // Loop for each information depends on theme
+                for (int j = 0 ; j < loops; j++)
+                {
+                    TextBlock info = new TextBlock()
+                    {
+                        FontSize = 17,
+                        Width = 190,
+                        HorizontalAlignment = HorizontalAlignment.Center,
+                        VerticalAlignment = VerticalAlignment.Center,
+                        TextAlignment = TextAlignment.Center
+                    };
+
+                    if (!customerMode && (j == 1 || j == 3))
+                        info.Width = 285;
+
+                    info.Text = HelpingClass.DescritpionScrollView(listOfCustomers,customerMode, j, i);
+                    informations.Children.Add(info);
+                }
+
+                // adding contextmenu for each customer
+                contextMenu = new ContextMenu();
+                for(int j = 0; j < 2; j ++)
+                {
+                    MenuItem menuItem = new MenuItem()
+                    {
+                        Header = j == 0 ? "Edit customer" : "Delete customer",
+                    };
+                    menuItem.Click += ContextMenu;
+                    contextMenu.Items.Add(menuItem);
+                }
+
+                // Button for contextmenu
+                Button menu = new Button()
+                {
+                    FontSize = 20,
+                    HorizontalAlignment = HorizontalAlignment.Right,
+                    VerticalAlignment = VerticalAlignment.Center,
+                    Margin = new Thickness(40, 0, 0, 0),
+                    Background = new SolidColorBrush("#FF7B4BA5".ToColor()),
+                    ContextMenu = contextMenu,
+                    Name = "id" + i.ToString(),
+                };
+                menu.Click += OpenContextMenu;
+                informations.Children.Add(menu);
+
+                borderStackPanel.Child = informations;
+                customer.Children.Add(borderStackPanel);
+            }
+            scrollViewer.Content = customer;
+            return scrollViewer;
+
+        } // Creating ScrollViewer for mode
         private void ChangingCustomerView(List<Place> customers)
         {
+            // Selecting elements to remove
             var elementsToRemove = customerGrid.Children
                         .Cast<UIElement>()
                         .Where(e => Grid.GetRow(e) == 2 || Grid.GetRow(e) == 3)
                         .ToList();
 
+            // Removing elements from grid
             foreach (var element in elementsToRemove)
             {
                 customerGrid.Children.Remove(element);
@@ -688,32 +638,98 @@ namespace MapDBTrack
             // Theme panel for scroll viewer
             theme = StackPanelMode();
             Grid.SetRow(theme, 2);
+
             // Creating scrollviewer
             scrollViewer = ScrollMode(customers);
             Grid.SetRow(scrollViewer, 3);
 
+            // Adding to customer screen
             customerGrid.Children.Add(theme);
             customerGrid.Children.Add(scrollViewer);
-        } // Switching mode between address and personal 
-        protected override void OnClosing(CancelEventArgs e)
+        } // Switching mode between address and personal
+        private void ContextMenu(object sender, RoutedEventArgs e)
         {
-            base.OnClosing(e);
-            if (addingCustomer != null && addingCustomer.IsVisible)
-                e.Cancel = true;
-        } // blocking window 
-        private void BorderClick(object sender, MouseButtonEventArgs e)
+            // Setting string (which options was choosen)
+            string option = (sender as MenuItem).Header.ToString();
+            Place place = listOfData[menuId];
+
+            switch (option)
+            {
+                // Editing customer
+                case "Edit customer":
+                    AddingCustomer editCustomer = new AddingCustomer(place, true);
+                    editCustomer.Show();
+                    editCustomer.Closed += (sender, e) => SearchingScroll(null, null);
+                    break;
+
+                // Deleting customer
+                case "Delete customer":
+                    listOfData.RemoveAt(menuId);
+                    HelpingClass.RemoveRecordFromDB(place);
+                    break;
+            }
+            SearchingScroll(null, null);
+        }  // Options for ContextMenu
+        private void SearchingScroll(object sender, EventArgs e)
         {
-            if (e.ChangedButton == MouseButton.Left)
-                this.DragMove();
-        } // feature to moving window
+            if (string.IsNullOrEmpty(search.Text))
+                ChangingCustomerView(listOfData);
+            else
+            {
+                // Setting that word which is the most correct with searching
+                var filter = listOfData.Where(x =>
+                x.customer_id.Contains(search.Text) ||
+                x.first_name.Contains(search.Text) ||
+                x.last_name.Contains(search.Text) ||
+                x.email.Contains(search.Text) ||
+                x.contact_number.Contains(search.Text) ||
+                x.city.Contains(search.Text) ||
+                x.province.Contains(search.Text) ||
+                x.street.Contains(search.Text) ||
+                x.postal_code.Contains(search.Text) ||
+                x.employee_id.ToString().Contains(search.Text)).ToList();
+
+                ChangingCustomerView(filter);
+            }
+        } // Searching by special Box
+        private void OpenContextMenu(object sender, RoutedEventArgs e)
+        {
+            menuId = int.Parse((sender as Button).Name.Split('d')[1]);
+            contextMenu.IsOpen = true;
+        } // opening context menu
+
+
+        private void AddressClick(object sender,  RoutedEventArgs e)
+        {
+            customerMode = false;
+
+            // Changing color of mode
+            personalBtn.BorderBrush = Brushes.Transparent;
+            addressBtn.BorderBrush = new SolidColorBrush("#FF7B4BA5".ToColor());
+
+            SearchingScroll(null, null);
+
+        } // Address Click (customer view)
+        private void PersonalClick(object sender, RoutedEventArgs e)
+        {
+            customerMode = true;
+
+            // Changing color of mode
+            personalBtn.BorderBrush = new SolidColorBrush("#FF7B4BA5".ToColor());
+            addressBtn.BorderBrush = Brushes.Transparent;
+
+            SearchingScroll(null, null);
+        } // Personal Click (customer view)
         private void DeleteClick(object sender, RoutedEventArgs e)
         {
             if (customer.Children.Count == 0)
                 return;
 
-            MessageBoxResult result = MessageBox.Show($"Are you sure to delete {customer.Children.Count}","Information",MessageBoxButton.YesNo,MessageBoxImage.Question);
+            // Sending MessageBox to conferm about deleting
+            MessageBoxResult result = MessageBox.Show($"Are you sure to delete {customer.Children.Count} customers","Information",MessageBoxButton.YesNo,MessageBoxImage.Question);
             if(result == MessageBoxResult.Yes )
             {
+                // Deleting customers
                 for (int i = 0; i < customer.Children.Count; i++)
                 {
                     Border border = customer.Children[i] as Border;
@@ -728,12 +744,13 @@ namespace MapDBTrack
                     }
 
                 }
-                LoadingCustomerScreen();
+                SearchingScroll(null, null);
             }    
             
         } // Button to delete customers
         private void ReportClick(object sender, RoutedEventArgs e)
         {
+            // Opening new window (to report)
             Button report = sender as Button;
             Report reportWindow = new Report();
             menuButtons.IsEnabled = false;
@@ -745,9 +762,10 @@ namespace MapDBTrack
                 menuButtons.IsEnabled = true;
             };
             reportWindow.Show();
-        } // button to report 
-        private void SortBy(object sender, RoutedEventArgs e)
+        } // Button to report 
+        private void SortByClick(object sender, RoutedEventArgs e)
         {
+            // sorting by Theme
             Button button = sender as Button;
             string theme = button.Content.ToString();
             switch(theme)
@@ -777,40 +795,25 @@ namespace MapDBTrack
                     listOfData = listOfData.OrderBy(x => x.street).ToList();
                     break;
             }
+            SearchingScroll(null, null);
+        } // Sorting button 
 
-            ChangingCustomerView(listOfData);
-        } // sorting button 
-        private void ContextMenu(object sender, RoutedEventArgs e)
-        {
-            string option = (sender as MenuItem).Header.ToString();
-            Place place = listOfData[menuId];
-            switch (option)
-            {
-                case "Edit customer":
-                    AddingCustomer editCustomer = new AddingCustomer(place, true);
-                    editCustomer.Show();
-                    editCustomer.Closed += new EventHandler(EditClose);
-                    break;
 
-                case "Delete customer":
-                    listOfData.RemoveAt(menuId);
-                    HelpingClass.RemoveRecordFromDB(place); 
-                    break;
-            }
-            ChangingCustomerView(listOfData);
-
-        }  // options in contextmenu
-        private void EditClose(object sender, EventArgs e)
+        // Features for the window
+        protected override void OnClosing(CancelEventArgs e)
         {
-            ChangingCustomerView(listOfData);
-        } // closing edit
-        private void OpenContextMenu(object sender, RoutedEventArgs e)
+            base.OnClosing(e);
+            if (addingCustomer != null && addingCustomer.IsVisible)
+                e.Cancel = true;
+        } // blocking window 
+        private void BorderClick(object sender, MouseButtonEventArgs e)
         {
-            menuId = int.Parse((sender as Button).Name.Split('d')[1]);
-            contextMenu.IsOpen = true;
-        } // opening context menu
+            if (e.ChangedButton == MouseButton.Left)
+                this.DragMove();
+        } // feature to moving window
     }
 
+    // Special string extension class for color of structures
     public static class StringExtensions
     {
         public static Color ToColor(this string color)
