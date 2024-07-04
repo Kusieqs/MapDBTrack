@@ -36,7 +36,7 @@ namespace MapDBTrack
             //message box about to provide of registation
             MessageBox.Show("Correct registration", "Information", MessageBoxButton.OK, MessageBoxImage.Information);
             Close();
-        } // registration new account
+        } // Registration new account
         private bool CheckingEmptyString()
         {
             bool correct = true;
@@ -70,21 +70,21 @@ namespace MapDBTrack
             }
             return correct;
 
-        } // checking empty area and writing message
+        } // Checking empty area and writing message
         private bool CheckAllParameters(SqlConnection sql)
         {
             return LoginCheck(sql) & PasswordCheck() & RepeatPasswordCheck() & EmailCheck(sql);
-        } // feature with checking 4 features
+        } // Feature with checking 4 features
         private void BorderClick(object sender, MouseButtonEventArgs e)
         {
             if (e.ChangedButton == MouseButton.Left)
                 this.DragMove();
-        } // feature to moving window
+        } // Feature to moving window
         private void InfoClick(object sender, RoutedEventArgs e)
         {
             // MessageBox with informations
             HelpingClass.InformationsAboutProgram();
-        } // information button
+        } // Information button
         private void ExitClick(object sender, RoutedEventArgs e)
         {
             this.Close();
@@ -150,7 +150,7 @@ namespace MapDBTrack
                 return false;
             }
             return true;
-        } // checkiong 2 passwords whether they are same
+        } // Checkiong 2 passwords whether they are same
         private bool EmailCheck(SqlConnection sql)
         {
             // special query to search same email in DB
@@ -183,20 +183,20 @@ namespace MapDBTrack
         private void LoginChanged(object sender, RoutedEventArgs e)
         {
             LoginFailed.Text = string.Empty;
-        } // error login is disappearing
+        } // Error login is disappearing
         private void EmailChanged(object sender, RoutedEventArgs e)
         {
             EmailFailed.Text = string.Empty;
-        } // error Email is disappearing     
+        } // Error Email is disappearing     
         private void PasswordChanged(object sender, RoutedEventArgs e)
         {
             PasswordFailed.Text = string.Empty;
             RepeatPasswordFailed.Text = string.Empty;
-        } // error Password is disappearing     
+        } // Error Password is disappearing     
         private void RepeatPasswordChanged(object sender, RoutedEventArgs e)
         {
             RepeatPasswordFailed.Text = string.Empty;
-        } // error repeat password is disappearing     
+        } // Error repeat password is disappearing     
         #endregion
 
 

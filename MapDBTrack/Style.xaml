@@ -304,7 +304,7 @@
         <Setter Property="AcceptsReturn" Value="True"/>
         <Setter Property="HorizontalContentAlignment" Value="Left"/>
         <Setter Property="VerticalContentAlignment" Value="Top"/>
-        <Setter Property="MaxLines" Value="12"/>
+        <Setter Property="MaxLength" Value="150"/>
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="TextBox">

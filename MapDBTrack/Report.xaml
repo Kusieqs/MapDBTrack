@@ -8,7 +8,7 @@
         Background="Transparent"
         Title="Report" Height="100" Width="400" ResizeMode="NoResize" FontFamily="{DynamicResource MaterialDesignFont}">
     <Grid MouseDown="BorderClick">
-        <Border CornerRadius="15" Background="White">
+        <Border CornerRadius="15" Background="White" BorderBrush="#FF7B4BA5" BorderThickness="0.5">
             <Grid MouseDown="BorderClick">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*"/>

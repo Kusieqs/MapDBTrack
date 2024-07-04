@@ -9,7 +9,7 @@
         Background="Transparent"
         Title="AddingCustomer" Height="880" Width="700" ResizeMode="NoResize" FontFamily="{DynamicResource MaterialDesignFont}">
     <Grid MouseDown="BorderClick">
-        <Border Background="White" CornerRadius="15,15,15,15">
+        <Border Background="White" CornerRadius="19,19,15,15">
             <Grid>
                 <Grid.RowDefinitions>
                     <RowDefinition Height="*"/>
@@ -82,10 +82,12 @@
                 </Border>
 
 
-                <TextBlock Grid.Row="6" Text="Description" FontSize="45" Foreground="#FF7B4BA5" FontWeight="Bold" VerticalAlignment="Top" HorizontalAlignment="Center" Margin="0,6,0,0" FontFamily="Calibri" Height="55" Width="214"/>
+                <TextBlock Grid.Row="6" Text="Description" FontSize="45" Foreground="#FF7B4BA5" FontWeight="Bold" FontFamily="Calibri"  VerticalAlignment="Top" HorizontalAlignment="Center" Margin="0,6,0,0"  Height="55" Width="214"/>
                 <TextBlock Grid.Row="6" Text="(optional)" FontSize="20" Foreground="#FF7B4BA5" FontWeight="DemiBold" FontFamily="Calibri"  VerticalAlignment="Top" HorizontalAlignment="Center" Margin="0,56,0,0" Height="25" Width="82"/>
+                <TextBlock x:Name="CountChars" Grid.Row="6" Text="0" FontSize="15" Foreground="#FF7B4BA5" FontWeight="DemiBold" FontFamily="Calibri" TextAlignment="Right"  Margin="622,86,54,139" Grid.RowSpan="2"/>
+                <TextBlock Grid.Row="6" Text="/150" FontSize="15" Foreground="#FF7B4BA5" FontWeight="DemiBold" FontFamily="Calibri" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="647,86,0,0" Grid.RowSpan="2"/>
 
-                <TextBox x:Name="DescriptionBox" Grid.Row="7" Style="{StaticResource RoundedTextBoxDesc}" Margin="10,12,10,12"/>
+                <TextBox x:Name="DescriptionBox" Grid.Row="7" Style="{StaticResource RoundedTextBoxDesc}" Margin="10,12,10,12" MaxLines="20" MaxLength="150" TextChanged="TextChangedLines"/>
 
                 <Border Grid.Row="8" Grid.Column="0" Grid.ColumnSpan="2">
                     <Grid>

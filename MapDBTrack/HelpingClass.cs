@@ -7,7 +7,6 @@ using Microsoft.Maps.MapControl.WPF;
 using System.Globalization;
 using System.IO;
 using System.Runtime.Serialization.Json;
-using System.Windows.Input.Manipulations;
 
 namespace MapDBTrack
 {

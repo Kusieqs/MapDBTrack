@@ -335,7 +335,7 @@ namespace MapDBTrack
                 Mouse.OverrideCursor = Cursors.Arrow;
 
                 // Creating new window and showing
-                addingCustomer = new AddingCustomer(pinLocation, this, pin, map);
+                addingCustomer = new AddingCustomer(pinLocation, pin, map);
                 addingCustomer.Show();
                 menuButtons.IsEnabled = false;
 
