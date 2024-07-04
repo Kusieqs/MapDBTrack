@@ -66,7 +66,6 @@ namespace MapDBTrack
             if (log && pass)
                 return true;
             return false;
-
         }
         private bool CheckingLog(string login, string password)
         {

@@ -88,12 +88,12 @@
 
                 <StackPanel HorizontalAlignment="Center" Margin="0,70,0,0" VerticalAlignment="Top" Width="340"  >
                     <TextBox x:Name="LoginBox" TextChanged="LoginTextChanged" Height="60" FontSize="20" BorderThickness="0 0 0 1.5" BorderBrush="#C5C8CC" materialDesign:HintAssist.FloatingOffset="0,-20" materialDesign:HintAssist.Hint="Username" Margin="0,0,0,10" Text="" Style="{StaticResource MaterialDesignFloatingHintTextBox}" FontWeight="DemiBold" FontFamily="Calibri"/>
-                    <TextBlock x:Name="LogFailed" Text="" Style="{StaticResource TextBlokcsError}" Margin="2,0,0,30" HorizontalAlignment="Left"/>
+                    <TextBlock x:Name="LogFailed" Text="" Style="{StaticResource TextBlocksError}" Margin="2,0,0,30" HorizontalAlignment="Left"/>
                     <PasswordBox x:Name="PasswordBox" PasswordChanged="PassTextChanged" Height="60" FontSize="20" BorderThickness="0 0 0 1.5" BorderBrush="#C5C8CC" materialDesign:HintAssist.FloatingOffset="0,-20" materialDesign:HintAssist.Hint="Password"  Margin="0,0,0,10" Password=""  Style="{StaticResource MaterialDesignFloatingHintPasswordBox}" FontWeight="DemiBold" FontFamily="Calibri"/>
-                    <TextBlock x:Name="PasswordFailed" Style="{StaticResource TextBlokcsError}" HorizontalAlignment="Left" Margin="2,0,0,15"/>
+                    <TextBlock x:Name="PasswordFailed" Style="{StaticResource TextBlocksError}" HorizontalAlignment="Left" Margin="2,0,0,15"/>
                 </StackPanel>
 
-                <TextBlock x:Name="PasswordReminder" TextDecorations="Underline" IsEnabled="False" IsHitTestVisible="False" Style="{StaticResource TextBlokcsError}" Foreground="#FF7B4BA5" HorizontalAlignment="Left" Margin="302,259,0,0" VerticalAlignment="Top" Height="18"/>
+                <TextBlock x:Name="PasswordReminder" TextDecorations="Underline" IsEnabled="False" IsHitTestVisible="False" Style="{StaticResource TextBlocksError}" Foreground="#FF7B4BA5" HorizontalAlignment="Left" Margin="302,259,0,0" VerticalAlignment="Top" Height="18"/>
                 <Button x:Name="Reset" Cursor="Hand" IsEnabled="False" FontSize="10" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="302,259,0,0" Height="13" Width="107" Background="Transparent" BorderBrush="Transparent" Click="ResetPassword"/>
 
 

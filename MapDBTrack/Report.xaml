@@ -8,7 +8,7 @@
         Background="Transparent"
         Title="Report" Height="100" Width="400" ResizeMode="NoResize" FontFamily="{DynamicResource MaterialDesignFont}">
     <Grid MouseDown="BorderClick">
-        <Border CornerRadius="15" Background="White" BorderBrush="#FF7B4BA5" BorderThickness="0.5">
+        <Border CornerRadius="15" Background="White" BorderBrush="#FF7B4BA5" BorderThickness="0.7">
             <Grid MouseDown="BorderClick">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*"/>
@@ -16,12 +16,12 @@
                     <ColumnDefinition Width="*"/>
                 </Grid.ColumnDefinitions>
                 <Image Source="/Pictures/close.png" RenderOptions.BitmapScalingMode="HighQuality" IsHitTestVisible="False"  Grid.Column="2" Margin="105,5,10,84" />
-                <Button BorderBrush="Transparent" Background="Transparent" Click="ExitClick" Cursor="Hand" Grid.Column="2" Width="11" Height="11" Margin="108,5,14,84"/>
-                
-                
-                <Button Grid.Column="0" Height="45" Width="110" Content="PDF" FontSize="20" Background="#FF7B4BA5" FontFamily="Calibri" Click="PdfClick"/>
-                <Button Grid.Column="1" Height="45" Width="110" Content="Excel" FontSize="20" Background="#FF7B4BA5" FontFamily="Calibri" Click="ExcelClick"/>
-                <Button Grid.Column="2" Height="45" Width="110" Content="Json" FontSize="20" Background="#FF7B4BA5" FontFamily="Calibri" Click="JsonClick"/>
+                <Button BorderBrush="Transparent" Background="Transparent" Click="ExitClick" Cursor="Hand" Grid.Column="2" Height="10" Width="10" VerticalAlignment="Top" Margin="109,5,14,0" />
+
+
+                <Button Grid.Column="0"  Content="PDF" Width="120" Height="55" Style="{StaticResource ButtonSign}" Click="PdfClick"/>
+                <Button Grid.Column="1" Content="Excel" Width="120" Height="55" Style="{StaticResource ButtonSign}"  Click="ExcelClick"/>
+                <Button Grid.Column="2"  Content="Json" Width="120" Height="55" Style="{StaticResource ButtonSign}"  Click="JsonClick"/>
             </Grid>
         </Border>
     </Grid>

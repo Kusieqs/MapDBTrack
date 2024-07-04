@@ -24,6 +24,7 @@
                 <Image Source="/Pictures/info.png" Width="17" Height="17" Margin="15,10,268,117"  RenderOptions.BitmapScalingMode="HighQuality" IsHitTestVisible="False"/>
                 <Button Background="Transparent" BorderBrush="Transparent" Width="17" Height="17" Margin="15,10,268,117" Click="Information"/>
                 <TextBlock Text="MapDBTrack" FontSize="50" FontWeight="Bold" Foreground="#FF7B4BA5" HorizontalAlignment="Left" VerticalAlignment="Center" FontFamily="Calibri" Margin="15,0,0,0"/>
+                
                 <Border Grid.Row="1" Background="#FF7B4BA5" CornerRadius="0,120,0,13">
                     <Grid>
                         <Grid.RowDefinitions>
@@ -31,6 +32,7 @@
                             <RowDefinition Height="505*"/>
                         </Grid.RowDefinitions>
                         <Image Source="/Pictures/Map.png" Grid.Row="0" IsHitTestVisible="False" RenderOptions.BitmapScalingMode="HighQuality" Margin="56,14,57,500" Grid.RowSpan="2"/>
+                        
                         <Border Grid.Row="1">
                             <Grid x:Name="menuButtons">
                                 <Grid.ColumnDefinitions>
@@ -49,19 +51,19 @@
                                 <TextBlock x:Name="LoginName" Foreground="White" FontWeight="DemiBold" TextAlignment="Center" VerticalAlignment="Top" FontSize="22"  FontFamily="Calibri" Grid.ColumnSpan="2" Margin="15,19,15,0" Grid.RowSpan="2" />
 
 
-                                <Button x:Name="Map" Grid.Row="2" Grid.ColumnSpan="2" Grid.Column="0" Style="{StaticResource ButtonRounded}" Click="MapClick"/>
+                                <Button x:Name="Map" Grid.Row="2" Grid.ColumnSpan="2" Grid.Column="0" Style="{StaticResource MainMenuButton}" Click="MapClick"/>
                                 <Image Source="/Pictures/Pin.png" Grid.Row="2" Width="65" IsHitTestVisible="False" RenderOptions.BitmapScalingMode="HighQuality"/>
                                 <TextBlock Text="Map" Grid.Row="2" Grid.Column="1" Style="{StaticResource TextBlocks}" IsHitTestVisible="False"/>
 
-                                <Button x:Name="Customer"  Grid.Row="3" Grid.ColumnSpan="2" Grid.Column="0" Style="{StaticResource ButtonRounded}" Click="CustomersClick"/>
+                                <Button x:Name="Customer"  Grid.Row="3" Grid.ColumnSpan="2" Grid.Column="0" Style="{StaticResource MainMenuButton}" Click="CustomersClick"/>
                                 <Image Source="/Pictures/Customer.png" Grid.Row="3" Width="60" IsHitTestVisible="False" RenderOptions.BitmapScalingMode="HighQuality"/>
                                 <TextBlock Text="Customers" Grid.Row="3" Grid.Column="1" Style="{StaticResource TextBlocks}" IsHitTestVisible="False"/>
 
-                                <Button x:Name="Logout" Grid.Row="4" Grid.ColumnSpan="2" Grid.Column="0" Style="{StaticResource ButtonRounded}" Click="LogoutClick"/>
+                                <Button x:Name="Logout" Grid.Row="4" Grid.ColumnSpan="2" Grid.Column="0" Style="{StaticResource MainMenuButton}" Click="LogoutClick"/>
                                 <Image Source="/Pictures/Logout.png" Grid.Row="4" IsHitTestVisible="False" RenderOptions.BitmapScalingMode="HighQuality" Margin="21,0,13,0"/>
                                 <TextBlock Text="Log out" Grid.Row="4" Grid.Column="1" Style="{StaticResource TextBlocks}" IsHitTestVisible="False"/>
 
-                                <Button x:Name="Exit" Grid.Row="5" Grid.ColumnSpan="2" Grid.Column="0" Style="{StaticResource ButtonRounded}" Click="ExitClick"/>
+                                <Button x:Name="Exit" Grid.Row="5" Grid.ColumnSpan="2" Grid.Column="0" Style="{StaticResource MainMenuButton}" Click="ExitClick"/>
                                 <Image Source="/Pictures/Exit.png" Grid.Row="5"  IsHitTestVisible="False" RenderOptions.BitmapScalingMode="HighQuality" Margin="8,10,10,11"/>
                                 <TextBlock Text="Exit" Grid.Row="5" Grid.Column="1" Style="{StaticResource TextBlocks}" IsHitTestVisible="False"/>
 

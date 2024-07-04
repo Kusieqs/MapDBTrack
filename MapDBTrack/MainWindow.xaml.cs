@@ -147,7 +147,7 @@ namespace MapDBTrack
 
             // creating button to add pin
             adding = new Button();
-            adding.Style = FindResource("ButtonsAddPins") as Style;
+            adding.Style = FindResource("ButtonAddPins") as Style;
             adding.Click += AddPin;
             System.Windows.Controls.Image imageAdd = new System.Windows.Controls.Image
             {
@@ -163,7 +163,7 @@ namespace MapDBTrack
 
             // creating button do remove pin
             removing = new Button();
-            removing.Style = FindResource("ButtonsRemovePins") as Style;
+            removing.Style = FindResource("ButtonRemovePins") as Style;
             removing.Click += RemovePin;
             System.Windows.Controls.Image imageRemove = new System.Windows.Controls.Image
             {
@@ -229,7 +229,7 @@ namespace MapDBTrack
             personalBtn = new Button()
             {
                 Content = "Personal",
-                Style = FindResource("tabButton") as Style,
+                Style = FindResource("TabButton") as Style,
                 Width = 78,
                 Margin = new Thickness(0, 0, 20, 0),
                 FontFamily = new FontFamily("Calibri"),
@@ -242,7 +242,7 @@ namespace MapDBTrack
             addressBtn = new Button()
             {
                 Content = "Address",
-                Style = FindResource("tabButton") as Style,
+                Style = FindResource("TabButton") as Style,
                 Width = 78,
                 FontFamily = new FontFamily("Calibri"),
                 BorderBrush = Brushes.Transparent,

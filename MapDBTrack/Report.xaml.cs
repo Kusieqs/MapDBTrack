@@ -2,8 +2,6 @@
 using PdfSharpCore.Drawing;
 using PdfSharpCore.Pdf;
 using System.IO;
-using System.Numerics;
-using System.Text.Json.Serialization;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
@@ -12,9 +10,7 @@ namespace MapDBTrack
 {
     public partial class Report : Window
     {
-        string desktop = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
-
-
+        string desktop = Environment.GetFolderPath(Environment.SpecialFolder.Desktop); // Path to dekstop
         public Report()
         {
             InitializeComponent();
@@ -23,6 +19,7 @@ namespace MapDBTrack
         {
             List<Place> places = ListCreate();
 
+            // Creating PDF document
             PdfDocument pdf = new PdfDocument();
             PdfPage page = pdf.AddPage();
             XGraphics gfx = XGraphics.FromPdfPage(page);
@@ -31,6 +28,7 @@ namespace MapDBTrack
             int x = 10;
             int lineHeight = 24;
 
+            // Setting information about customer to page
             foreach (var item in places)
             {
                 if(y + lineHeight > page.Height.Point - 25)
@@ -83,7 +81,7 @@ namespace MapDBTrack
             }
             pdf.Save(Path.Combine(desktop, "Report_PDF.pdf"));
             MessageBox.Show("The file has been saved", "Information", MessageBoxButton.OK, MessageBoxImage.Information);
-            this.Close();
+            Close();
         } // Creating PDF file 
         private void ExcelClick(object sender, RoutedEventArgs e)
         {
@@ -129,7 +127,7 @@ namespace MapDBTrack
             }
             MessageBox.Show("The file has been saved", "Information", MessageBoxButton.OK, MessageBoxImage.Information);
             this.Close();
-        }
+        } // Creating Excel file (This is not the final version, just a test version)
         private void JsonClick(object sender, RoutedEventArgs e)
         {
             List<Place> places = ListCreate();
@@ -137,10 +135,12 @@ namespace MapDBTrack
             File.WriteAllText(Path.Combine(desktop,"Report_Json.json"), json);
             MessageBox.Show("The file has been saved", "Information", MessageBoxButton.OK, MessageBoxImage.Information);
             this.Close();
-        } // Creating json file
+        } // Creating Json file
         private List<Place> ListCreate()
         {
             List<Place> places = new List<Place>();
+
+            // creating list to report from scroll viewer
             for (int i = 0; i < MainWindow.customer.Children.Count; i++)
             {
                 Border border = MainWindow.customer.Children[i] as Border;
@@ -150,16 +150,16 @@ namespace MapDBTrack
                 places.Add(p1);
             }
             return places;
-        }
+        } // List of customers
         private void ExitClick(object sender, RoutedEventArgs e)
         {
             this.Close();
-        } // exit method
+        } // Exit method
         private void BorderClick(object sender, MouseButtonEventArgs e)
         {
             if (e.ChangedButton == MouseButton.Left)
                 this.DragMove();
-        } // feature to moving window
+        } // Feature to moving window
 
     }
 }

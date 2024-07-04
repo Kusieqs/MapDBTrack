@@ -13,6 +13,8 @@ namespace MapDBTrack
 
     public static class HelpingClass
     {
+        public const string connectString = ""; // Connect string to DB
+        public const string connectMap = ""; // Key API to bing maps
         public const string version = "1.1"; // Version of program
         public readonly static string[] engExp =
         {
