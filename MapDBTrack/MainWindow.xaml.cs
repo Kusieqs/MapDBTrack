@@ -299,7 +299,7 @@ namespace MapDBTrack
             search = new TextBox()
             {
                 Height = 35,
-                Margin = new Thickness(16, 14, 800, 7),
+                Margin = new Thickness(60, 14, 800, 7),
                 FontSize = 20,
                 FontFamily = new FontFamily("Calibri"),
                 Foreground = new SolidColorBrush("#FF7B4BA5".ToColor()),
@@ -483,10 +483,11 @@ namespace MapDBTrack
                         map.Children.Remove(pushpin);
                         HelpingClass.RemoveRecordFromDB(customerPin);
                         listOfData.Remove(customerPin);
+                        removed = false;
+                        menuButtons.IsEnabled = true;
+                        adding.IsEnabled = true;
+                        Mouse.OverrideCursor = Cursors.Arrow;
                     }
-                    adding.IsEnabled = true;
-                    removed = false;
-                    Mouse.OverrideCursor = Cursors.Arrow;
                 }
             }
         } // Removing pin from map and DB
@@ -546,6 +547,7 @@ namespace MapDBTrack
         } // Creating stack panel for Theme 
         private ScrollViewer ScrollMode(List<Place> listOfCustomers)
         {
+
             // creating scroll viewer
             ScrollViewer scrollViewer = new ScrollViewer()
             {
@@ -553,83 +555,100 @@ namespace MapDBTrack
                 VerticalScrollBarVisibility = ScrollBarVisibility.Auto
             };
 
-            // Setting how many loops (it depends on customerMode)
-            int loops = customerMode == true ? 5 : 4;
-
-            // Creating StackPanel
-            customer = new StackPanel();
-
-            for (int i = 0 ; i < listOfCustomers.Count; i++)
+            if (listOfCustomers.Count == 0)
             {
-                // creating border for each StackPanel
-                Border borderStackPanel = new Border()
+                // Special TextBlock if list is empty
+                TextBlock emptyList = new TextBlock()
                 {
-                    CornerRadius = new CornerRadius(10),
-                    Background = Brushes.LightGray,
-                    Height = 50,
-                    Margin = new Thickness(0, 5, 3, 5)
-                };
-
-                StackPanel informations = new StackPanel();
-                informations.Orientation = Orientation.Horizontal;
-
-                // Loop for each information depends on theme
-                for (int j = 0 ; j < loops; j++)
-                {
-                    TextBlock info = new TextBlock()
-                    {
-                        FontSize = 17,
-                        Width = 190,
-                        HorizontalAlignment = HorizontalAlignment.Center,
-                        VerticalAlignment = VerticalAlignment.Center,
-                        TextAlignment = TextAlignment.Center
-                    };
-
-                    if (!customerMode && (j == 1 || j == 3))
-                        info.Width = 285;
-
-                    info.Text = HelpingClass.DescritpionScrollView(listOfCustomers,customerMode, j, i);
-                    informations.Children.Add(info);
-                }
-
-                // adding contextmenu for each customer
-                contextMenu = new ContextMenu();
-                for(int j = 0; j < 2; j ++)
-                {
-                    MenuItem menuItem = new MenuItem()
-                    {
-                        Header = j == 0 ? "Edit customer" : "Delete customer",
-                    };
-                    menuItem.Click += ContextMenu;
-                    contextMenu.Items.Add(menuItem);
-                }
-
-                // Creating image for menu button
-                Image buttonMenu = new Image()
-                {
-                    Margin = new Thickness(3),
-                    Source = new BitmapImage(new Uri("pack://application:,,,/MapDBTrack;component/Pictures/menu.png"))
-                };
-                RenderOptions.SetBitmapScalingMode(buttonMenu, BitmapScalingMode.HighQuality);
-
-                // Button for contextmenu
-                Button menu = new Button()
-                {
-                    HorizontalAlignment = HorizontalAlignment.Right,
+                    Text = "Empty List",
+                    FontFamily = new FontFamily("Calibri"),
+                    FontSize = 70,
                     VerticalAlignment = VerticalAlignment.Center,
-                    Margin = new Thickness(37, 0, 0, 0),
-                    ContextMenu = contextMenu,
-                    Name = listOfCustomers[i].customer_id,
-                    Style = FindResource("ButtonMenu") as Style,
-                    Content = buttonMenu,
+                    HorizontalAlignment = HorizontalAlignment.Center,
+                    Foreground = new SolidColorBrush("#FF7B4BA5".ToColor())
                 };
-                menu.Click += OpenContextMenu;
-                informations.Children.Add(menu);
-
-                borderStackPanel.Child = informations;
-                customer.Children.Add(borderStackPanel);
+                scrollViewer.Content = emptyList;
             }
-            scrollViewer.Content = customer;
+            else
+            {
+                // Setting how many loops (it depends on customerMode)
+                int loops = customerMode == true ? 5 : 4;
+
+                // Creating StackPanel
+                customer = new StackPanel();
+
+                for (int i = 0; i < listOfCustomers.Count; i++)
+                {
+                    // creating border for each StackPanel
+                    Border borderStackPanel = new Border()
+                    {
+                        CornerRadius = new CornerRadius(10),
+                        Background = Brushes.LightGray,
+                        Height = 50,
+                        Margin = new Thickness(0, 5, 3, 5)
+                    };
+
+                    StackPanel informations = new StackPanel();
+                    informations.Orientation = Orientation.Horizontal;
+
+                    // Loop for each information depends on theme
+                    for (int j = 0; j < loops; j++)
+                    {
+                        TextBlock info = new TextBlock()
+                        {
+                            FontSize = 17,
+                            Width = 190,
+                            HorizontalAlignment = HorizontalAlignment.Center,
+                            VerticalAlignment = VerticalAlignment.Center,
+                            TextAlignment = TextAlignment.Center
+                        };
+
+                        if (!customerMode && (j == 1 || j == 3))
+                            info.Width = 285;
+
+                        info.Text = HelpingClass.DescritpionScrollView(listOfCustomers, customerMode, j, i);
+                        informations.Children.Add(info);
+                    }
+
+                    // adding contextmenu for each customer
+                    contextMenu = new ContextMenu();
+                    for (int j = 0; j < 2; j++)
+                    {
+                        MenuItem menuItem = new MenuItem()
+                        {
+                            Header = j == 0 ? "Edit customer" : "Delete customer",
+                        };
+                        menuItem.Click += ContextMenu;
+                        contextMenu.Items.Add(menuItem);
+                    }
+
+                    // Creating image for menu button
+                    Image buttonMenu = new Image()
+                    {
+                        Margin = new Thickness(3),
+                        Source = new BitmapImage(new Uri("pack://application:,,,/MapDBTrack;component/Pictures/menu.png"))
+                    };
+                    RenderOptions.SetBitmapScalingMode(buttonMenu, BitmapScalingMode.HighQuality);
+
+                    // Button for contextmenu
+                    Button menu = new Button()
+                    {
+                        HorizontalAlignment = HorizontalAlignment.Right,
+                        VerticalAlignment = VerticalAlignment.Center,
+                        Margin = new Thickness(37, 0, 0, 0),
+                        ContextMenu = contextMenu,
+                        Name = listOfCustomers[i].customer_id,
+                        Style = FindResource("ButtonMenu") as Style,
+                        Content = buttonMenu,
+                    };
+                    menu.Click += OpenContextMenu;
+                    informations.Children.Add(menu);
+
+                    borderStackPanel.Child = informations;
+                    customer.Children.Add(borderStackPanel);
+                    scrollViewer.Content = customer;
+                }
+            }
             return scrollViewer;
 
         } // Creating ScrollViewer for mode
