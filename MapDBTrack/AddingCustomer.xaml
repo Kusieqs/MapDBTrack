@@ -9,7 +9,7 @@
         Background="Transparent"
         Title="AddingCustomer" Height="880" Width="700" ResizeMode="NoResize" FontFamily="{DynamicResource MaterialDesignFont}">
     <Grid MouseDown="BorderClick">
-        <Border Background="White" CornerRadius="15,15,15,15">
+        <Border Background="White" CornerRadius="19,19,15,15">
             <Grid>
                 <Grid.RowDefinitions>
                     <RowDefinition Height="*"/>
@@ -40,14 +40,14 @@
                         <TextBox x:Name="FirstNameBox" FontWeight="DemiBold" Grid.Row="0" Grid.Column="0"  Height="45" Width="300" FontSize="15"  BorderThickness="0 0 0 1.5" Style="{StaticResource MaterialDesignFloatingHintTextBox}" materialDesign:HintAssist.Hint="Name"  materialDesign:HintAssist.FloatingOffset="0,-20" TextChanged="FirstChanged"/>
                         <TextBox x:Name="LastNameBox" FontWeight="DemiBold" Grid.Row="0" Grid.Column="1"  Height="45" Width="300" FontSize="15"  BorderThickness="0 0 0 1.5" Style="{StaticResource MaterialDesignFloatingHintTextBox}" materialDesign:HintAssist.Hint="Last name (optional)"  materialDesign:HintAssist.FloatingOffset="0,-20" TextChanged="LastChanged"/>
 
-                        <TextBlock x:Name="FirstNameError" Text="" Grid.Row="0" Grid.Column="0" Style="{StaticResource TextBlokcsError}" HorizontalAlignment="Left" Margin="25,68,0,0" VerticalAlignment="Top"/>
-                        <TextBlock x:Name="LastNameError" Text="" Grid.Row="0" Grid.Column="1" Style="{StaticResource TextBlokcsError}" HorizontalAlignment="Left" Margin="25,68,0,0" VerticalAlignment="Top"/>
+                        <TextBlock x:Name="FirstNameError" Text="" Grid.Row="0" Grid.Column="0" Style="{StaticResource TextBlocksError}" HorizontalAlignment="Left" Margin="25,68,0,0" VerticalAlignment="Top"/>
+                        <TextBlock x:Name="LastNameError" Text="" Grid.Row="0" Grid.Column="1" Style="{StaticResource TextBlocksError}" HorizontalAlignment="Left" Margin="25,68,0,0" VerticalAlignment="Top"/>
 
                         <TextBox x:Name="ContactBox" FontWeight="DemiBold" Grid.Row="1" Grid.Column="1" Height="45" Width="300" FontSize="15"  BorderThickness="0 0 0 1.5" Style="{StaticResource MaterialDesignFloatingHintTextBox}" materialDesign:HintAssist.Hint="Number"  materialDesign:HintAssist.FloatingOffset="0,-20" TextChanged="NumberChanged"/>
                         <TextBox x:Name="EmailBox" FontWeight="DemiBold" Grid.Row="1" Grid.Column="0" Height="45" Width="300" FontSize="15"  BorderThickness="0 0 0 1.5" Style="{StaticResource MaterialDesignFloatingHintTextBox}" materialDesign:HintAssist.Hint="Email (optional)"  materialDesign:HintAssist.FloatingOffset="0,-20" TextChanged="EmailChanged"/>
 
-                        <TextBlock x:Name="MailError" Text="" Grid.Row="1" Grid.Column="0" Style="{StaticResource TextBlokcsError}" HorizontalAlignment="Left" Margin="25,68,0,0" VerticalAlignment="Top"/>
-                        <TextBlock x:Name="ContactError" Text="" Grid.Row="1" Grid.Column="1" Style="{StaticResource TextBlokcsError}" HorizontalAlignment="Left" Margin="25,68,0,0" VerticalAlignment="Top"/>
+                        <TextBlock x:Name="MailError" Text="" Grid.Row="1" Grid.Column="0" Style="{StaticResource TextBlocksError}" HorizontalAlignment="Left" Margin="25,68,0,0" VerticalAlignment="Top"/>
+                        <TextBlock x:Name="ContactError" Text="" Grid.Row="1" Grid.Column="1" Style="{StaticResource TextBlocksError}" HorizontalAlignment="Left" Margin="25,68,0,0" VerticalAlignment="Top"/>
                     </Grid>
                 </Border>
 
@@ -67,14 +67,14 @@
                         <TextBox x:Name="ProvinceBox" FontWeight="DemiBold" Grid.Row="0" Grid.Column="0" Height="45" Width="300" FontSize="15"  BorderThickness="0 0 0 1.5" Style="{StaticResource MaterialDesignFloatingHintTextBox}" materialDesign:HintAssist.Hint="Province (optional)"  materialDesign:HintAssist.FloatingOffset="0,-20" TextChanged="ProvinceChanged"/>
                         <TextBox x:Name="CityBox" FontWeight="DemiBold" Grid.Row="0" Grid.Column="1" Height="45" Width="300" FontSize="15"  BorderThickness="0 0 0 1.5" Style="{StaticResource MaterialDesignFloatingHintTextBox}" materialDesign:HintAssist.Hint="City"  materialDesign:HintAssist.FloatingOffset="0,-20" TextChanged="CityChanged"/>
 
-                        <TextBlock x:Name="ProvinceError" Text="" Grid.Row="0" Grid.Column="0" Style="{StaticResource TextBlokcsError}" HorizontalAlignment="Left" Margin="25,68,0,0" VerticalAlignment="Top"/>
-                        <TextBlock x:Name="CityError" Text="" Grid.Row="0" Grid.Column="1" Style="{StaticResource TextBlokcsError}" HorizontalAlignment="Left" Margin="25,68,0,0" VerticalAlignment="Top"/>
+                        <TextBlock x:Name="ProvinceError" Text="" Grid.Row="0" Grid.Column="0" Style="{StaticResource TextBlocksError}" HorizontalAlignment="Left" Margin="25,68,0,0" VerticalAlignment="Top"/>
+                        <TextBlock x:Name="CityError" Text="" Grid.Row="0" Grid.Column="1" Style="{StaticResource TextBlocksError}" HorizontalAlignment="Left" Margin="25,68,0,0" VerticalAlignment="Top"/>
 
                         <TextBox x:Name="PostalCodeBox" FontWeight="DemiBold" Grid.Row="1" Grid.Column="0" Height="45" Width="300" FontSize="15"  BorderThickness="0 0 0 1.5" Style="{StaticResource MaterialDesignFloatingHintTextBox}" materialDesign:HintAssist.Hint="Postal code"  materialDesign:HintAssist.FloatingOffset="0,-20" TextChanged="PostalChanged"/>
                         <TextBox x:Name="StreetBox" FontWeight="DemiBold" Grid.Row="1" Grid.Column="1" Height="45" Width="300" FontSize="15"  BorderThickness="0 0 0 1.5" Style="{StaticResource MaterialDesignFloatingHintTextBox}" materialDesign:HintAssist.Hint="Street"  materialDesign:HintAssist.FloatingOffset="0,-20" TextChanged="StreetChanged"/>
 
-                        <TextBlock x:Name="PostalError" Text="" Grid.Row="1" Grid.Column="0" Style="{StaticResource TextBlokcsError}" HorizontalAlignment="Left" Margin="25,68,0,0" VerticalAlignment="Top"/>
-                        <TextBlock x:Name="StreetError" Text="" Grid.Row="1" Grid.Column="1" Style="{StaticResource TextBlokcsError}" HorizontalAlignment="Left" Margin="25,68,0,0" VerticalAlignment="Top"/>
+                        <TextBlock x:Name="PostalError" Text="" Grid.Row="1" Grid.Column="0" Style="{StaticResource TextBlocksError}" HorizontalAlignment="Left" Margin="25,68,0,0" VerticalAlignment="Top"/>
+                        <TextBlock x:Name="StreetError" Text="" Grid.Row="1" Grid.Column="1" Style="{StaticResource TextBlocksError}" HorizontalAlignment="Left" Margin="25,68,0,0" VerticalAlignment="Top"/>
 
                         <TextBox x:Name="LatitudeBox" FontWeight="DemiBold" Grid.Row="2" Grid.Column="0" IsEnabled="False" Height="45" Width="300" FontSize="15"  BorderThickness="0 0 0 1.5" Style="{StaticResource MaterialDesignFloatingHintTextBox}" materialDesign:HintAssist.Hint="Latitude"  materialDesign:HintAssist.FloatingOffset="0,-20"/>
                         <TextBox x:Name="LongitudeBox" FontWeight="DemiBold" Grid.Row="2" Grid.Column="1"  IsEnabled="False" Height="45" Width="300" FontSize="15"  BorderThickness="0 0 0 1.5" Style="{StaticResource MaterialDesignFloatingHintTextBox}" materialDesign:HintAssist.Hint="Longitude"  materialDesign:HintAssist.FloatingOffset="0,-20"/>
@@ -82,10 +82,12 @@
                 </Border>
 
 
-                <TextBlock Grid.Row="6" Text="Description" FontSize="45" Foreground="#FF7B4BA5" FontWeight="Bold" VerticalAlignment="Top" HorizontalAlignment="Center" Margin="0,6,0,0" FontFamily="Calibri" Height="55" Width="214"/>
+                <TextBlock Grid.Row="6" Text="Description" FontSize="45" Foreground="#FF7B4BA5" FontWeight="Bold" FontFamily="Calibri"  VerticalAlignment="Top" HorizontalAlignment="Center" Margin="0,6,0,0"  Height="55" Width="214"/>
                 <TextBlock Grid.Row="6" Text="(optional)" FontSize="20" Foreground="#FF7B4BA5" FontWeight="DemiBold" FontFamily="Calibri"  VerticalAlignment="Top" HorizontalAlignment="Center" Margin="0,56,0,0" Height="25" Width="82"/>
+                <TextBlock x:Name="CountChars" Grid.Row="6" Text="0" FontSize="15" Foreground="#FF7B4BA5" FontWeight="DemiBold" FontFamily="Calibri" TextAlignment="Right"  Margin="622,86,54,139" Grid.RowSpan="2"/>
+                <TextBlock Grid.Row="6" Text="/150" FontSize="15" Foreground="#FF7B4BA5" FontWeight="DemiBold" FontFamily="Calibri" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="647,86,0,0" Grid.RowSpan="2"/>
 
-                <TextBox x:Name="DescriptionBox" Grid.Row="7" Style="{StaticResource RoundedTextBoxDesc}" Margin="10,12,10,12"/>
+                <TextBox x:Name="DescriptionBox" Grid.Row="7" Style="{StaticResource RoundedTextBoxDesc}" Margin="10,12,10,12" MaxLines="20" MaxLength="150" TextChanged="TextChangedLines"/>
 
                 <Border Grid.Row="8" Grid.Column="0" Grid.ColumnSpan="2">
                     <Grid>

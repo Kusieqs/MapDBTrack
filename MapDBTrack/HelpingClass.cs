@@ -1,77 +1,81 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Net;
 using System.Windows;
 using System.Net.Mail;
 using System.Data.SqlClient;
-using System.Printing;
-using System.Drawing;
 using System.Windows.Controls;
 using Microsoft.Maps.MapControl.WPF;
 using System.Globalization;
 using System.IO;
 using System.Runtime.Serialization.Json;
-using System.Windows.Controls.Primitives;
-using System.Security.Cryptography.Pkcs;
 
 namespace MapDBTrack
 {
 
     public static class HelpingClass
     {
-        public const string version = "1.1";
-        public static string[] engExp = new string[]
+        public const string connectString = ""; // Connect string to DB
+        public const string connectMap = ""; // Key API to bing maps
+        public const string version = "1.1"; // Version of program
+        public readonly static string[] engExp =
         {
             "Field is empty",
             "Wrong field format",
             "String is too long",
-        };
+            "Error",
+        };  // String exceptions
         
         public static bool NetworkCheck(Window window)
         {
             while(true)
             {
                 var client = new WebClient();
-                var stream = client.OpenRead("http://www.google.com");
-                if (stream == null)
-                {
-                    client.Dispose();
-                    stream.Close();
-                    MessageBoxResult result = MessageBox.Show("No internet connection\nDo you want try again?", "Error", MessageBoxButton.YesNo, MessageBoxImage.Error);
 
-                    if(result == MessageBoxResult.Yes)
-                        continue;
-                    else
-                        window.Close();
+                // open stream google.com
+                using(var stream = client.OpenRead("http://www.google.com"))
+                {
+                    // if it is no conncetion internet then messagebox will show
+                    if (stream == null)
+                    {
+                        MessageBoxResult result = MessageBox.Show("No internet connection\nDo you want try again?", "Error", MessageBoxButton.YesNo, MessageBoxImage.Error);
+
+                        // trying to connect one more time
+                        if (result == MessageBoxResult.Yes)
+                            continue;
+                        else
+                            window.Close();
+                    }
+                    break;
                 }
-                break;
             }
             return true;
-        } // Checking connection with wifi
+        } // Checking connection with internet
         public static void SendingPassword(string login)
         {
             string passwordReminder = "", employeeEmail = "";
-            string query = $"Select password, email From Employee Where login = '{login}'";
+            string query = $"Select password, email From Employee Where login = '{login}'"; // query to DB
+            string mail = "t75102442@gmail.com"; // Special admin mail to sending mail to employee
+            string pass = "gezf aeiw utwg ovnb"; // Special key of mail
+            int smtpPort = 587; // port of mail
 
-            SqlConnection connect = new SqlConnection(connectString);
-            connect.Open();
-            SqlCommand command = new SqlCommand(query,connect);
-            SqlDataReader reader = command.ExecuteReader();
-
-            if(reader.Read())
+            // open connection with DB
+            using (SqlConnection connect = new SqlConnection(connectString))
             {
-                passwordReminder = reader.GetString(0);
-                employeeEmail = reader.GetString(1);
+                connect.Open();
+                SqlCommand command = new SqlCommand(query, connect);
+                
+                using(SqlDataReader reader = command.ExecuteReader())
+                {
+                    // reading informations about employee
+                    if (reader.Read())
+                    {
+                        passwordReminder = reader.GetString(0);
+                        employeeEmail = reader.GetString(1);
+                    }
+                }
+
             }
-            
 
-            string mail = "t75102442@gmail.com";
-            string pass = "gezf aeiw utwg ovnb";
-            int smtpPort = 587;
-
+            // Theme of mail and body
             MailMessage message = new MailMessage()
             {
                 From = new MailAddress(mail),
@@ -80,6 +84,7 @@ namespace MapDBTrack
             };
             message.To.Add(new MailAddress(employeeEmail));
 
+            // Setting mail properties
             var smtClient = new SmtpClient("smtp.gmail.com")
             {
                 Port = smtpPort,
@@ -87,20 +92,21 @@ namespace MapDBTrack
                 EnableSsl = true
             };
 
+            // sending email to employee 
             smtClient.Send(message);
 
         } // Sending password reminder to user email
         public static void CleanGrid(Grid grid)
         {
-            // Usunięcie wszystkich dzieci z Grid
+            // Deleting all childrens from gird
             grid.Children.Clear();
 
-            // Wyczyść definicje wierszy
+            // Deleting all rows
             grid.RowDefinitions.Clear();
 
-            // Wyczyść definicje kolumn
+            // Deleting all columns
             grid.ColumnDefinitions.Clear();
-        } // cleaning Grid 
+        } // Cleaning Grid 
         public static RootObject ReadLocation(Location location)
         {
             WebClient webClient = new WebClient();
@@ -113,21 +119,20 @@ namespace MapDBTrack
         } // Reading locations when employee will click on map
         public static void AddingNewCustomer(Place customer)
         {
-            string queryCustomer = $"Insert Into Customer (id, employee_id, contact_number, first_name, last_name, description, email)";
-            string valuesCustomer = $"\nValues ('{customer.customer_id}', {customer.employee_id}, '{customer.contact_number}', '{customer.first_name}', '{customer.last_name}', '{customer.description}', '{customer.email}')";
-            
-            string queryPlace = $"INSERT INTO Place (customer_id, province, city, postal_code, street, latitude, longitude)";
-            string valuesPlace = $"\nValues ('{customer.customer_id}', '{customer.province}', '{customer.city}', '{customer.postal_code}', '{customer.street}', {customer.latitude.ToString().Replace(',','.')}, {customer.longitude.ToString().Replace(',','.')})";
-            queryCustomer += valuesCustomer;
-            queryPlace += valuesPlace;
+            string queryCustomer = $"Insert Into Customer (id, employee_id, contact_number, first_name, last_name, description, email)" + // Query to customer
+            $"\nValues ('{customer.customer_id}', {customer.employee_id}, '{customer.contact_number}', '{customer.first_name}', '{customer.last_name}', '{customer.description}', '{customer.email}')";
+            string queryPlace = $"INSERT INTO Place (customer_id, province, city, postal_code, street, latitude, longitude)" + // Query to employee 
+            $"\nValues ('{customer.customer_id}', '{customer.province}', '{customer.city}', '{customer.postal_code}', '{customer.street}', {customer.latitude.ToString().Replace(',', '.')}, {customer.longitude.ToString().Replace(',', '.')})";
 
-            SqlConnection sqlConnection = new SqlConnection(connectString);
-            sqlConnection.Open();
-            SqlCommand command = new SqlCommand(queryCustomer, sqlConnection);
-            command.ExecuteNonQuery();
-            SqlCommand command1 = new SqlCommand(queryPlace, sqlConnection);
-            command1.ExecuteNonQuery();
-            sqlConnection.Close();
+            // Open stream to DB
+            using(SqlConnection sqlConnection = new SqlConnection(connectString))
+            {
+                sqlConnection.Open();
+                SqlCommand commandCustomer = new SqlCommand(queryCustomer, sqlConnection);
+                commandCustomer.ExecuteNonQuery();
+                SqlCommand commandPlace = new SqlCommand(queryPlace, sqlConnection);
+                commandPlace.ExecuteNonQuery();
+            }
 
         } // Adding new customer to DB
         public static void EditCustomer(Place customer)
@@ -139,7 +144,7 @@ namespace MapDBTrack
                         $"last_name = '{customer.last_name}', " +
                         $"description = '{customer.description}', " +
                         $"email = '{customer.email}' " +
-                        $"WHERE id = '{customer.customer_id}'";
+                        $"WHERE id = '{customer.customer_id}'"; // Query to edit customer
 
             string updatePlace = $"UPDATE Place SET " +
                      $"province = '{customer.province}', " +
@@ -148,49 +153,54 @@ namespace MapDBTrack
                      $"street = '{customer.street}', " +
                      $"latitude = {customer.latitude.ToString().Replace(',', '.')}, " +
                      $"longitude = {customer.longitude.ToString().Replace(',', '.')}" +
-                     $"WHERE customer_id = '{customer.customer_id}'";
+                     $"WHERE customer_id = '{customer.customer_id}'"; // Query to edit place
 
-            SqlConnection sqlConnection = new SqlConnection(connectString);
-            sqlConnection.Open();
-            SqlCommand command = new SqlCommand(updateCustomer, sqlConnection);
-            command.ExecuteNonQuery();
-            SqlCommand command1 = new SqlCommand(updatePlace, sqlConnection);
-            command1.ExecuteNonQuery();
-            sqlConnection.Close();
-        }
+            // open stream to DB
+            using(SqlConnection sqlConnection = new SqlConnection(connectString))
+            {
+                sqlConnection.Open();
+                SqlCommand commandCustomer = new SqlCommand(updateCustomer, sqlConnection);
+                commandCustomer.ExecuteNonQuery();
+                SqlCommand commandPlace = new SqlCommand(updatePlace, sqlConnection);
+                commandPlace.ExecuteNonQuery();
+            };
+        } // Sending new infromations to DB
         public static List<Place> LoadingPlace(int id)
         {
+            string query = $"SELECT * FROM Customer c RIGHT JOIN Place p ON c.id = p.Customer_Id WHERE employee_id = {id}"; // Query to join to tables
             List<Place> places = new List<Place>();
-            string query = $"SELECT * FROM Customer c RIGHT JOIN Place p ON c.id = p.Customer_Id WHERE employee_id = {id}";
 
-            SqlConnection sqlConnection = new SqlConnection(connectString);
-            sqlConnection.Open();
-            SqlCommand command = new SqlCommand(query, sqlConnection);
-            SqlDataReader reader = command.ExecuteReader();
-
-            while (reader.Read())
+            // Open stream to DB
+            using (SqlConnection sqlConnection = new SqlConnection(connectString))
             {
-                Place p1 = new Place(
-                    reader.GetInt32(1),
-                    reader.GetString(2),
-                    reader.GetString(3),
-                    reader.GetString(4),
-                    reader.GetString(5),
-                    reader.GetString(6),
-                    reader.GetString(7),
-                    reader.GetString(8),
-                    reader.GetString(9),
-                    reader.GetString(10),
-                    reader.GetString(11),
-                    Convert.ToDouble(reader.GetDecimal(12)),
-                    Convert.ToDouble(reader.GetDecimal(13)));
+                sqlConnection.Open();
+                SqlCommand command = new SqlCommand(query, sqlConnection);
+                using (SqlDataReader reader = command.ExecuteReader())
+                {
+                    // Adding new place to list
+                    while (reader.Read())
+                    {
+                        Place p1 = new Place(
+                            reader.GetInt32(1),
+                            reader.GetString(2),
+                            reader.GetString(3),
+                            reader.GetString(4),
+                            reader.GetString(5),
+                            reader.GetString(6),
+                            reader.GetString(7),
+                            reader.GetString(8),
+                            reader.GetString(9),
+                            reader.GetString(10),
+                            reader.GetString(11),
+                            Convert.ToDouble(reader.GetDecimal(12)),
+                            Convert.ToDouble(reader.GetDecimal(13)));
 
-                places.Add(p1);
+                        places.Add(p1);
+                    }
+                }
             }
 
-            reader.Close();
-            sqlConnection.Close();
-
+            // returning list
             if (places.Count == 0)
                 return new List<Place>();
             else
@@ -199,11 +209,12 @@ namespace MapDBTrack
         } // Loading data to list
         public static string GetDescTool(Place p1)
         {
-            string info = $"Name: {p1.first_name}";
-            info += string.IsNullOrEmpty(p1.last_name) ? "\n" : $"\nLast name: {p1.last_name}\n";
-            info += string.IsNullOrEmpty(p1.email) ? $"Nr: {p1.contact_number}\n" : $"Nr: {p1.contact_number}\nEmail: {p1.email}\n";
-            info += $"{p1.city} {p1.postal_code} {p1.street} {p1.province}";
+            string info = $"Name: {p1.first_name}"; // name of customer
+            info += string.IsNullOrEmpty(p1.last_name) ? "\n" : $"\nLast name: {p1.last_name}\n"; // last name of customer
+            info += string.IsNullOrEmpty(p1.email) ? $"Nr: {p1.contact_number}\n" : $"Nr: {p1.contact_number}\nEmail: {p1.email}\n"; // Contact number and email of customer
+            info += $"{p1.city} {p1.postal_code} {p1.street} {p1.province}"; // Address of customer
 
+            // Setting description in fine format
             if(!string.IsNullOrEmpty(p1.description))
             {
                 string desc = "";
@@ -221,57 +232,52 @@ namespace MapDBTrack
                 info += "\n\n" + desc;
             }
             return info;
-        }
+        } // Descripiton on the map
         public static string GetIdFromDB()
         {
-            string id = "";
             while (true)
             {
                 Random random = new Random();
-                string alfa = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
-                id = "";
+                string alfa = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz"; // Chars to ID
+                string id = ""; // id of customer
 
+                // creating ID
                 for (int i = 0; i < 8; i++)
                 {
                     id += alfa[random.Next(0, alfa.Length)];
                 }
 
-                SqlConnection sql = new SqlConnection(connectString);
-                string query = $"Select id From Customer Where id = '{id}'";
-                sql.Open();
-                SqlCommand sqlCommand = new SqlCommand(query, sql);
-                SqlDataReader read = sqlCommand.ExecuteReader();
+                string query = $"Select id From Customer Where id = '{id}'"; // Query to search clone Id
 
-                if (!read.HasRows)
+                // Creating stream to DB
+                using(SqlConnection sql = new SqlConnection(connectString))
                 {
-                    sql.Close();
-                    read.Close();
-                    break;
+                    sql.Open();
+                    SqlCommand sqlCommand = new SqlCommand(query, sql);
+                    using(SqlDataReader read = sqlCommand.ExecuteReader())
+                    {
+                        // if ID is not in DB than we return correct ID
+                        if (!read.HasRows)
+                            return id;
+                    }
                 }
-                sql.Close();
-                read.Close();
             }
-            return id;
-
-        }
-        public static string Exceptions(int num)
-        {
-            string[] exp = engExp; // warunek czy pol czy eng
-            return exp[num];
-        } // excpetions words
+        } // Setting random ID
         public static void RemoveRecordFromDB(Place p1)
         {
+            string queryPlace = $"DELETE FROM Place WHERE customer_id = '{p1.customer_id}'" + 
+            $"\nDELETE FROM Customer WHERE id = '{p1.customer_id}'"; // Query to Delete customer
+            // Creating Stream to DB
             using (SqlConnection sql = new SqlConnection(connectString))
             {
-                string queryPlace = $"DELETE FROM Place WHERE customer_id = '{p1.customer_id}'" ;
-                string queryCustomer = $"\nDELETE FROM Customer WHERE id = '{p1.customer_id}'";
-                SqlCommand sqlCommand = new SqlCommand(queryPlace+queryCustomer , sql);
+                SqlCommand sqlCommand = new SqlCommand(queryPlace, sql);
                 sql.Open();
                 sqlCommand.ExecuteNonQuery();
             }
-        }
+        } // Removing record from DB
         public static string DescritpionScrollView(List<Place> customers,bool mode, int loop, int positionOfPlace)
         {
+            // Personal mode
             if (mode)
             {
                 switch (loop)
@@ -287,9 +293,10 @@ namespace MapDBTrack
                     case 4:
                         return customers[positionOfPlace].contact_number;
                     default:
-                        return "Error";
+                        return engExp[3];
                 }
             }
+            // Address mode
             else
             {
                 switch (loop)
@@ -303,12 +310,13 @@ namespace MapDBTrack
                     case 3:
                         return customers[positionOfPlace].street;
                     default:
-                        return "Error";
+                        return engExp[3];
                 }
             }
-        } // special information for scroll view
+        } // Special information for scroll view
         public static string DescriptionStackPanel(bool mode, int loop)
         {
+            // Personal mode
             if (mode)
             {
                 switch (loop)
@@ -324,9 +332,10 @@ namespace MapDBTrack
                     case 4:
                         return "NUMBER";
                     default:
-                        return "Error";
+                        return engExp[3];
                 }
             }
+            // Address mode
             else
             {
                 switch (loop)
@@ -340,10 +349,15 @@ namespace MapDBTrack
                     case 3:
                         return "STREET";
                     default:
-                        return "Error";
+                        return engExp[3];
                 }
             }
-        } // theme description for scroll view
+        } // Theme description for scroll view
+        public static void InformationsAboutProgram()
+        {
+            string info = $"Version: {version}\nContact: kus.konrad1@gmail.com\nLicense: MapDBTrack Commercial Use License";
+            MessageBox.Show(info, "Information", MessageBoxButton.OK, MessageBoxImage.Information);
+        } // Information MessageBox
     }
 
 }

@@ -26,7 +26,6 @@ namespace MapDBTrack
         }
 
     }
-
     public class Place : Customer
     {
         public string customer_id { get; set; }

@@ -18,9 +18,9 @@
     <None Remove="Pictures\Customer.png" />
     <None Remove="Pictures\enter.png" />
     <None Remove="Pictures\Exit.png" />
-    <None Remove="Pictures\History.png" />
     <None Remove="Pictures\Info.png" />
     <None Remove="Pictures\Logout.png" />
+    <None Remove="Pictures\menu.png" />
     <None Remove="Pictures\mode.png" />
     <None Remove="Pictures\Pin.png" />
     <None Remove="Pictures\PinLogin.png" />
@@ -36,7 +36,6 @@
     <Resource Include="Pictures\Customer.png" />
     <Resource Include="Pictures\enter.png" />
     <Resource Include="Pictures\Exit.png" />
-    <Resource Include="Pictures\History.png" />
   </ItemGroup>
 
   <ItemGroup>
@@ -54,6 +53,7 @@
     <Resource Include="Pictures\Map.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Resource>
+    <Resource Include="Pictures\menu.png" />
     <Resource Include="Pictures\mode.png" />
     <Resource Include="Pictures\Pin.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>

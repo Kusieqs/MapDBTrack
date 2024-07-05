@@ -1,35 +1,27 @@
 ﻿using Microsoft.Maps.MapControl.WPF;
 using System.Text.RegularExpressions;
-using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
 using System.Windows.Input;
-using System.Windows.Media;
 
 namespace MapDBTrack
 {
     public partial class AddingCustomer : Window
     {
-        bool correctClose = false;
-        private Location location;
-        private Pushpin Pushpin;
-        private Map map;
-        private Window mainWindow;
-        private bool edit = false;
+        private Location location; // Location of place
+        private Pushpin Pushpin; // Pin to delete or ovveride
+        private Map map; // Map
+        private bool edit = false; // If it is true than window is for editing customer
+        private static Place customer; // Object to editing if edit is true
 
-        private static string id;
-        private static Place customer;
-        public AddingCustomer(Location location, Window window, Pushpin pin, Map map)
+        public AddingCustomer(Location location, Pushpin pin, Map map)
         {
             InitializeComponent();
             this.location = location;
-            LoadingData();
             this.Pushpin = pin;
             this.map = map;
-            Closing += CloseWindow;
-            mainWindow = window;
+            LoadingData();
         }
-        public AddingCustomer(Place place,bool edit)
+        public AddingCustomer(Place place, bool edit)
         {
             InitializeComponent();
             ThemeOfPanel.Text = "Edit customer";
@@ -45,10 +37,38 @@ namespace MapDBTrack
             LatitudeBox.Text = place.latitude.ToString();
             LongitudeBox.Text = place.longitude.ToString();
             DescriptionBox.Text = place.description;
-            id = place.customer_id;
             customer = place;
 
-        }
+        } // Constructor for editing customer
+        private void LoadingData()
+        {
+            // Reading location cords
+            LongitudeBox.Text = location.Longitude.ToString();
+            LatitudeBox.Text = location.Latitude.ToString();
+
+            // Reading location on map
+            RootObject rootObject = HelpingClass.ReadLocation(location);
+
+            if(rootObject != null && rootObject.address != null)
+            {
+                // Setting information about province, city, postcode
+                if (rootObject.address.city != null)
+                    CityBox.Text = rootObject.address.city;
+
+                if (rootObject.address.state != null)
+                    ProvinceBox.Text = rootObject.address.state;
+
+                if (rootObject.address.postcode != null)
+                    PostalCodeBox.Text = rootObject.address.postcode;
+
+                // Setting information about road
+                if (rootObject.display_name != null)
+                    if (int.TryParse(rootObject.display_name.Split(',')[0], out int x))
+                        StreetBox.Text = $"{rootObject.address.road} {x}";
+                    else
+                        StreetBox.Text = $"{rootObject.address.road}";
+            }
+        } // Loading inforamtion about place where pinn was inputed
         public void AcceptClick(object sender, RoutedEventArgs e)
         {
             // checking informations that are correct
@@ -63,8 +83,8 @@ namespace MapDBTrack
             {
                 if (edit)
                 {
-                    // editing existing place
-                    int x = MainWindow.places.IndexOf(customer);
+                    // Editing existing place
+                    int x = MainWindow.listOfData.IndexOf(customer); // index of customer in list
                     customer.first_name = FirstNameBox.Text;
                     customer.last_name = LastNameBox.Text;
                     customer.email = EmailBox.Text;
@@ -75,14 +95,16 @@ namespace MapDBTrack
                     customer.city = CityBox.Text;
                     customer.description = DescriptionBox.Text;
 
-                    MainWindow.places[x] = customer;
-
+                    // Changing information about customer
+                    MainWindow.listOfData[x] = customer;
                     HelpingClass.EditCustomer(customer);
                 }
                 else
                 {
-                    // creating new object
-                    string lastOne = HelpingClass.GetIdFromDB();
+                    // Setting last id from DB
+                    string newId = HelpingClass.GetIdFromDB();
+
+                    // Creating new object 
                     Place place = new Place(
                         MainWindow.idOfEmployee,
                         ContactBox.Text,
@@ -90,7 +112,7 @@ namespace MapDBTrack
                         LastNameBox.Text,
                         DescriptionBox.Text,
                         EmailBox.Text,
-                        lastOne,
+                        newId,
                         ProvinceBox.Text,
                         CityBox.Text,
                         PostalCodeBox.Text,
@@ -100,81 +122,60 @@ namespace MapDBTrack
                         );
 
                     // adding new object to list and map
-                    MainWindow.places.Add(place);
+                    MainWindow.listOfData.Add(place);
                     HelpingClass.AddingNewCustomer(place);
-                    correctClose = true;
                     MainWindow.acceptOverridePin = true;
                 }
                 this.Close();
             }
-            else
-                return;
 
-        } // Accepting iformations about customer
+        } // Checking complete informations and adding to DB
+        private void TextChangedLines(object sender, RoutedEventArgs e)
+        {
+            CountChars.Text = DescriptionBox.Text.Length.ToString();
+
+            int maxLines = 7;
+            int lineCount = DescriptionBox.LineCount;
+            string desc = "";
+
+            if (DescriptionBox.Text.Length != 0)
+                desc = DescriptionBox.Text.Substring(0, DescriptionBox.Text.Length - 1);
+
+            if(lineCount > maxLines)
+            {
+                DescriptionBox.Text = desc;
+                DescriptionBox.CaretIndex = desc.Length;
+            }
+        } // Setting max line length (it doesn't work in xaml code (MaxLines = "7")) 
         public void DeleteClick(object sender, RoutedEventArgs e)
         {
             if(!edit)
                 map.Children.Remove(Pushpin);
 
             Close();
-        } // deleting pinn from map
-        private void LoadingData()
-        {
-            try
-            {
-                LongitudeBox.Text = location.Longitude.ToString();
-                LatitudeBox.Text = location.Latitude.ToString();
-
-                // reading location on map
-                RootObject rootObject = HelpingClass.ReadLocation(location);
-                string numberRoad = rootObject.display_name;
-
-                // setting information about road
-                if (numberRoad == null)
-                    throw new FormatException();
-                else if (int.TryParse(numberRoad.Split(',')[0], out int x))
-                    StreetBox.Text = $"{rootObject.address.road} {x}";
-                else
-                    StreetBox.Text = $"{rootObject.address.road}";
-
-                // setting information about province, city and postal code
-                ProvinceBox.Text = rootObject.address.state;
-                CityBox.Text = rootObject.address.city;
-                PostalCodeBox.Text = rootObject.address.postcode;
-            }
-            catch (Exception)
-            {
-                return;
-            }
-
-        } // Loading inforamtion about place where pinn was inputed
-        public void CloseWindow(object sender, System.ComponentModel.CancelEventArgs e)
-        {
-            if(!correctClose)
-                map.Children.Remove(Pushpin);
-        } // Ovveriding method when window is closing
+        } // Deleting pin from map
         private void BorderClick(object sender, MouseButtonEventArgs e)
         {
             if (e.ChangedButton == MouseButton.Left)
                 this.DragMove();
-        } // feature to moving window
-
+        } // Feature to moving window
+        
         #region Excpetions to infomration about customer
         private bool FirstNameExceptions()
         {
             if (FirstNameBox.Text.Trim().Length == 0)
             {
-                FirstNameError.Text = HelpingClass.Exceptions(0);
+                FirstNameError.Text = HelpingClass.engExp[0];
                 return false;
             }
             else if (!Regex.IsMatch(FirstNameBox.Text.Trim(), @"^[\p{L}\p{M}]+$"))
             {
-                FirstNameError.Text = HelpingClass.Exceptions(1);
+                FirstNameError.Text = HelpingClass.engExp[1];
                 return false;
             }
             else if (FirstNameBox.Text.Trim().Length > 50)
             {
-                FirstNameError.Text = HelpingClass.Exceptions(2);
+                FirstNameError.Text = HelpingClass.engExp[2];
                 return false;
             }
 
@@ -185,12 +186,12 @@ namespace MapDBTrack
             if (LastNameBox.Text.Trim().Length > 0)
                 if (!Regex.IsMatch(LastNameBox.Text.Trim(), @"^[\p{L}\p{M}\s-]+$"))
                 {
-                    LastNameError.Text = HelpingClass.Exceptions(1);
+                    LastNameError.Text = HelpingClass.engExp[1];
                     return false;
                 }
                 else if (LastNameBox.Text.Trim().Length > 50)
                 {
-                    LastNameError.Text = HelpingClass.Exceptions(2);
+                    LastNameError.Text = HelpingClass.engExp[2];
                     return false;
                 }
 
@@ -198,21 +199,19 @@ namespace MapDBTrack
         } // Error text when last name is wrong
         private bool ContactExceptions()
         {
-
-
             if (ContactBox.Text.Trim().Length == 0)
             {
-                ContactError.Text = HelpingClass.Exceptions(0);
+                ContactError.Text = HelpingClass.engExp[0];
                 return false;
             }
-            else if (!Regex.IsMatch(ContactBox.Text.Trim(), @"^\+?\d{1,}$"))
+            else if (!Regex.IsMatch(ContactBox.Text.Trim(), @"^\+?[\d\s]+$"))
             {
-                ContactError.Text = HelpingClass.Exceptions(1);
+                ContactError.Text = HelpingClass.engExp[1];
                 return false;
             }
             else if (ContactBox.Text.Trim().Length > 20)
             {
-                ContactError.Text = HelpingClass.Exceptions(2);
+                ContactError.Text = HelpingClass.engExp[2];
                 return false;
             }
             return true;
@@ -223,7 +222,7 @@ namespace MapDBTrack
 
             if (EmailBox.Text.Trim().Length != 0 && !Regex.IsMatch(EmailBox.Text.Trim(), pattern))
             {
-                MailError.Text = HelpingClass.Exceptions(1);
+                MailError.Text = HelpingClass.engExp[1];
                 return false;
             }
             return true;
@@ -234,12 +233,12 @@ namespace MapDBTrack
             if (ProvinceBox.Text.Trim().Length > 0)
                 if (!Regex.IsMatch(ProvinceBox.Text.Trim(), @"^[\p{L}\p{M}\s-]+$"))
                 {
-                    ProvinceError.Text = HelpingClass.Exceptions(1); 
+                    ProvinceError.Text = HelpingClass.engExp[1]; 
                     return false;
                 }
                 else if (ProvinceBox.Text.Trim().Length > 50)
                 {
-                    ProvinceError.Text = HelpingClass.Exceptions(2);
+                    ProvinceError.Text = HelpingClass.engExp[2];
                     return false;
                 }
             return true;
@@ -248,17 +247,17 @@ namespace MapDBTrack
         {
             if (CityBox.Text.Trim().Length == 0)
             {
-                CityError.Text = HelpingClass.Exceptions(0);
+                CityError.Text = HelpingClass.engExp[0];
                 return false;
             }
             else if (!Regex.IsMatch(CityBox.Text.Trim(), @"^[\p{L}\p{M}\s-]+$"))
             {
-                CityError.Text = HelpingClass.Exceptions(1);
+                CityError.Text = HelpingClass.engExp[1];
                 return false;
             }
             else if (CityBox.Text.Trim().Length > 50)
             {
-                CityError.Text = HelpingClass.Exceptions(2);
+                CityError.Text = HelpingClass.engExp[2];
                 return false;
             }
             return true;
@@ -267,17 +266,17 @@ namespace MapDBTrack
         {
             if (PostalCodeBox.Text.Trim().Length == 0)
             {
-                PostalError.Text = HelpingClass.Exceptions(0);
+                PostalError.Text = HelpingClass.engExp[0];
                 return false;
             }
             else if (!Regex.IsMatch(PostalCodeBox.Text.Trim(), @"^\d+-\d+$"))
             {
-                PostalError.Text = HelpingClass.Exceptions(1);
+                PostalError.Text = HelpingClass.engExp[1];
                 return false;
             }
             else if (PostalCodeBox.Text.Trim().Length > 10)
             {
-                PostalError.Text = HelpingClass.Exceptions(2);
+                PostalError.Text = HelpingClass.engExp[2];
                 return false;
             }
             return true;
@@ -286,17 +285,17 @@ namespace MapDBTrack
         {
             if (StreetBox.Text.Trim().Length == 0)
             {
-                StreetError.Text = HelpingClass.Exceptions(0);
-                return false;
-            }
-            else if (StreetBox.Text.Trim().Length > 100)
-            {
-                StreetError.Text = HelpingClass.Exceptions(2);
+                StreetError.Text = HelpingClass.engExp[0];
                 return false;
             }
             else if (!Regex.IsMatch(StreetBox.Text.Trim(), @"^[\p{L}\p{M}0-9\s-]+$"))
             {
-                StreetError.Text = HelpingClass.Exceptions(1);
+                StreetError.Text = HelpingClass.engExp[1];
+                return false;
+            }
+            else if (StreetBox.Text.Trim().Length > 100)
+            {
+                StreetError.Text = HelpingClass.engExp[2];
                 return false;
             }
             return true;
@@ -333,7 +332,6 @@ namespace MapDBTrack
         {
             StreetError.Text = string.Empty;
         } // Error street text disappearing 
-         
         #endregion
 
     }

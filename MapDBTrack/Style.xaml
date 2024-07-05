@@ -15,7 +15,7 @@
         <Setter Property="FontFamily" Value="Calibri"/>
         <Setter Property="FontWeight" Value="Medium"/>
     </Style>
-    <Style x:Key="TextBlokcsError" TargetType="TextBlock">
+    <Style x:Key="TextBlocksError" TargetType="TextBlock">
         <Setter Property="FontSize" Value="15"/>
         <Setter Property="VerticalAlignment" Value="Center"/>
         <Setter Property="Foreground" Value="Red"/>
@@ -33,14 +33,13 @@
         <Setter Property="BorderBrush" Value="White"/>
         <Setter Property="FontFamily" Value="Calibri"/>
         <Setter Property="FontWeight" Value="Medium"/>
-        <Setter Property="Cursor" Value="Hand"/>
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="Button">
                     <Border x:Name="border" Background="{TemplateBinding Background}"
                         BorderBrush="{TemplateBinding BorderBrush}"
                         BorderThickness="{TemplateBinding BorderThickness}"
-                        CornerRadius="25">
+                        CornerRadius="20">
                         <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
                     </Border>
                     <ControlTemplate.Triggers>
@@ -81,53 +80,67 @@
             </Setter.Value>
         </Setter>
     </Style>
-    <Style x:Key="TextBlockOnBox" TargetType="TextBlock">
-        <Setter Property="Width" Value="340"/>
-        <Setter Property="Height" Value="40"/>
-        <Setter Property="Background" Value="Transparent"/>
-        <Setter Property="HorizontalAlignment" Value="Left"/>
-        <Setter Property ="VerticalAlignment" Value="Center"/>
-        <Setter Property="Foreground" Value="LightGray"/>
-        <Setter Property="FontSize" Value="20"/>
-        <Setter Property="FontFamily" Value="Segoe UI"/>
-        <Setter Property="FontWeight" Value="Regular"/>
-        <Setter Property="Panel.ZIndex" Value="1"/>
-        <Setter Property="IsHitTestVisible" Value="False"/>
-    </Style>
-    <Style x:Key="TextBoxMain" TargetType="TextBox">
+    <Style x:Key="ButtonMenu" TargetType="Button">
+        <Setter Property="Width" Value="35"/>
+        <Setter Property="Height" Value="35"/>
+        <Setter Property="Background" Value="#FF7B4BA5"/>
         <Setter Property="BorderBrush" Value="Transparent"/>
-        <Setter Property="BorderThickness" Value="0"/>
-        <Setter Property="Margin" Value="35,1,2,1"/>
-        <Setter Property="FontSize" Value="20"/>
-        <Setter Property="FontFamily" Value="Segoe UI"/>
-        <Setter Property="FontWeight" Value="Regular"/>
-        <Setter Property="VerticalAlignment" Value="Center"/>
-        <Setter Property="VerticalAlignment" Value="Center"/>
+        <Setter Property="FontFamily" Value="Calibri"/>
+        <Setter Property="FontWeight" Value="Medium"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="Button">
+                    <Border x:Name="border" Background="{TemplateBinding Background}"
+                        BorderBrush="{TemplateBinding BorderBrush}"
+                        BorderThickness="{TemplateBinding BorderThickness}"
+                        CornerRadius="4">
+                        <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <EventTrigger RoutedEvent="MouseEnter">
+                            <BeginStoryboard>
+                                <Storyboard>
+                                    <ColorAnimation Storyboard.TargetProperty="(Border.Background).(SolidColorBrush.Color)"
+                                                To="#FF9C5ED2" Duration="0:0:0.3"/>
+                                </Storyboard>
+                            </BeginStoryboard>
+                        </EventTrigger>
+                        <EventTrigger RoutedEvent="MouseLeave">
+                            <BeginStoryboard>
+                                <Storyboard>
+                                    <ColorAnimation Storyboard.TargetProperty="(Border.Background).(SolidColorBrush.Color)"
+                                                To="#FF7B4BA5" Duration="0:0:0.3"/>
+                                </Storyboard>
+                            </BeginStoryboard>
+                        </EventTrigger>
+                        <EventTrigger RoutedEvent="PreviewMouseDown">
+                            <BeginStoryboard>
+                                <Storyboard>
+                                    <ColorAnimation Storyboard.TargetProperty="(Border.Background).(SolidColorBrush.Color)"
+                                                To="#FF9C76BD" Duration="0:0:0.1"/>
+                                </Storyboard>
+                            </BeginStoryboard>
+                        </EventTrigger>
+                        <EventTrigger RoutedEvent="PreviewMouseUp">
+                            <BeginStoryboard>
+                                <Storyboard>
+                                    <ColorAnimation Storyboard.TargetProperty="(Border.Background).(SolidColorBrush.Color)"
+                                                To="#FF9C5ED2" Duration="0:0:0.1"/>
+                                </Storyboard>
+                            </BeginStoryboard>
+                        </EventTrigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
     </Style>
-    <Style x:Key="TextBoxPass" TargetType="PasswordBox">
-        <Setter Property="BorderBrush" Value="Transparent"/>
-        <Setter Property="BorderThickness" Value="0"/>
-        <Setter Property="Margin" Value="35,1,2,1"/>
-        <Setter Property="FontSize" Value="20"/>
-        <Setter Property="FontFamily" Value="Segoe UI"/>
-        <Setter Property="FontWeight" Value="Regular"/>
-        <Setter Property="VerticalAlignment" Value="Center"/>
-        <Setter Property="VerticalAlignment" Value="Center"/>
-    </Style>
-
-
-
-
-
-
-    <Style x:Key="ButtonRounded" TargetType="Button">
+    <Style x:Key="MainMenuButton" TargetType="Button">
         <Setter Property="Background" Value="#FF7B4BA5"/>
         <Setter Property="BorderThickness" Value="2"/>
         <Setter Property="FontSize" Value="20"/>
         <Setter Property="FontWeight" Value="DemiBold"/>
         <Setter Property="Foreground" Value="White"/>
         <Setter Property="BorderBrush" Value="Transparent"/>
-        <Setter Property="Cursor" Value="Hand"/>
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="Button">
@@ -174,136 +187,6 @@
             </Setter.Value>
         </Setter>
     </Style>
-
-    <Style x:Key="ButtonRoundedExit" TargetType="Button">
-        <Setter Property="Background" Value="#FF7B4BA5"/>
-        <Setter Property="BorderThickness" Value="2"/>
-        <Setter Property="FontSize" Value="20"/>
-        <Setter Property="FontWeight" Value="DemiBold"/>
-        <Setter Property="Foreground" Value="White"/>
-        <Setter Property="BorderBrush" Value="Transparent"/>
-        <Setter Property="Cursor" Value="Hand"/>
-        <Setter Property="Template">
-            <Setter.Value>
-                <ControlTemplate TargetType="Button">
-                    <Border x:Name="border" Background="{TemplateBinding Background}"
-                        BorderBrush="{TemplateBinding BorderBrush}"
-                        BorderThickness="{TemplateBinding BorderThickness}" CornerRadius="0,0,0,14">
-                        <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                    </Border>
-                    <ControlTemplate.Triggers>
-                        <EventTrigger RoutedEvent="MouseEnter">
-                            <BeginStoryboard>
-                                <Storyboard>
-                                    <ColorAnimation Storyboard.TargetProperty="(Border.Background).(SolidColorBrush.Color)"
-                                                To="#FF9C5ED2" Duration="0:0:0.3"/>
-                                </Storyboard>
-                            </BeginStoryboard>
-                        </EventTrigger>
-                        <EventTrigger RoutedEvent="MouseLeave">
-                            <BeginStoryboard>
-                                <Storyboard>
-                                    <ColorAnimation Storyboard.TargetProperty="(Border.Background).(SolidColorBrush.Color)"
-                                                To="#FF7B4BA5" Duration="0:0:0.3"/>
-                                </Storyboard>
-                            </BeginStoryboard>
-                        </EventTrigger>
-                        <EventTrigger RoutedEvent="PreviewMouseDown">
-                            <BeginStoryboard>
-                                <Storyboard>
-                                    <ColorAnimation Storyboard.TargetProperty="(Border.Background).(SolidColorBrush.Color)"
-                                                To="#FF9C76BD" Duration="0:0:0.1"/>
-                                </Storyboard>
-                            </BeginStoryboard>
-                        </EventTrigger>
-                        <EventTrigger RoutedEvent="PreviewMouseUp">
-                            <BeginStoryboard>
-                                <Storyboard>
-                                    <ColorAnimation Storyboard.TargetProperty="(Border.Background).(SolidColorBrush.Color)"
-                                                To="#FF9C5ED2" Duration="0:0:0.1"/>
-                                </Storyboard>
-                            </BeginStoryboard>
-                        </EventTrigger>
-                    </ControlTemplate.Triggers>
-                </ControlTemplate>
-            </Setter.Value>
-        </Setter>
-    </Style>
-
-    <Style x:Key="RoundedTextBox" TargetType="TextBox">
-        <Setter Property="Width" Value="318"/>
-        <Setter Property="Height" Value="40"/>
-        <Setter Property="Background" Value="#faf4ff"/>
-        <Setter Property="Template">
-            <Setter.Value>
-                <ControlTemplate TargetType="TextBox">
-                    <Border BorderBrush="{TemplateBinding BorderBrush}"
-                            BorderThickness="{TemplateBinding BorderThickness}"
-                            Background="{TemplateBinding Background}"
-                            CornerRadius="10">
-                        <TextBox Text="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Text}"
-                             HorizontalAlignment="Stretch"
-                             VerticalAlignment="Stretch"
-                             BorderThickness="0"
-                             Background="Transparent"
-                             MaxLength="50"
-                             FontSize="18"
-                             FontWeight="DemiBold"   
-                             HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
-                    </Border>
-                </ControlTemplate>
-            </Setter.Value>
-        </Setter>
-    </Style>
-
-
-    <Style x:Key="RoundedTextBoxEmail" TargetType="TextBox">
-        <Setter Property="Width" Value="318"/>
-        <Setter Property="Height" Value="40"/>
-        <Setter Property="Background" Value="#faf4ff"/>
-        <Setter Property="Template">
-            <Setter.Value>
-                <ControlTemplate TargetType="TextBox">
-                    <Border BorderBrush="{TemplateBinding BorderBrush}"
-                            BorderThickness="{TemplateBinding BorderThickness}"
-                            Background="{TemplateBinding Background}"
-                            CornerRadius="10">
-                        <TextBox Text="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Text}"
-                             HorizontalAlignment="Stretch"
-                             VerticalAlignment="Stretch"
-                             BorderThickness="0"
-                             Background="Transparent"
-                             MaxLength="100"
-                             FontSize="18"
-                             FontWeight="DemiBold"   
-                             HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
-                    </Border>
-                </ControlTemplate>
-            </Setter.Value>
-        </Setter>
-    </Style>
-
-
-
-
-    <Style x:Key="TextBlocksStyles" TargetType="TextBlock">
-        <Setter Property="FontSize" Value="15"/>
-        <Setter Property="FontWeight" Value="DemiBold"/>
-        <Setter Property="VerticalAlignment" Value="Center"/>
-        <Setter Property="HorizontalAlignment" Value="Center"/>
-        <Setter Property="Foreground" Value="#FF2F5588"/>
-    </Style>
-
-
-    <Style x:Key="ImageCustomerView" TargetType="Image">
-        <Setter Property="Width" Value="40"/>
-        <Setter Property="Height" Value="40"/>
-        <Setter Property="IsHitTestVisible" Value="False"/>
-        <Setter Property="VerticalAlignment" Value="Center"/>
-        <Setter Property="HorizontalAlignment" Value="Center"/>
-        <Setter Property="Margin" Value="0,0,100,0"/>
-    </Style>
-
     <Style x:Key="RoundedTextBoxDesc" TargetType="TextBox">
         <Setter Property="Background" Value="#faf4ff"/>
         <Setter Property="FontSize" Value="16"/>
@@ -312,7 +195,7 @@
         <Setter Property="AcceptsReturn" Value="True"/>
         <Setter Property="HorizontalContentAlignment" Value="Left"/>
         <Setter Property="VerticalContentAlignment" Value="Top"/>
-        <Setter Property="MaxLines" Value="12"/>
+        <Setter Property="MaxLength" Value="150"/>
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="TextBox">
@@ -329,134 +212,6 @@
             </Setter.Value>
         </Setter>
     </Style>
-
-
-
-    <Style x:Key="BorderStyle">
-        <Setter Property="Control.BorderBrush" Value="#A0A1A2" />
-        <Setter Property="Control.BorderThickness" Value="1" />
-        <Setter Property="Control.Background" Value="#faf4ff" />
-        <Setter Property="Control.Foreground" Value="#101010" />
-        <Setter Property="Control.FontFamily" Value="Calibri" />
-        <Setter Property="Control.FontWeight" Value="DemiBold" />
-        <Setter Property="Control.FontStretch" Value="Normal" />
-        <Setter Property="Control.FontStyle" Value="Normal" />
-    </Style>
-
-    <Style x:Key="ComboBoxTextBoxStyle" TargetType="{x:Type TextBox}">
-        <Style.Triggers>
-            <Trigger Property="IsMouseOver" Value="true">
-                <Setter Property="Background" Value="Red" />
-            </Trigger>
-        </Style.Triggers>
-        <Setter Property="Template">
-            <Setter.Value>
-                <ControlTemplate TargetType="{x:Type TextBox}">
-                    <Grid>
-                        <Border CornerRadius="10,0,0,10"
-                            BorderThickness="1,1,0,1"
-                            Background="{TemplateBinding Background}"
-                            BorderBrush="#A0A1A2">
-                            <ScrollViewer x:Name="PART_ContentHost"/>
-                        </Border>
-                    </Grid>
-                </ControlTemplate>
-            </Setter.Value>
-        </Setter>
-    </Style>
-
-    <Style x:Key="ComboBoxButtonStyle" TargetType="{x:Type ToggleButton}">
-        <Style.Triggers>
-            <Trigger Property="IsMouseOver" Value="true">
-                <Setter Property="Background" Value="Red" />
-            </Trigger>
-        </Style.Triggers>
-        <Setter Property="Template">
-            <Setter.Value>
-                <ControlTemplate TargetType="{x:Type ToggleButton}">
-                    <Border Background="#faf4ff" 
-                        x:Name="border" 
-                        CornerRadius="0,10,10,0" 
-                        BorderThickness="0,1,1,1"
-                        BorderBrush="#A0A1A2">
-                        <ContentPresenter />
-                    </Border>
-                </ControlTemplate>
-            </Setter.Value>
-        </Setter>
-    </Style>
-
-    <Style  x:Key="RoundedComboBox" TargetType="{x:Type ComboBox}" BasedOn="{StaticResource BorderStyle}">
-        <Setter Property="IsReadOnly" Value="True"/>
-        <Setter Property="Template">
-            <Setter.Value>
-                <ControlTemplate TargetType="{x:Type ComboBox}">
-                    <Grid>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition/>
-                            <ColumnDefinition MaxWidth="18"/>
-                        </Grid.ColumnDefinitions>
-
-                        <TextBox Name="PART_EditableTextBox"
-                             Padding="0,0,0,0"
-                             IsHitTestVisible="False"
-                             Height="{TemplateBinding Height}"
-                             BorderBrush="#A0A1A2"
-                             Background="#faf4ff"
-                             Style="{StaticResource ComboBoxTextBoxStyle}"/>
-
-                        <ToggleButton Grid.Column="1" 
-                                  Height="{TemplateBinding Height}"
-                                  Style="{StaticResource ComboBoxButtonStyle}"
-                                  Focusable="False"
-                                  IsChecked="{Binding Path=IsDropDownOpen, Mode=TwoWay, RelativeSource={RelativeSource TemplatedParent}}"
-                                  ClickMode="Press">
-                            <Path Grid.Column="1"
-                              HorizontalAlignment="Center"
-                              VerticalAlignment="Center"
-                              Data="M 0 0 L 4 4 L 8 0 Z"
-                              Fill="Black" />
-                        </ToggleButton>
-
-                        <ContentPresenter Grid.Column="0" 
-                                      Name="ContentSite"
-                                      Content="{TemplateBinding SelectionBoxItem}"
-                                      ContentTemplate="{TemplateBinding SelectionBoxItemTemplate}"
-                                      ContentTemplateSelector="{TemplateBinding ItemTemplateSelector}"
-                                      VerticalAlignment="Center"
-                                      HorizontalAlignment="Left"
-                                      Margin="6,0,0,0"/>
-
-                        <Popup Grid.Column="0" 
-                           Name="Popup"
-                           Placement="Bottom"
-                           IsOpen="{TemplateBinding IsDropDownOpen}"
-                           AllowsTransparency="True" 
-                           Focusable="False"
-                           PopupAnimation="Slide">
-
-                            <Grid Name="DropDown"
-                              SnapsToDevicePixels="True"                
-                              MinWidth="{TemplateBinding ActualWidth}"
-                              MaxHeight="{TemplateBinding MaxDropDownHeight}">
-
-                                <Border x:Name="DropDownBorder"
-                                    BorderThickness="1"
-                                    CornerRadius="2"
-                                    Background="White"
-                                    BorderBrush="#A0A1A2"/>
-                                <ScrollViewer SnapsToDevicePixels="True">
-                                    <StackPanel IsItemsHost="True" KeyboardNavigation.DirectionalNavigation="Contained" />
-                                </ScrollViewer>
-                            </Grid>
-
-                        </Popup>
-                    </Grid>
-                </ControlTemplate>
-            </Setter.Value>
-        </Setter>
-    </Style>
-
     <Style x:Key="TextBlocks" TargetType="TextBlock">
         <Setter Property="FontSize" Value="26"/>
         <Setter Property="FontWeight" Value="DemiBold"/>
@@ -465,25 +220,11 @@
         <Setter Property="HorizontalAlignment" Value="Center"/>
         <Setter Property="FontFamily" Value="Calibri"/>
     </Style>
-
-    <Style x:Key="TextBlocksCustomerButtons" TargetType="TextBlock">
-        <Setter Property="FontSize" Value="30"/>
-        <Setter Property="VerticalAlignment" Value="Center"/>
-        <Setter Property="HorizontalAlignment" Value="Center"/>
-        <Setter Property="FontFamily" Value="Calibri"/>
-        <Setter Property="Foreground" Value="White"/>
-        <Setter Property="IsHitTestVisible" Value="False"/>
-        <Setter Property="FontWeight" Value="DemiBold"/>
-        <Setter Property="Margin" Value="40,0,0,0"/>
-    </Style>
-
-    <Style x:Key="ButtonsAddPins" TargetType="Button">
+    <Style x:Key="ButtonAddPins" TargetType="Button">
         <Setter Property="Background" Value="#FF7B4BA5"/>
         <Setter Property="BorderBrush" Value="Transparent"/>
         <Setter Property="FontWeight" Value="DemiBold"/>
-        <Setter Property="Cursor" Value="Hand"/>
         <Setter Property="FontSize" Value="45"/>
-        <Setter Property="FontWeight" Value="DemiBold"/>
         <Setter Property="VerticalContentAlignment" Value="Center"/>
         <Setter Property="HorizontalContentAlignment" Value="Center"/>
         <Setter Property="HorizontalAlignment" Value="Stretch"/>
@@ -498,6 +239,10 @@
                         <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
                     </Border>
                     <ControlTemplate.Triggers>
+                        <Trigger Property="IsEnabled" Value="False">
+                            <Setter TargetName="border" Property="Background" Value="#FF6F4594"/>
+                            <Setter Property="Cursor" Value="Arrow"/>
+                        </Trigger>
                         <EventTrigger RoutedEvent="MouseEnter">
                             <BeginStoryboard>
                                 <Storyboard>
@@ -533,15 +278,12 @@
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
             </Setter.Value>
-
         </Setter>
     </Style>
-
-    <Style x:Key="ButtonsRemovePins" TargetType="Button">
+    <Style x:Key="ButtonRemovePins" TargetType="Button">
         <Setter Property="Background" Value="#FF7B4BA5"/>
         <Setter Property="BorderBrush" Value="Transparent"/>
         <Setter Property="FontWeight" Value="DemiBold"/>
-        <Setter Property="Cursor" Value="Hand"/>
         <Setter Property="FontSize" Value="45"/>
         <Setter Property="FontWeight" Value="DemiBold"/>
         <Setter Property="VerticalContentAlignment" Value="Center"/>
@@ -558,6 +300,10 @@
                         <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
                     </Border>
                     <ControlTemplate.Triggers>
+                        <Trigger Property="IsEnabled" Value="False">
+                            <Setter TargetName="border" Property="Background" Value="#FF6F4594"/>
+                            <Setter Property="Cursor" Value="Arrow"/>
+                        </Trigger>
                         <EventTrigger RoutedEvent="MouseEnter">
                             <BeginStoryboard>
                                 <Storyboard>
@@ -596,7 +342,7 @@
 
         </Setter>
     </Style>
-    <Style x:Key="tabButton" TargetType="Button">
+    <Style x:Key="TabButton" TargetType="Button">
         <Setter Property="Background" Value="Transparent"/>
         <Setter Property="Foreground" Value="#FF7B4BA5"/>
         <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
