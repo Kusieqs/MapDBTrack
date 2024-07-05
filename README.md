@@ -1,7 +1,7 @@
 # MapDBTrack
 
 ## Project description
-MapDBTrack is a Windows Presentation Foundation (WPF) application designed to enhance the management of employees, clients, and their addresses using Bing Maps API and a database.
+### MapDBTrack is a Windows Presentation Foundation (WPF) application designed to enhance the management of employees, clients, and their addresses using Bing Maps API and a database.
 
 ![image](https://github.com/Kusieqs/MapDBTrack/assets/130232383/8cd5d359-347c-4ffb-a25b-963c47b7af22)
 
@@ -32,6 +32,9 @@ Bing Maps API Key: The API key for Bing Maps is not included in the repository. 
 
 ### License
 This project is licensed under the MIT License - see the LICENSE file for details.
+
+###Contact
+If you have any questions or suggestions, please feel free to contact the project maintainer.
 
 ### Gallery
 ![image](https://github.com/Kusieqs/MapDBTrack/assets/130232383/40ec5379-6319-4ca9-b8ee-5f06ae7f9c08)
