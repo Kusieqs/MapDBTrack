@@ -33,7 +33,7 @@ Bing Maps API Key: The API key for Bing Maps is not included in the repository. 
 ### License
 This project is licensed under the MIT License - see the LICENSE file for details.
 
-###Contact
+### Contact
 If you have any questions or suggestions, please feel free to contact the project maintainer.
 
 ### Gallery
