@@ -59,7 +59,7 @@ namespace MapDBTrack
                             content = $"Email: {item.email}";
                             break;
                         case 5:
-                            content = $"City: {item.postal_code}";
+                            content = $"City: {item.city}";
                             break;
                         case 6:
                             content = $"Postal Code: {item.postal_code}";
@@ -151,15 +151,15 @@ namespace MapDBTrack
             }
             return places;
         } // List of customers
-        private void ExitClick(object sender, RoutedEventArgs e)
-        {
-            this.Close();
-        } // Exit method
         private void BorderClick(object sender, MouseButtonEventArgs e)
         {
             if (e.ChangedButton == MouseButton.Left)
                 this.DragMove();
         } // Feature to moving window
+        private void ExitClick(object sender, RoutedEventArgs e)
+        {
+            this.Close();
+        } // Exit method
 
     }
 }

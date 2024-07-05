@@ -199,14 +199,12 @@ namespace MapDBTrack
         } // Error text when last name is wrong
         private bool ContactExceptions()
         {
-
-
             if (ContactBox.Text.Trim().Length == 0)
             {
                 ContactError.Text = HelpingClass.engExp[0];
                 return false;
             }
-            else if (!Regex.IsMatch(ContactBox.Text.Trim(), @"^\+?\d{1,}$"))
+            else if (!Regex.IsMatch(ContactBox.Text.Trim(), @"^\+?[\d\s]+$"))
             {
                 ContactError.Text = HelpingClass.engExp[1];
                 return false;

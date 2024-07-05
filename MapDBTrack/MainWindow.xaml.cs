@@ -1,6 +1,5 @@
 ﻿using Microsoft.Maps.MapControl.WPF;
 using System.ComponentModel;
-using System.Numerics;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
@@ -695,30 +694,35 @@ namespace MapDBTrack
 
                 // Deleting customer
                 case "Delete customer":
-                    listOfData.Remove(place);
-                    HelpingClass.RemoveRecordFromDB(place);
+                    MessageBoxResult result = MessageBox.Show($"Do you want remove this pin?\n\n{HelpingClass.GetDescTool(place)}", "Inforamtion", MessageBoxButton.YesNo, MessageBoxImage.Warning);
+                    if (result == MessageBoxResult.Yes)
+                    {
+                        listOfData.Remove(place);
+                        HelpingClass.RemoveRecordFromDB(place);
+                    }
                     break;
             }
             SearchingScroll(null, null);
         }  // Options for ContextMenu
         private void SearchingScroll(object sender, EventArgs e)
         {
-            if (string.IsNullOrEmpty(search.Text))
+            if (string.IsNullOrEmpty(search.Text.Trim()))
                 ChangingCustomerView(listOfData);
             else
             {
+                string searchText = search.Text.Trim();
                 // Setting that word which is the most correct with searching
                 var filter = listOfData.Where(x =>
-                x.customer_id.Contains(search.Text) ||
-                x.first_name.Contains(search.Text) ||
-                x.last_name.Contains(search.Text) ||
-                x.email.Contains(search.Text) ||
-                x.contact_number.Contains(search.Text) ||
-                x.city.Contains(search.Text) ||
-                x.province.Contains(search.Text) ||
-                x.street.Contains(search.Text) ||
-                x.postal_code.Contains(search.Text) ||
-                x.employee_id.ToString().Contains(search.Text)).ToList();
+                x.customer_id.Contains(searchText) ||
+                x.first_name.Contains(searchText) ||
+                x.last_name.Contains(searchText) ||
+                x.email.Contains(searchText) ||
+                x.contact_number.Contains(searchText) ||
+                x.city.Contains(searchText) ||
+                x.province.Contains(searchText) ||
+                x.street.Contains(searchText) ||
+                x.postal_code.Contains(searchText) ||
+                x.employee_id.ToString().Contains(searchText)).ToList();
 
                 ChangingCustomerView(filter);
             }
@@ -757,7 +761,7 @@ namespace MapDBTrack
                 return;
 
             // Sending MessageBox to conferm about deleting
-            MessageBoxResult result = MessageBox.Show($"Are you sure to delete {customer.Children.Count} customers","Information",MessageBoxButton.YesNo,MessageBoxImage.Question);
+            MessageBoxResult result = MessageBox.Show($"Are you sure to delete {customer.Children.Count} customers","Information",MessageBoxButton.YesNo,MessageBoxImage.Warning);
             if(result == MessageBoxResult.Yes )
             {
                 // Deleting customers
